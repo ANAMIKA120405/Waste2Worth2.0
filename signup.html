@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Sign Up - Waste2Worth</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+        .slider-container {
+            position: relative;
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            min-height: 600px;
+            overflow: visible;
+            z-index: 2;
+        }
+        .switch-btns {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            gap: 20px;
+        }
+        .switch-btn {
+            padding: 12px 24px;
+            border: 2px solid #4CAF50;
+            border-radius: 25px;
+            background: rgba(255,255,255,0.1);
+            color: #4CAF50;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(1px);
+        }
+        .switch-btn.active, .switch-btn:hover {
+            background: #4CAF50;
+            color: white;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+        .container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            background: transparent;
+        }
+        .forms-wrapper {
+            position: relative;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .form-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(.68,-0.55,.27,1.55);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(3px);
+            border-right: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px 0 0 20px;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            overflow-y: auto;
+            max-height: 100%;
+        }
+        .form-slide.signup {
+            transform: translateX(0);
+        }
+        .form-slide.login {
+            transform: translateX(100%);
+        }
+        .slider-container.show-login .form-slide.signup {
+            transform: translateX(-100%);
+        }
+        .slider-container.show-login .form-slide.login {
+            transform: translateX(0);
+        }
+        .right-section {
+            flex: 1;
+            background: transparent;
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center;
+            color: white;
+            padding: 60px 50px; 
+            text-align: center;
+            position: relative;
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(46, 125, 50, 0.1));
+        }
+        h1 { 
+            font-size: 2.2em; 
+            margin-bottom: 5px; 
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .subtitle { 
+            color: rgba(255,255,255,0.8); 
+            margin-bottom: 25px; 
+            font-size: 1em; 
+            line-height: 1.4; 
+        }
+        .form-group { margin-bottom: 20px; position: relative; }
+        .form-group label {
+            display: block; 
+            margin-bottom: 8px; 
+            color: white;
+            font-weight: 600; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            font-size: 0.9em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        .input-container { position: relative; }
+        .form-group input {
+            width: 100%; 
+            padding: 12px 20px; 
+            padding-left: 45px;
+            border: 2px solid rgba(255,255,255,0.15); 
+            border-radius: 8px; 
+            font-size: 14px;
+            transition: all 0.3s ease; 
+            background: rgba(255,255,255,0.08);
+            color: white;
+            backdrop-filter: blur(2px);
+        }
+        .form-group input::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+        .form-group input:focus {
+            border-color: #4CAF50; 
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
+            background: rgba(255,255,255,0.3);
+        }
+        .input-icon {
+            position: absolute; 
+            left: 18px; 
+            top: 50%;
+            transform: translateY(-50%); 
+            color: rgba(255,255,255,0.8); 
+            font-size: 18px;
+        }
+        .checkbox-container {
+            display: flex; align-items: center; margin-bottom: 20px;
+        }
+        .checkbox-container input[type="checkbox"] {
+            margin-right: 12px; width: 18px; height: 18px; accent-color: #4CAF50;
+        }
+        .checkbox-container label {
+            color: rgba(255,255,255,0.9); 
+            font-size: 14px; 
+            margin-bottom: 0;
+            text-transform: none; 
+            letter-spacing: normal; 
+            font-weight: normal;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        .signup-btn {
+            width: 100%; 
+            padding: 14px;
+            background: linear-gradient(135deg, #00C853, #4CAF50);
+            color: white; 
+            border: none; 
+            border-radius: 12px; 
+            font-size: 16px;
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: all 0.3s ease;
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+        .signup-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent 0px,
+                transparent 8px,
+                rgba(255, 255, 255, 0.2) 8px,
+                rgba(255, 255, 255, 0.2) 16px
+            );
+            pointer-events: none;
+        }
+        .signup-btn:hover {
+            background: linear-gradient(135deg, #45a049, #3e8e41);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.4);
+        }
+        .login-link { 
+            text-align: center; 
+            color: rgba(255,255,255,0.8); 
+            margin-top: 15px;
+        }
+        .login-link a { 
+            color: #4CAF50; 
+            text-decoration: none; 
+            font-weight: 600; 
+        }
+        .login-link a:hover { text-decoration: underline; }
+        .right-section h2 { 
+            font-size: 3.5em; 
+            margin-bottom: 20px; 
+            font-weight: 300; 
+            color: #4CAF50;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .right-section p { 
+            font-size: 1.2em; 
+            line-height: 1.6; 
+            opacity: 0.9;
+            color: rgba(255,255,255,0.9);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        .forgot-password {
+            text-align: center; 
+            margin-bottom: 25px;
+        }
+        .forgot-password a {
+            color: #4CAF50; 
+            text-decoration: none; 
+            font-size: 14px;
+        }
+        .back-home-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #4CAF50;
+            padding: 10px 20px;
+            border: 2px solid #4CAF50;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            backdrop-filter: blur(1px);
+            z-index: 10;
+        }
+        .back-home-btn:hover {
+            background: #4CAF50;
+            color: white;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+        @media (max-width: 768px) {
+            .slider-container { 
+                height: auto; 
+                min-height: 95vh; 
+                max-height: none;
+            }
+            .container { 
+                flex-direction: column; 
+                height: auto; 
+                min-height: 95vh; 
+            }
+            .switch-btns { 
+                position: relative; 
+                top: 0; 
+                left: 0; 
+                justify-content: center; 
+                margin-bottom: 20px; 
+                transform: none; 
+            }
+            .left-section, .right-section { 
+                padding: 25px 20px; 
+            }
+            .right-section { order: -1; }
+            h1 { font-size: 1.8em; }
+            .right-section h2 { font-size: 2em; }
+            .form-group { margin-bottom: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slider-container" id="sliderContainer">
+        <div class="switch-btns">
+            <button class="switch-btn" id="showLogin">LOG IN</button>
+            <button class="switch-btn active" id="showSignup">SIGN UP</button>
+        </div>
+        <div class="container">
+            <div class="forms-wrapper">
+                <div class="form-slide signup">
+                    <h1>Sign Up</h1>
+                    <form id="signupForm">
+                        <div class="form-group">
+                            <label for="fullname">Full Name</label>
+                            <div class="input-container">
+                                <span class="input-icon">👤</span>
+                                <input type="text" id="fullname" name="fullname" placeholder="Full Name" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <div class="input-container">
+                                <span class="input-icon">📧</span>
+                                <input type="email" id="email" name="email" placeholder="Email" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <div class="input-container">
+                                <span class="input-icon">🔒</span>
+                                <input type="password" id="password" name="password" placeholder="Password" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-password">Confirm Password</label>
+                            <div class="input-container">
+                                <span class="input-icon">🔒</span>
+                                <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" required>
+                            </div>
+                        </div>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="agree-terms" name="agree-terms" required>
+                            <label for="agree-terms">I agree to the Terms of Service and Privacy Policy</label>
+                        </div>
+                        <button type="submit" class="signup-btn">Sign Up</button>
+                    </form>
+                    <div class="login-link">
+                        Already have an account? <a href="#" id="loginLink">Log In</a>
+                    </div>
+                </div>
+                <div class="form-slide login">
+                    <h1>Login</h1>
+                    <form action="homepage.html" method="get">
+                        <div class="form-group">
+                            <label for="login-email">Email</label>
+                            <div class="input-container">
+                                <span class="input-icon">📧</span>
+                                <input type="email" id="login-email" name="login-email" placeholder="Email" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Password</label>
+                            <div class="input-container">
+                                <span class="input-icon">🔒</span>
+                                <input type="password" id="login-password" name="login-password" placeholder="Password" required>
+                            </div>
+                        </div>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="remember-me" name="remember-me">
+                            <label for="remember-me">Remember me</label>
+                        </div>
+                        <div class="forgot-password">
+                            <a href="#">Forgot your password?</a>
+                        </div>
+                        <button type="submit" class="signup-btn">Log In</button>
+                    </form>
+                    <div class="login-link">
+                        Don't have an account? <a href="#" id="signupLink">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+            <div class="right-section">
+                <h2>Welcome Back!</h2>
+                <p>Login to continue your journey.<br>Or create a new account to get started!</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        const showSignup = document.getElementById('showSignup');
+        const showLogin = document.getElementById('showLogin');
+        const sliderContainer = document.getElementById('sliderContainer');
+        const loginLink = document.getElementById('loginLink');
+        const signupLink = document.getElementById('signupLink');
+
+        showSignup.addEventListener('click', () => {
+            sliderContainer.classList.remove('show-login');
+            showSignup.classList.add('active');
+            showLogin.classList.remove('active');
+        });
+        showLogin.addEventListener('click', () => {
+            sliderContainer.classList.add('show-login');
+            showLogin.classList.add('active');
+            showSignup.classList.remove('active');
+        });
+        if (loginLink) {
+            loginLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                sliderContainer.classList.add('show-login');
+                showLogin.classList.add('active');
+                showSignup.classList.remove('active');
+            });
+        }
+        if (signupLink) {
+            signupLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                sliderContainer.classList.remove('show-login');
+                showSignup.classList.add('active');
+                showLogin.classList.remove('active');
+            });
+        }
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // ...your signup logic...
+            // After successful signup:
+            window.location.href = 'homepage.html';
+        });
+    </script>
+</body>
+</html>

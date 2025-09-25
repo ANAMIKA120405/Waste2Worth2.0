@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Join Our Community - Waste2Worth</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sidebar-width: 260px;
+      --primary-green: #3c9a5f;
+      --sidebar-bg: #e6f4ec;
+      --card-radius: 18px;
+      --shadow: 0 8px 32px 0 rgba(44, 62, 80, 0.09);
+      --transition: 0.2s;
+      --font-main: 'Inter', Arial, sans-serif;
+      --bg-main: #f0f9f4;
+      --banner-bg: linear-gradient(90deg, #008e5c 0%, #1e8e3e 100%);
+      --info-tag-bg: #eafaf1;
+      --info-tag-color: #3c9a5f;
+      --sidebar-active: #2f6f4f;
+      --sidebar-hover: #c3e6d2;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-main);
+      background: var(--bg-main);
+      color: #222;
+      min-height: 100vh;
+    }
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
+    /* Sidebar */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: var(--sidebar-bg);
+      min-height: 100vh;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 10;
+      box-shadow: 2px 0 16px 0 rgba(44, 62, 80, 0.04);
+    }
+    .logo {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--primary-green);
+      letter-spacing: 0.5px;
+      margin: 36px 0 36px 32px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sidebar nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sidebar nav ul li {
+      margin-bottom: 8px;
+    }
+    .sidebar nav a {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 32px;
+      font-size: 1.08rem;
+      color: var(--primary-green);
+      text-decoration: none;
+      border-radius: 8px 0 0 8px;
+      transition: background var(--transition), color var(--transition);
+      font-weight: 600;
+    }
+    .sidebar nav a.active {
+      background: var(--sidebar-active);
+      color: #fff;
+    }
+    .sidebar nav a:hover:not(.active) {
+      background: var(--sidebar-hover);
+      color: var(--primary-green);
+    }
+    .sidebar nav svg {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+    .more-options {
+      margin: 32px 32px 0 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .more-options label {
+      font-size: 0.98rem;
+      color: var(--primary-green);
+      margin-bottom: 2px;
+    }
+    .more-options select {
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid #b6e2c7;
+      font-size: 1rem;
+      color: var(--primary-green);
+      background: #fff;
+    }
+    /* Main Content */
+    .main {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      padding: 36px 32px 32px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 0;
+      background: var(--bg-main);
+      min-height: 100vh;
+    }
+    /* Banner */
+    .banner {
+      width: 100%;
+      max-width: 900px;
+      min-height: 170px;
+      background: var(--banner-bg);
+      border-radius: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 36px 48px;
+      margin-bottom: 28px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .banner-title {
+      font-size: 1.7rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+      z-index: 2;
+    }
+    .banner-subtitle {
+      font-size: 1.25rem;
+      font-weight: 400;
+      z-index: 2;
+    }
+    /* Info tags below banner */
+    .info-tags {
+      display: flex;
+      gap: 18px;
+      margin: 22px 0 36px 0;
+      width: 100%;
+      max-width: 900px;
+      flex-wrap: wrap;
+    }
+    .info-tag {
+      background: var(--info-tag-bg);
+      color: var(--info-tag-color);
+      font-weight: 600;
+      font-size: 1rem;
+      border-radius: 8px;
+      padding: 8px 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 8px 0 rgba(44, 62, 80, 0.04);
+      margin-bottom: 6px;
+    }
+    .info-tag svg {
+      width: 18px;
+      height: 18px;
+      fill: var(--info-tag-color);
+    }
+    /* Cards Section */
+    .cards-section {
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      align-items: flex-start;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+    .card {
+      background: #fff;
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow);
+      padding: 32px 28px 28px 28px;
+      flex: 1 1 340px;
+      max-width: 420px;
+      min-width: 280px;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 24px;
+    }
+    /* Form Card */
+    .form-card h2 {
+      color: var(--primary-green);
+      margin-bottom: 10px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .form-card p {
+      color: #222;
+      font-size: 1.05rem;
+      margin-bottom: 22px;
+      text-align: left;
+    }
+    .community-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .community-form label {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary-green);
+      margin-bottom: 4px;
+      margin-top: 8px;
+    }
+    .community-form input,
+    .community-form textarea,
+    .community-form button {
+      font-size: 1rem;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1px solid #b6e2c7;
+      outline: none;
+      font-family: var(--font-main);
+      background: #f6fcf8;
+      resize: none;
+    }
+    .community-form input:focus,
+    .community-form textarea:focus {
+      border-color: var(--primary-green);
+      background: #eafaf1;
+    }
+    .community-form button {
+      background: var(--primary-green);
+      color: #fff;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      border-radius: 22px;
+      font-size: 1.08rem;
+      margin-top: 8px;
+      box-shadow: 0 2px 8px 0 rgba(44, 62, 80, 0.08);
+    }
+    .community-form button:hover {
+      background: #287346;
+    }
+    /* Benefits Card */
+    .benefits-card h3 {
+      color: var(--primary-green);
+      margin-bottom: 16px;
+      font-size: 1.18rem;
+      font-weight: 700;
+      text-align: left;
+    }
+    .benefit-section {
+      margin-bottom: 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .benefit-section:last-child {
+      margin-bottom: 0;
+    }
+    .benefit-icon {
+      color: var(--primary-green);
+      font-size: 1.3rem;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+    .benefit-content {
+      display: flex;
+      flex-direction: column;
+    }
+    .benefit-title {
+      font-weight: 600;
+      color: #222;
+      font-size: 1.05rem;
+      margin-bottom: 2px;
+    }
+    .benefit-desc {
+      color: #444;
+      font-size: 0.98rem;
+    }
+    @media (max-width: 1000px) {
+      .cards-section {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 18px;
+      }
+      .card {
+        max-width: 100%;
+        margin-bottom: 18px;
+      }
+    }
+    @media (max-width: 700px) {
+      .main {
+        padding: 18px 4px 18px 4px;
+      }
+      .banner {
+        padding: 24px 12px;
+        min-height: 120px;
+      }
+      .info-tags {
+        gap: 8px;
+        margin: 14px 0 22px 0;
+      }
+      .cards-section {
+        gap: 12px;
+      }
+      .card {
+        padding: 18px 8px 18px 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        Waste2Worth
+      </div>
+      <nav>
+        <ul>
+          <li>
+            <a href="homepage.html">
+              <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9v8a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-4h-4v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8z"/></svg>
+              Home
+            </a>
+          </li>
+          <li>
+            <a href="joincomm.html" class="active">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M16 21v-2a4 4 0 0 0-8 0v2"/></svg>
+              Join Our Community
+            </a>
+          </li>
+          <li>
+            <a href="value.html">
+              <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 8v8M9 12h6" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+              Value for Money
+            </a>
+          </li>
+          <li>
+            <a href="aboutus.html">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 16v-4M12 8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              About Us
+            </a>
+          </li>
+        </ul>
+        <div class="more-options">
+          <label for="more">More Options</label>
+          <select id="more">
+            <option>Choose...</option>
+            <option>About Us</option>
+            <option>Contact</option>
+            <option>FAQ</option>
+          </select>
+        </div>
+      </nav>
+    </aside>
+    <!-- Main Content -->
+    <main class="main">
+      <!-- Banner -->
+      <div class="banner">
+        <div class="banner-title">Join Our Amazing Community</div>
+        <div class="banner-subtitle">Connect, Share, and Grow Together</div>
+      </div>
+      <!-- Info tags -->
+      <div class="info-tags">
+        <span class="info-tag">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-8 0v2"/><circle cx="12" cy="7" r="4"/></svg>
+          10,000+ Members
+        </span>
+        <span class="info-tag">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="#3c9a5f" stroke-width="2" fill="none"/><circle cx="12" cy="12" r="4" fill="#3c9a5f"/></svg>
+          Active Daily
+        </span>
+        <span class="info-tag">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01z"/></svg>
+          Award Winning
+        </span>
+      </div>
+      <!-- Cards Section -->
+      <div class="cards-section">
+        <!-- Left: Form Card -->
+        <div class="card form-card">
+          <h2>⚡ Become a Member Today</h2>
+          <p>Fill out the form below to join our exclusive community</p>
+          <form class="community-form" autocomplete="off">
+            <label for="fullname">Full Name</label>
+            <input id="fullname" type="text" placeholder="Enter your full name" required>
+            <label for="email">Email Address</label>
+            <input id="email" type="email" placeholder="Enter your email" required>
+            <label for="interests">Your Interests</label>
+            <input id="interests" type="text" placeholder="What are you passionate about?" required>
+            <button type="submit">Join Now</button>
+          </form>
+        </div>
+        <!-- Right: Benefits Card -->
+        <div class="card benefits-card">
+          <h3>Community Benefits</h3>
+          <div class="benefit-section">
+            <span class="benefit-icon">👥</span>
+            <div class="benefit-content">
+              <span class="benefit-title">Connect with Others</span>
+              <span class="benefit-desc">Join thousands of like-minded individuals sharing similar interests</span>
+            </div>
+          </div>
+          <div class="benefit-section">
+            <span class="benefit-icon">🏪</span>
+            <div class="benefit-content">
+              <span class="benefit-title">Open Your Own Store</span>
+              <span class="benefit-desc">Get tools and resources to start your own sustainable store within the community.</span>
+            </div>
+          </div>
+          <div class="benefit-section">
+            <span class="benefit-icon">🎁</span>
+            <div class="benefit-content">
+              <span class="benefit-title">Special Offers</span>
+              <span class="benefit-desc">Get exclusive discounts and early access to eco-products.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

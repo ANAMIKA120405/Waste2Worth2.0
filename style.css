@@ -1,0 +1,304 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', Arial, sans-serif;
+    background: #f0f9f4;
+    color: #222;
+    min-height: 100vh;
+}
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+.sidebar {
+    width: 260px;
+    background: #e6f4ec;
+    min-height: 100vh;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 10;
+    box-shadow: 2px 0 16px 0 rgba(44, 62, 80, 0.04);
+}
+.logo {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #2e7d32;
+    letter-spacing: 0.5px;
+    margin: 36px 0 36px 32px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.sidebar nav ul li {
+    margin-bottom: 8px;
+}
+.sidebar nav a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 32px;
+    font-size: 1.08rem;
+    color: #2e7d32;
+    text-decoration: none;
+    border-radius: 8px 0 0 8px;
+    transition: background 0.18s, color 0.18s;
+    font-weight: 600;
+}
+.sidebar nav a.active {
+    background: #2e7d32;
+    color: #fff;
+}
+.sidebar nav a:hover:not(.active) {
+    background: #c3e6d2;
+    color: #2e7d32;
+}
+.sidebar nav svg {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+}
+.more-options {
+    margin: 32px 32px 32px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.more-options label {
+    font-size: 0.98rem;
+    color: #2e7d32;
+    margin-bottom: 2px;
+    font-weight: 500;
+}
+.more-options select {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #b6e2c7;
+    font-size: 1rem;
+    color: #2e7d32;
+    background: #fff;
+}
+.main {
+    flex: 1;
+    margin-left: 260px;
+    padding: 40px 32px 32px 32px;
+    background: #f0f9f4;
+    min-height: 100vh;
+}
+.banner-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2e7d32;
+    margin-bottom: 8px;
+}
+.banner-tagline {
+    font-size: 1.13rem;
+    color: #222;
+    margin-bottom: 32px;
+}
+.impact-box {
+    background: linear-gradient(90deg, #3c9a5f 60%, #2196f3 100%);
+    color: #fff;
+    border-radius: 22px;
+    padding: 28px 32px;
+    margin-bottom: 32px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.impact-title {
+    font-size: 1.18rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+.impact-desc {
+    font-size: 1rem;
+    margin-bottom: 18px;
+}
+.impact-stats {
+    display: flex;
+    gap: 48px;
+    justify-content: center;
+}
+.impact-stat {
+    text-align: center;
+}
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+}
+.stat-label {
+    font-size: 1rem;
+}
+.products-section {
+    margin-top: 24px;
+}
+.products-grid {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+.product-card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px 0 rgba(44, 62, 80, 0.09);
+    border: 1.5px solid #e0f2e9;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0 0 0 0;
+    width: 320px;
+    min-width: 0;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    min-height: 370px;
+    padding-bottom: 18px;
+    justify-content: space-between;
+}
+.product-image {
+    width: 100%;
+    height: 140px;
+    background: #e0e0e0;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #bdbdbd;
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+.product-label {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: #3c9a5f;
+    color: #fff;
+    font-size: 0.92rem;
+    font-weight: 600;
+    padding: 4px 14px;
+    border-radius: 14px;
+    letter-spacing: 0.2px;
+    z-index: 2;
+}
+.product-label.bestseller {
+    background: #2196f3;
+}
+.product-label.new {
+    background: #43a047;
+}
+.product-label.choice {
+    background: #ff9800;
+}
+.product-label.limited {
+    background: #d32f2f;
+}
+.product-discount {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: #ff3b3b;
+    color: #fff;
+    font-size: 0.92rem;
+    font-weight: 600;
+    padding: 4px 14px;
+    border-radius: 14px;
+    z-index: 2;
+    box-shadow: 0 2px 8px 0 rgba(44, 62, 80, 0.08);
+}
+.product-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 22px 18px 18px 18px;
+    flex: 1 1 auto;
+    min-height: 220px;
+    justify-content: flex-start;
+}
+.product-title {
+    font-size: 1.18rem;
+    font-weight: 700;
+    color: #3c9a5f;
+    margin-bottom: 8px;
+    letter-spacing: 0.2px;
+}
+.product-desc {
+    font-size: 1rem;
+    color: #222;
+    margin-bottom: 8px;
+}
+.product-meta {
+    font-size: 0.98rem;
+    color: #176c2a;
+    margin-bottom: 8px;
+}
+.product-rating {
+    margin-bottom: 8px;
+}
+.star {
+    color: #ffb300;
+    font-size: 1.1rem;
+}
+.reviews {
+    color: #888;
+    font-size: 0.98rem;
+    margin-left: 6px;
+}
+.product-price {
+    font-size: 1.08rem;
+    font-weight: 700;
+    color: #3c9a5f;
+    margin-bottom: 8px;
+}
+.product-price .old {
+    color: #888;
+    font-size: 0.98rem;
+    text-decoration: line-through;
+    margin-left: 8px;
+}
+.product-btn {
+    background: #3c9a5f;
+    color: #fff;
+    border: none;
+    border-radius: 22px;
+    padding: 10px 0;
+    width: 100%;
+    font-size: 1.08rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px 0 rgba(44, 62, 80, 0.08);
+    transition: background 0.2s;
+    margin-top: auto;
+    margin-bottom: 0;
+    align-self: stretch;
+}
+.product-btn:hover {
+    background: #287346;
+}
+.back-home-btn, .signup-btn {
+  background: #3c9a5f;
+  color: #fff;
+  border-radius: 22px;
+  padding: 10px 24px;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-block;
+  margin: 12px 0;
+}
+.back-home-btn:hover, .signup-btn:hover {
+  background: #287346;
+}

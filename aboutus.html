@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>About Us | Subhadra Enterprises</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green-light: #E9F5E9;
+      --green-main: #4CAF50;
+      --green-dark: #2E8B57;
+      --green-gradient: linear-gradient(to right, #4CAF50, #2E8B57);
+      --sidebar-bg: #fff;
+      --sidebar-shadow: 2px 0 16px 0 rgba(44, 62, 80, 0.04);
+      --sidebar-purple: #2E8B57; /* changed from #8E24AA */
+      --sidebar-purple-dark: #256d49; /* changed from #6d1b7b */
+      --sidebar-active-bg: #2E8B57;
+      --sidebar-active-color: #fff;
+      --card-bg: #fff;
+      --card-radius: 18px;
+      --card-shadow: 0 4px 24px 0 rgba(44, 62, 80, 0.08);
+      --main-radius: 24px;
+      --main-shadow: 0 8px 32px 0 rgba(44,62,80,0.10);
+      --font-main: 'Inter', Arial, sans-serif;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--green-light);
+      font-family: var(--font-main);
+      color: #222;
+      min-height: 100vh;
+    }
+    body {
+      display: flex;
+      min-height: 100vh;
+    }
+    .sidebar {
+      width: 270px;
+      background: var(--sidebar-bg);
+      box-shadow: var(--sidebar-shadow);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 10;
+      min-height: 100vh;
+      padding-bottom: 32px;
+    }
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 32px 28px 18px 28px;
+    }
+    .sidebar-logo {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--green-dark);
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sidebar-menu {
+      font-size: 2rem;
+      color: var(--green-dark);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      margin-left: 12px;
+      display: flex;
+      align-items: center;
+    }
+    .sidebar-nav {
+      margin-top: 18px;
+      flex: 1;
+    }
+    .sidebar-nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .sidebar-nav li {
+      margin: 0;
+    }
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 28px;
+      font-size: 1.08rem;
+      color: var(--sidebar-purple);
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: 600;
+      transition: background 0.18s, color 0.18s;
+      margin-right: 16px;
+      position: relative;
+      background: none;
+    }
+    .sidebar-nav a .nav-icon {
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--sidebar-purple);
+      transition: color 0.2s;
+    }
+    .sidebar-nav a.active {
+      background: var(--sidebar-active-bg);
+      color: var(--sidebar-active-color);
+    }
+    .sidebar-nav a.active .nav-icon {
+      color: #fff;
+    }
+    .sidebar-nav a:hover:not(.active) {
+      background: #F3EAF7;
+      color: var(--sidebar-purple-dark);
+    }
+    .sidebar-nav a:hover:not(.active) .nav-icon {
+      color: var(--sidebar-purple-dark);
+    }
+    .sidebar .more-options {
+      margin: 32px 28px 0 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .sidebar .more-options label {
+      font-size: 0.98rem;
+      color: var(--green-dark);
+      margin-bottom: 2px;
+      font-weight: 500;
+    }
+    .sidebar .more-options select {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1.5px solid #b6e2c7;
+      font-size: 1rem;
+      color: var(--green-dark);
+      background: #fff;
+      appearance: none;
+      outline: none;
+      font-family: inherit;
+      background-image: url('data:image/svg+xml;utf8,<svg fill="none" stroke="%232E8B57" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>');
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 18px 18px;
+    }
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: 270px;
+      padding: 0;
+      background: none;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .main-inner {
+      max-width: 1200px;
+      margin: 38px auto 38px auto;
+      background: #fff;
+      border-radius: var(--main-radius);
+      box-shadow: var(--main-shadow);
+      padding: 0 0 38px 0;
+      overflow: hidden;
+    }
+    /* Header Section */
+    .about-header {
+      background: var(--green-gradient);
+      color: #fff;
+      border-radius: 0 0 38px 38px;
+      padding: 48px 32px 38px 32px;
+      text-align: center;
+      position: relative;
+      margin-bottom: 0;
+    }
+    .about-header-icons {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+    .about-header-icon {
+      background: rgba(255,255,255,0.18);
+      border-radius: 14px;
+      padding: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .about-header-icon svg {
+      width: 32px;
+      height: 32px;
+      fill: #fff;
+      display: block;
+    }
+    .about-header h1 {
+      font-size: 2.7rem;
+      font-weight: 700;
+      margin: 0;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+    .about-header-desc {
+      font-size: 1.18rem;
+      font-weight: 500;
+      color: #eafaf1;
+      background: rgba(44, 62, 80, 0.13);
+      border-radius: 18px;
+      padding: 18px 24px;
+      margin: 0 auto;
+      max-width: 900px;
+      margin-bottom: 0;
+    }
+    /* Section Headers */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--green-dark);
+      margin: 48px 0 18px 0;
+      justify-content: center;
+    }
+    .section-header-icon {
+      background: #E9F5E9;
+      border-radius: 10px;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .section-header-icon svg {
+      width: 28px;
+      height: 28px;
+      fill: var(--green-dark);
+      display: block;
+    }
+    /* Cards Row */
+    .cards-row {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--card-radius);
+      box-shadow: var(--card-shadow);
+      padding: 28px 24px 24px 24px;
+      flex: 1 1 260px;
+      max-width: 340px;
+      min-width: 220px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+    .card-icon {
+      background: #E9F5E9;
+      border-radius: 10px;
+      padding: 8px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card-icon svg {
+      width: 28px;
+      height: 28px;
+      fill: var(--green-dark);
+      display: block;
+    }
+    .card-title {
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: var(--green-dark);
+      margin-bottom: 6px;
+    }
+    .card-desc {
+      font-size: 1.02rem;
+      color: #222;
+      font-weight: 500;
+      margin-bottom: 0;
+    }
+    /* Section Text */
+    .section-text {
+      font-size: 1.13rem;
+      color: #222;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto 32px auto;
+      font-weight: 500;
+    }
+    /* Mission Block */
+    .mission-block {
+      background: var(--green-gradient);
+      color: #fff;
+      border-radius: 18px;
+      box-shadow: var(--card-shadow);
+      padding: 32px 28px;
+      margin: 48px 32px 0 32px;
+      text-align: center;
+      position: relative;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .mission-icons {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+    .mission-icon {
+      background: rgba(255,255,255,0.18);
+      border-radius: 14px;
+      padding: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mission-icon svg {
+      width: 32px;
+      height: 32px;
+      fill: #fff;
+      display: block;
+    }
+    .mission-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+      letter-spacing: 0.5px;
+    }
+    .mission-text {
+      font-size: 1.13rem;
+      font-weight: 500;
+      color: #eafaf1;
+      margin-bottom: 0;
+    }
+    /* For Generations Block */
+    .generations-block {
+      background: var(--green-gradient);
+      color: #fff;
+      border-radius: 18px;
+      box-shadow: var(--card-shadow);
+      padding: 32px 28px;
+      margin: 48px 32px 0 32px;
+      text-align: center;
+      position: relative;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .generations-icons {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+    .generations-icon {
+      background: rgba(255,255,255,0.18);
+      border-radius: 14px;
+      padding: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .generations-icon svg {
+      width: 32px;
+      height: 32px;
+      fill: #fff;
+      display: block;
+    }
+    .generations-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+      letter-spacing: 0.5px;
+    }
+    .generations-text {
+      font-size: 1.13rem;
+      font-weight: 500;
+      color: #eafaf1;
+      margin-bottom: 0;
+    }
+    /* Contact Section */
+    .contact-section {
+      margin: 48px 0 0 0;
+      padding: 0 32px;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .contact-header {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--green-dark);
+      margin-bottom: 18px;
+      text-align: center;
+    }
+    .contact-text {
+      font-size: 1.13rem;
+      color: #222;
+      text-align: center;
+      font-weight: 500;
+      margin-bottom: 32px;
+    }
+    .contact-cards-row {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    .contact-card {
+      background: var(--card-bg);
+      border-radius: var(--card-radius);
+      box-shadow: var(--card-shadow);
+      padding: 24px 20px 20px 20px;
+      flex: 1 1 220px;
+      max-width: 320px;
+      min-width: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+    .contact-card-icon {
+      background: #E9F5E9;
+      border-radius: 10px;
+      padding: 8px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .contact-card-icon svg {
+      width: 28px;
+      height: 28px;
+      fill: var(--green-dark);
+      display: block;
+    }
+    .contact-card-title {
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--green-dark);
+      margin-bottom: 6px;
+    }
+    .contact-card-desc {
+      font-size: 1.02rem;
+      color: #222;
+      font-weight: 500;
+      margin-bottom: 0;
+      word-break: break-word;
+    }
+    .contact-btn {
+      display: block;
+      margin: 0 auto;
+      background: var(--green-gradient);
+      color: #fff;
+      border: none;
+      border-radius: 22px;
+      padding: 14px 48px;
+      font-size: 1.18rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 2px 8px 0 rgba(44, 62, 80, 0.08);
+      transition: background 0.2s;
+      margin-top: 18px;
+      margin-bottom: 38px;
+      letter-spacing: 0.5px;
+    }
+    .contact-btn:hover {
+      background: linear-gradient(90deg, #2E8B57 60%, #4CAF50 100%);
+    }
+    /* Responsive Design */
+    @media (max-width: 1100px) {
+      .main-inner {
+        max-width: 98vw;
+        margin: 24px auto 24px auto;
+      }
+      .cards-row, .contact-cards-row {
+        gap: 18px;
+      }
+      .mission-block, .generations-block {
+        margin: 32px 8px 0 8px;
+        padding: 24px 10px;
+      }
+    }
+    @media (max-width: 900px) {
+      .sidebar {
+        width: 100vw;
+        min-width: 0;
+        position: relative;
+        box-shadow: none;
+        padding-bottom: 0;
+      }
+      .main-content {
+        margin-left: 0;
+      }
+      .main-inner {
+        border-radius: 0;
+        box-shadow: none;
+        margin: 0;
+        padding: 0 0 24px 0;
+      }
+      .about-header {
+        border-radius: 0 0 24px 24px;
+        padding: 32px 8px 24px 8px;
+      }
+      .section-header {
+        font-size: 1.4rem;
+      }
+      .mission-block, .generations-block {
+        border-radius: 12px;
+        padding: 18px 4px;
+      }
+      .contact-section {
+        padding: 0 8px;
+      }
+    }
+    @media (max-width: 700px) {
+      .cards-row, .contact-cards-row {
+        flex-direction: column;
+        gap: 0;
+        align-items: center;
+      }
+      .card, .contact-card {
+        max-width: 98vw;
+        width: 100%;
+        margin-bottom: 18px;
+      }
+      .sidebar-header {
+        padding: 18px 12px 12px 12px;
+      }
+      .sidebar .more-options {
+        margin: 18px 12px 0 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <span class="sidebar-logo">
+        <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="4" fill="#2E8B57"/></svg>
+        Waste2Worth
+      </span>
+      <button class="sidebar-menu" aria-label="Menu">
+        <svg width="28" height="28" fill="none" viewBox="0 0 24 24">
+          <rect y="4" width="24" height="2" rx="1" fill="#2E8B57"/>
+          <rect y="11" width="24" height="2" rx="1" fill="#2E8B57"/>
+          <rect y="18" width="24" height="2" rx="1" fill="#2E8B57"/>
+        </svg>
+      </button>
+    </div>
+    <nav class="sidebar-nav">
+      <ul>
+        <li>
+          <a href="homepage.html">
+            <span class="nav-icon">
+              <!-- Home icon -->
+              <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9v8a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-4h-4v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8z" fill="#2E8B57"/></svg>
+            </span>
+            Home
+          </a>
+        </li>
+        <li>
+          <a href="joincomm.html">
+            <span class="nav-icon">
+              <!-- Group icon -->
+              <svg viewBox="0 0 24 24"><circle cx="8" cy="10" r="2" fill="#2E8B57"/><circle cx="16" cy="10" r="2" fill="#2E8B57"/><ellipse cx="12" cy="16" rx="7" ry="3" fill="#2E8B57"/></svg>
+            </span>
+            Join Our Community
+          </a>
+        </li>
+        <li>
+          <a href="value.html">
+            <span class="nav-icon">
+              <!-- Dollar icon -->
+              <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4" fill="#2E8B57"/><path d="M12 8v8M9 12h6" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+            Value for Money
+          </a>
+        </li>
+        <li>
+          <a href="aboutus.html" class="active">
+            <span class="nav-icon">
+              <!-- Info icon -->
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#fff"/><path d="M12 16v-4M12 8h.01" stroke="#2E8B57" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+            About Us
+          </a>
+        </li>
+      </ul>
+      
+    </nav>
+  </aside>
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="main-inner">
+      <!-- About Us Header -->
+      <section class="about-header">
+        <div class="about-header-icons">
+          <span class="about-header-icon">
+            <!-- Building icon -->
+            <svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="16" rx="3" fill="#fff"/><rect x="8" y="8" width="2" height="2" rx="1" fill="#2E8B57"/><rect x="14" y="8" width="2" height="2" rx="1" fill="#2E8B57"/><rect x="8" y="13" width="2" height="2" rx="1" fill="#2E8B57"/><rect x="14" y="13" width="2" height="2" rx="1" fill="#2E8B57"/></svg>
+          </span>
+          <h1>About Us</h1>
+          <span class="about-header-icon">
+            <!-- Leaf icon -->
+            <svg viewBox="0 0 24 24"><path d="M4 20C4 20 4 4 20 4C20 20 4 20 4 20Z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 16C8 16 12 12 16 8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+          </span>
+        </div>
+        <div class="about-header-desc">
+          At Subhadra Enterprises, we believe sustainability is not just a goal—it’s a responsibility. We are dedicated to creating solutions that serve both industry and agriculture, ensuring progress goes hand in hand with care for the planet.
+        </div>
+      </section>
+      <!-- Industrial Solutions -->
+      <section>
+        <div class="section-header">
+          <span class="section-header-icon">
+            <!-- Leaf icon -->
+            <svg viewBox="0 0 24 24"><path d="M4 20C4 20 4 4 20 4C20 20 4 20 4 20Z" stroke="#2E8B57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 16C8 16 12 12 16 8" stroke="#2E8B57" stroke-width="2" stroke-linecap="round"/></svg>
+          </span>
+          <span class="section-header-icon">
+            <!-- Building icon -->
+            <svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="16" rx="3" fill="#2E8B57"/><rect x="8" y="8" width="2" height="2" rx="1" fill="#fff"/><rect x="14" y="8" width="2" height="2" rx="1" fill="#fff"/><rect x="8" y="13" width="2" height="2" rx="1" fill="#fff"/><rect x="14" y="13" width="2" height="2" rx="1" fill="#fff"/></svg>
+          </span>
+          Industrial Solutions
+        </div>
+        <div class="cards-row">
+          <div class="card">
+            <span class="card-icon">
+              <!-- Steel icon -->
+              <svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="8" rx="4" fill="#2E8B57"/><rect x="8" y="10" width="8" height="4" rx="2" fill="#fff"/></svg>
+            </span>
+            <div class="card-title">Steel Sector Solutions</div>
+            <div class="card-desc">High-strength briquettes using sinter fines, LD sludge, and cement</div>
+          </div>
+          <div class="card">
+            <span class="card-icon">
+              <!-- Optimization icon -->
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#2E8B57"/><path d="M12 8v4l3 3" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <div class="card-title">Resource Optimization</div>
+            <div class="card-desc">Better use of industrial by-products for efficient operations</div>
+          </div>
+          <div class="card">
+            <span class="card-icon">
+              <!-- Cleaner icon -->
+              <svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="6" fill="#2E8B57"/><path d="M9 15l2-2 2 2 2-2" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <div class="card-title">Cleaner Operations</div>
+            <div class="card-desc">Supporting cleaner and more efficient furnace operations</div>
+          </div>
+        </div>
+      </section>
+      <!-- Agricultural Excellence -->
+      <section>
+        <div class="section-header">
+          <span class="section-header-icon">
+            <!-- Leaf icon -->
+            <svg viewBox="0 0 24 24"><path d="M4 20C4 20 4 4 20 4C20 20 4 20 4 20Z" stroke="#2E8B57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 16C8 16 12 12 16 8" stroke="#2E8B57" stroke-width="2" stroke-linecap="round"/></svg>
+          </span>
+          Agricultural Excellence
+        </div>
+        <div class="section-text">
+          On the agricultural side, we bring nature closer to farming through our premium cocopeat, made from coconut husks. Loved by growers in horticulture, floriculture, and hydroponics, cocopeat provides a natural, eco-friendly medium that helps plants thrive.
+        </div>
+        <div class="cards-row">
+          <div class="card">
+            <span class="card-icon">
+              <!-- Cocopeat icon -->
+              <svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="8" ry="5" fill="#2E8B57"/><ellipse cx="12" cy="12" rx="4" ry="2.5" fill="#fff"/></svg>
+            </span>
+            <div class="card-title">Premium Cocopeat</div>
+            <div class="card-desc">Made from coconut husks for sustainable growing</div>
+          </div>
+          <div class="card">
+            <span class="card-icon">
+              <!-- Eco medium icon -->
+              <svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="6" fill="#2E8B57"/><path d="M12 9v6M9 12h6" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+            <div class="card-title">Eco-Friendly Medium</div>
+            <div class="card-desc">Natural medium for horticulture, floriculture, and hydroponics</div>
+          </div>
+          <div class="card">
+            <span class="card-icon">
+              <!-- Plant icon -->
+              <svg viewBox="0 0 24 24"><path d="M12 20v-6M12 14c-4-2-6-6-6-10 4 0 8 2 8 6 0 2-2 4-2 4s2 2 2 4c0 2-2 2-2 2z" stroke="#2E8B57" stroke-width="2" fill="none"/></svg>
+            </span>
+            <div class="card-title">Plant-Friendly</div>
+            <div class="card-desc">Helps plants thrive while reducing environmental impact</div>
+          </div>
+        </div>
+      </section>
+      <!-- Our Mission -->
+      <section>
+        <div class="mission-block">
+          <div class="mission-icons">
+            <span class="mission-icon">
+              <!-- Globe icon -->
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#fff"/><path d="M2 12h20M12 2v20M4 4c4 4 12 4 16 0" stroke="#2E8B57" stroke-width="2" fill="none"/></svg>
+            </span>
+            <span class="mission-icon">
+              <!-- Heart icon -->
+              <svg viewBox="0 0 24 24"><path d="M12 21C12 21 4 13.5 4 8.5C4 5.5 6.5 4 8.5 4C10 4 12 5.5 12 7C12 5.5 14 4 15.5 4C17.5 4 20 5.5 20 8.5C20 13.5 12 21 12 21Z" stroke="#2E8B57" stroke-width="2" fill="none"/></svg>
+            </span>
+          </div>
+          <div class="mission-title">Our Mission</div>
+          <div class="mission-text">
+            By working across these two diverse fields—industrial briquettes and cocopeat—we build a bridge between heavy industry and green farming. Our aim is simple: to turn challenges into opportunities, reduce waste, and create value for people and the planet alike.
+          </div>
+        </div>
+      </section>
+      <!-- Our Core Values -->
+      <section>
+        <div class="section-header">
+          <span class="section-header-icon">
+            <!-- Leaf icon -->
+            <svg viewBox="0 0 24 24"><path d="M4 20C4 20 4 4 20 4C20 20 4 20 4 20Z" stroke="#2E8B57" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 16C8 16 12 12 16 8" stroke="#2E8B57" stroke-width="2" stroke-linecap="round"/></svg>
+          </span>
+          Our Core Values
+        </div>
+        <div class="section-text">
+          With innovation, quality, and responsibility at our core, we are committed to shaping a cleaner and more sustainable future.
+        </div>
+        <div class="cards-row">
+          <div class="card">
+            <span class="card-icon">
+              <!-- Innovation icon -->
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#2E8B57"/><path d="M12 8v4l3 3" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <div class="card-title">Innovation</div>
+            <div class="card-desc">Turning challenges into opportunities through creative solutions</div>
+          </div>
+          <div class="card">
+            <span class="card-icon">
+              <!-- Quality icon -->
+              <svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="6" fill="#2E8B57"/><path d="M9 12l2 2 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <div class="card-title">Quality</div>
+            <div class="card-desc">Delivering excellence in every product and service</div>
+          </div>
+          <div class="card">
+            <span class="card-icon">
+              <!-- Responsibility icon -->
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#2E8B57"/><path d="M12 8v4l3 3" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="17" r="1" fill="#fff"/></svg>
+            </span>
+            <div class="card-title">Responsibility</div>
+            <div class="card-desc">Creating value for people and planet alike</div>
+          </div>
+        </div>
+      </section>
+      <!-- For Generations to Come -->
+      <section>
+        <div class="generations-block">
+          <div class="generations-icons">
+            <span class="generations-icon">
+              <!-- People icon -->
+              <svg viewBox="0 0 24 24"><circle cx="8" cy="10" r="2" fill="#fff"/><circle cx="16" cy="10" r="2" fill="#fff"/><ellipse cx="12" cy="16" rx="7" ry="3" fill="#fff" stroke="#2E8B57" stroke-width="2"/></svg>
+            </span>
+            <span class="generations-icon">
+              <!-- Arrow icon -->
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+          <div class="generations-title">For Generations to Come</div>
+          <div class="generations-text">
+            We are committed to shaping a cleaner and more sustainable future—for industries, for farmers, and for generations to come. Every solution we create today builds a better tomorrow.
+          </div>
+        </div>
+      </section>
+      <!-- Contact Us -->
+      <section class="contact-section">
+        <div class="contact-header">Contact Us</div>
+        <div class="contact-text">
+          We'd love to hear from you. Whether you're an industry professional, a farmer, or someone passionate about sustainable solutions—feel free to connect with us.
+        </div>
+        <div class="contact-cards-row">
+          <div class="contact-card">
+            <span class="contact-card-icon">
+              <!-- Email icon -->
+              <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="2" fill="#2E8B57"/><path d="M3 7l9 6 9-6" stroke="#fff" stroke-width="2"/></svg>
+            </span>
+            <div class="contact-card-title">Email</div>
+            <div class="contact-card-desc">souravkumarsingh2005@gmail.com</div>
+          </div>
+          <div class="contact-card">
+            <span class="contact-card-icon">
+              <!-- Phone icon -->
+              <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1C7.61 22 2 16.39 2 9.5a1 1 0 0 1 1-1H6.5a1 1 0 0 1 1 1c0 1.35.27 2.67.76 3.88a1 1 0 0 1-.21 1.11l-2.2 2.2z" fill="#2E8B57"/></svg>
+            </span>
+            <div class="contact-card-title">Phone</div>
+            <div class="contact-card-desc">+91 80928 77477</div>
+          </div>
+          <div class="contact-card">
+            <span class="contact-card-icon">
+              <!-- Address icon -->
+              <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" fill="#2E8B57"/></svg>
+            </span>
+            <div class="contact-card-title">Address</div>
+            <div class="contact-card-desc">Subhadra Enterprises N.H.-33 Road, Mango (Next to Motor World) Jamshedpur, Jharkhand – 831012</div>
+          </div>
+        </div>
+        <button class="contact-btn">Get In Touch</button>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

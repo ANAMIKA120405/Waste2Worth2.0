@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Coco Husk Dinnerware Collection - Waste2Worth</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --eco-green: #2e7d32;
+      --eco-green-light: #eafaf1;
+      --sidebar-bg: #e6f4ec;
+      --card-radius: 20px;
+      --card-shadow: 0 8px 32px 0 rgba(44, 62, 80, 0.09);
+      --badge-bg: #3c9a5f;
+      --badge-color: #fff;
+      --discount-bg: #ff3b3b;
+      --discount-color: #fff;
+      --heart-bg: #fff;
+      --heart-color: #2e7d32;
+      --icon-bg: #eafaf1;
+      --icon-color: #2e7d32;
+      --font-main: 'Inter', Arial, sans-serif;
+      --sidebar-width: 260px;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-main);
+      background: var(--eco-green-light);
+      color: #222;
+      min-height: 100vh;
+    }
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
+    .sidebar {
+      width: var(--sidebar-width);
+      background: var(--sidebar-bg);
+      min-height: 100vh;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 10;
+      box-shadow: 2px 0 16px 0 rgba(44, 62, 80, 0.04);
+    }
+    .logo {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--eco-green);
+      letter-spacing: 0.5px;
+      margin: 36px 0 36px 32px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sidebar nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sidebar nav ul li {
+      margin-bottom: 8px;
+    }
+    .sidebar nav a {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 32px;
+      font-size: 1.08rem;
+      color: var(--eco-green);
+      text-decoration: none;
+      border-radius: 8px 0 0 8px;
+      transition: background 0.18s, color 0.18s;
+      font-weight: 600;
+    }
+    .sidebar nav a.active {
+      background: var(--eco-green);
+      color: #fff;
+    }
+    .sidebar nav a:hover:not(.active) {
+      background: #c3e6d2;
+      color: var(--eco-green);
+    }
+    .sidebar nav a .nav-icon {
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--eco-green);
+      transition: color 0.2s;
+    }
+    .sidebar nav a.active .nav-icon {
+      color: #fff;
+    }
+    .sidebar nav a:hover:not(.active) .nav-icon {
+      color: var(--eco-green);
+    }
+    .back-products-btn {
+      background: #3c9a5f;
+      color: #fff;
+      border: none;
+      border-radius: 22px;
+      padding: 10px 0;
+      width: 80%;
+      font-size: 1.08rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 8px 0 rgba(44, 62, 80, 0.08);
+      transition: background 0.2s;
+      margin: 18px auto 0 auto;
+      display: block;
+      text-align: center;
+      text-decoration: none;
+    }
+    .back-products-btn:hover {
+      background: #287346;
+    }
+    .more-options {
+      margin: 32px 32px 32px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .more-options label {
+      font-size: 0.98rem;
+      color: var(--eco-green);
+      margin-bottom: 2px;
+      font-weight: 500;
+    }
+    .more-options select {
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid #b6e2c7;
+      font-size: 1rem;
+      color: var(--eco-green);
+      background: #fff;
+    }
+    .main {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      padding: 40px 32px 32px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: var(--eco-green-light);
+      min-height: 100vh;
+    }
+    .back-products {
+      margin-bottom: 24px;
+      display: inline-block;
+      color: var(--eco-green);
+      font-weight: 600;
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: 1.08rem;
+      background: #e6f4ec;
+      border-radius: 8px;
+      padding: 8px 18px;
+      border: none;
+      transition: background 0.2s;
+    }
+    .back-products:hover {
+      background: #c3e6d2;
+    }
+    .page-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--eco-green);
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    .page-desc {
+      font-size: 1.13rem;
+      color: #222;
+      margin-bottom: 32px;
+      text-align: center;
+      max-width: 700px;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      align-items: stretch; /* Ensure all cards are same height */
+    }
+    @media (max-width: 900px) {
+      .product-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+    }
+    @media (max-width: 600px) {
+      .product-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+    }
+    .product-card {
+      background: #fff;
+      border-radius: var(--card-radius);
+      box-shadow: var(--card-shadow);
+      border: 1.5px solid #e0f2e9;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      min-height: 440px; /* Increased from 370px */
+      height: 100%;
+      transition: box-shadow 0.2s;
+    }
+    .product-card:hover {
+      box-shadow: 0 12px 36px 0 rgba(44, 62, 80, 0.13);
+    }
+    .product-image {
+      width: 100%;
+      height: 140px;
+      background: #e0e0e0;
+      border-top-left-radius: var(--card-radius);
+      border-top-right-radius: var(--card-radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      color: #bdbdbd;
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+    .badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: var(--badge-bg);
+      color: var(--badge-color);
+      font-size: 0.92rem;
+      font-weight: 600;
+      padding: 4px 14px;
+      border-radius: 14px;
+      letter-spacing: 0.2px;
+      z-index: 10;
+    }
+    .product-content {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 22px 18px 0 18px;
+      flex: 1 1 auto;
+      min-height: 220px;
+    }
+    .product-title {
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: #3c9a5f;
+      margin-bottom: 8px;
+      letter-spacing: 0.2px;
+    }
+    .product-desc {
+      font-size: 1rem;
+      color: #222;
+      margin-bottom: 8px;
+    }
+    .product-meta {
+      font-size: 0.98rem;
+      color: #176c2a;
+      margin-bottom: 8px;
+    }
+    .product-btn {
+      background: #3c9a5f;
+      color: #fff;
+      border: none;
+      border-radius: 22px;
+      padding: 12px 0;
+      width: 100%;
+      font-size: 1.08rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 8px 0 rgba(44, 62, 80, 0.08);
+      transition: background 0.2s;
+      margin-top: auto;
+      margin-bottom: 0;
+      align-self: stretch;
+      display: block;
+    }
+    .product-btn:hover {
+      background: #287346;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar: identical to perfume.html and homepage.html -->
+    <aside class="sidebar">
+      <div class="logo">Waste2Worth</div>
+      <nav>
+        <ul>
+          <li>
+            <a href="homepage.html">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
+                <path d="M3 12l9-9 9 9v8a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-4h-4v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8z"/>
+              </svg>
+              Home
+            </a>
+          </li>
+          <li>
+            <a href="joincomm.html">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
+                <circle cx="12" cy="7" r="4"/>
+                <path d="M16 21v-2a4 4 0 0 0-8 0v2"/>
+              </svg>
+              Join Our Community
+            </a>
+          </li>
+          <li>
+            <a href="value.html">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
+                <path d="M12 21c-4.97 0-9-3.13-9-7 0-2.21 1.79-4 4-4 .34 0 .67.03 1 .08V7a5 5 0 0 1 10 0v3.08c.33-.05.66-.08 1-.08 2.21 0 4 1.79 4 4 0 3.87-4.03 7-9 7zm-4-7c0 2.21 3.13 4 7 4s7-1.79 7-4-3.13-4-7-4-7 1.79-7 4z"/>
+              </svg>
+              Value for Money
+            </a>
+          </li>
+        </ul>
+        <!-- Back to Products button removed from sidebar -->
+        
+      </nav>
+    </aside>
+    <main class="main">
+      <!-- Back to Products link at the very top -->
+      <a href="homepage.html" class="back-products-btn" style="margin-bottom: 24px; display: inline-block;">&larr; Back to Products</a>
+      <div class="page-title">Coco Husk Dinnerware Collection</div>
+      <div class="page-desc">
+        Discover our exclusive collection of sustainable dinnerware, handcrafted from upcycled coconut husk waste. Each piece combines natural beauty with eco-conscious design for your dining experience.
+      </div>
+      <div class="product-grid">
+        <!-- 1 -->
+        <div class="product-card">
+          <div class="product-image">
+            <img src="images/treeplate.jpg" alt="Natural Dinner Plate" style="width:100%;height:100%;object-fit:cover;border-radius:20px 20px 0 0;">
+          </div>
+          <div class="product-content">
+            <div class="product-title">Tree Plate</div>
+            <div class="product-desc">Handcrafted from coconut husk, perfect for daily use.</div>
+            <div class="product-meta">Size: 10" | Capacity: 400ml</div>
+            <button class="product-btn add-to-cart">Add to Cart</button>
+          </div>
+        </div>
+        <!-- 2 -->
+        <div class="product-card">
+          <div class="product-image">
+            <img src="images/elegant-sal plate.jpg" alt="Elegant Salad Plate" style="width:100%;height:100%;object-fit:cover;border-radius:20px 20px 0 0;">
+          </div>
+          <div class="product-content">
+            <div class="product-title">Sal Plate</div>
+            <div class="product-desc">Eco Choice for healthy salads and snacks.</div>
+            <div class="product-meta">Size: 8" | Capacity: 250ml</div>
+            <button class="product-btn add-to-cart">Add to Cart</button>
+          </div>
+        </div>
+        <!-- 3 -->
+        <div class="product-card">
+          <div class="product-image">
+            <img src="images/plasa-plate.jpg" alt="Premium Dessert Plate" style="width:100%;height:100%;object-fit:cover;border-radius:20px 20px 0 0;">
+          </div>
+          <div class="product-content">
+            <div class="product-title">plasa Plate</div>
+            <div class="product-desc">Premium finish for desserts and sweets.</div>
+            <div class="product-meta">Size: 7" | Capacity: 180ml</div>
+            <button class="product-btn add-to-cart">Add to Cart</button>
+          </div>
+        </div>
+        <!-- 4 -->
+        <div class="product-card">
+          <div class="product-image">
+            <img src="images/kasa-plate.jpg" alt="Family Pack Plate" style="width:100%;height:100%;object-fit:cover;border-radius:20px 20px 0 0;">
+          </div>
+          <div class="product-content">
+            <div class="product-title">Family Pack Plate</div>
+            <div class="product-desc">Pack of 6 eco plates for family gatherings.</div>
+            <div class="product-meta">Size: 10" | Capacity: 400ml</div>
+            <button class="product-btn add-to-cart">Add to Cart</button>
+          </div>
+        </div>
+        <!-- 5 -->
+        <div class="product-card">
+          <div class="product-image">
+            <img src="images/coco-bowl.jpg" alt="Mini Coco-bowl" style="width:100%;height:100%;object-fit:cover;border-radius:20px 20px 0 0;">
+          </div>
+          <div class="product-content">
+            <div class="product-title">Mini Coco Plate</div>
+            <div class="product-desc">Small size for snacks and dips.</div>
+            <div class="product-meta">Size: 5" | Capacity: 80ml</div>
+            <button class="product-btn add-to-cart">Add to Cart</button>
+          </div>
+        </div>
+        <!-- 6 -->
+        <div class="product-card">
+          <div class="product-image">
+            <img src="images/Vinto-plate.jpg" alt="Vinto Plate" style="width:100%;height:100%;object-fit:cover;border-radius:20px 20px 0 0;">
+          </div>
+          <div class="product-content">
+            <div class="product-title">Designer Coco Plate</div>
+            <div class="product-desc">Stylish and sustainable for special occasions.</div>
+            <div class="product-meta">Size: 9" | Capacity: 320ml</div>
+            <button class="product-btn add-to-cart">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

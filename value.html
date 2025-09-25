@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Value for Money</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', Arial, sans-serif;
+      background: linear-gradient(135deg, #eafaf1 0%, #d6f5e6 100%);
+      min-height: 100vh;
+    }
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background: #e6f4ec; /* eco-green as homepage */
+      min-height: 100vh;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 10;
+      box-shadow: 2px 0 16px 0 rgba(44, 62, 80, 0.04);
+    }
+    .logo {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: #2f6f4f;
+      letter-spacing: 0.5px;
+      margin: 36px 0 36px 32px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sidebar nav {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    .sidebar nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .sidebar nav ul li {
+      margin: 0;
+    }
+    .sidebar nav a {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 32px;
+      font-size: 1.08rem;
+      color: #2f6f4f;
+      text-decoration: none;
+      border-radius: 8px 0 0 8px;
+      transition: background 0.18s, color 0.18s;
+      font-weight: 600;
+      margin-right: 16px;
+    }
+    .sidebar nav a.active {
+      background: #2f6f4f;
+      color: #fff;
+    }
+    .sidebar nav a:hover:not(.active) {
+      background: #c3e6d2;
+      color: #2f6f4f;
+    }
+    .sidebar nav a .nav-icon {
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #3c9a5f;
+      transition: color 0.2s;
+    }
+    .sidebar nav a.active .nav-icon {
+      color: #fff;
+    }
+    .sidebar nav a:hover:not(.active) .nav-icon {
+      color: #2f6f4f;
+    }
+    .more-options {
+      margin: 32px 32px 32px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .more-options label {
+      font-size: 0.98rem;
+      color: #2f6f4f;
+      margin-bottom: 2px;
+      font-weight: 500;
+    }
+    .more-options select {
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid #b6e2c7;
+      font-size: 1rem;
+      color: #2f6f4f;
+      background: #fff;
+    }
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: 250px;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      background: none;
+    }
+    .intro-section {
+      padding: 48px 48px 0 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .intro-heading {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #1e8e3e;
+      margin-bottom: 18px;
+    }
+    .heading-icon,
+    .heart-icon {
+      width: 38px;
+      height: 38px;
+      background: #1e8e3e;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .heading-icon svg,
+    .heart-icon svg {
+      width: 24px;
+      height: 24px;
+      fill: #fff;
+      display: block;
+    }
+    .intro-heading span {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #1e8e3e;
+    }
+    .intro-subheading {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px 0 rgba(44, 62, 80, 0.06);
+      padding: 24px 32px;
+      font-size: 1.15rem;
+      color: #222;
+      text-align: center;
+      max-width: 900px;
+      margin-bottom: 40px;
+      border: 1.5px solid #e0f2e9;
+    }
+    /* Cards Section */
+    .cards-section {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      padding: 0 48px 48px 48px;
+    }
+    .policy-card {
+      background: #fff;
+      border-radius: 22px;
+      box-shadow: 0 8px 32px 0 rgba(44, 62, 80, 0.09);
+      padding: 32px 28px 28px 28px;
+      flex: 1 1 380px;
+      max-width: 480px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1.5px solid #e0f2e9;
+    }
+    .policy-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1e8e3e;
+      margin-bottom: 10px;
+      text-align: center;
+      position: relative;
+    }
+    .policy-title::after {
+      content: '';
+      display: block;
+      margin: 8px auto 0 auto;
+      width: 80px;
+      height: 4px;
+      background: #1e8e3e;
+      border-radius: 2px;
+    }
+    .policy-desc {
+      font-size: 1.08rem;
+      color: #222;
+      text-align: center;
+      margin-bottom: 28px;
+      margin-top: 8px;
+    }
+    .flow-diagram {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+      margin-bottom: 28px;
+      margin-top: 8px;
+    }
+    .flow-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .flow-icon {
+      width: 54px;
+      height: 54px;
+      background: #1e8e3e;
+      border-radius: 14px;
+      margin-bottom: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .flow-icon svg {
+      width: 28px;
+      height: 28px;
+      fill: #fff;
+      display: block;
+    }
+    .flow-label {
+      font-size: 1rem;
+      color: #1e8e3e;
+      text-align: center;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+    .flow-arrow {
+      font-size: 2.1rem;
+      color: #1e8e3e;
+      font-weight: 700;
+      margin-top: 12px;
+    }
+    .join-btn {
+      margin-top: 8px;
+      background: #1e8e3e;
+      color: #fff;
+      border: none;
+      border-radius: 22px;
+      padding: 10px 38px;
+      font-size: 1.15rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 8px 0 rgba(44, 62, 80, 0.08);
+      transition: background 0.2s;
+    }
+    .join-btn:hover {
+      background: #176c2a;
+    }
+    /* Responsive Design */
+    @media (max-width: 1100px) {
+      .cards-section {
+        flex-direction: column;
+        gap: 24px;
+        align-items: center;
+        padding: 0 18px 32px 18px;
+      }
+      .policy-card {
+        max-width: 98vw;
+        width: 100%;
+      }
+      .intro-section {
+        padding: 32px 12px 0 12px;
+      }
+    }
+    @media (max-width: 700px) {
+      .main-content {
+        margin-left: 0;
+      }
+      .sidebar {
+        width: 100vw;
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 18px 0 0 0;
+        box-shadow: none;
+        position: relative;
+      }
+      .logo {
+        margin: 18px 0 18px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">Waste2Worth</div>
+      <nav>
+        <ul>
+          <li>
+            <a href="homepage.html">
+              <span class="nav-icon">
+                <!-- House icon -->
+                <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9v8a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-4h-4v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8z" fill="currentColor"/></svg>
+              </span>
+              Home
+            </a>
+          </li>
+          <li>
+            <a href="joincomm.html" class="nav-link">
+              <span class="nav-icon">
+                <!-- Users icon -->
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4" fill="currentColor"/><path d="M16 21v-2a4 4 0 0 0-8 0v2" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+              </span>
+              Join Our Community
+            </a>
+          </li>
+          <li>
+            <a href="value.html" class="active">
+              <span class="nav-icon">
+                <!-- Dollar icon -->
+                <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4" fill="currentColor"/><path d="M12 8v8M9 12h6" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+              </span>
+              Value for Money
+            </a>
+          </li>
+          <li>
+            <a href="aboutus.html">
+              <span class="nav-icon">
+                <!-- Info/About icon -->
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 16v-4M12 8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </span>
+              About Us
+            </a>
+          </li>
+        </ul>
+        
+      </nav>
+    </aside>
+    <!-- Main Content -->
+    <main class="main-content">
+      <section class="intro-section">
+        <div class="intro-heading">
+          <div class="heading-icon">
+            <!-- Leaf icon SVG -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M4 20C4 20 4 4 20 4C20 20 4 20 4 20Z" stroke="#1e8e3e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M8 16C8 16 12 12 16 8" stroke="#1e8e3e" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span>Value for Money</span>
+          <div class="heart-icon">
+            <!-- Heart icon SVG -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 21C12 21 4 13.5 4 8.5C4 5.5 6.5 4 8.5 4C10 4 12 5.5 12 7C12 5.5 14 4 15.5 4C17.5 4 20 5.5 20 8.5C20 13.5 12 21 12 21Z" stroke="#1e8e3e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="intro-subheading">
+          At Waste2Worth, we turn everyday waste into meaningful value. Through our innovative business plans, we make it easy for customers to give waste a second life while earning rewards in return. Together, we're building a cycle of reuse that benefits both people and the planet.
+        </div>
+      </section>
+      <section class="cards-section">
+        <!-- Retake Policy Card -->
+        <div class="policy-card">
+          <h2 class="policy-title">Retake Policy</h2>
+          <div class="policy-desc">
+            Our Retake Policy ensures that nothing goes to waste. Customers return their used products to us, we responsibly process and renew them, and then deliver the revalued products back to the customers. Small actions, big impact — your waste becomes something new.
+          </div>
+          <div class="flow-diagram">
+            <div class="flow-step">
+              <div class="flow-icon">
+                <!-- Box icon SVG -->
+                <svg viewBox="0 0 24 24" fill="none">
+                  <rect x="3" y="7" width="18" height="10" rx="2" stroke="#fff" stroke-width="2"/>
+                  <path d="M3 7L12 13L21 7" stroke="#fff" stroke-width="2"/>
+                </svg>
+              </div>
+              <div class="flow-label">Customer Returns<br>Used Products</div>
+            </div>
+            <div class="flow-arrow">&#8594;</div>
+            <div class="flow-step">
+              <div class="flow-icon">
+                <!-- Renew/refresh icon SVG -->
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M17 1.5V6H21.5" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M21.5 6C20.5 3.5 17.5 1.5 12 1.5C6.5 1.5 3.5 5.5 3.5 9.5C3.5 13.5 6.5 17.5 12 17.5C17.5 17.5 20.5 13.5 20.5 9.5" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="flow-label">We Process<br>& Renew</div>
+            </div>
+            <div class="flow-arrow">&#8594;</div>
+            <div class="flow-step">
+              <div class="flow-icon">
+                <!-- Delivery truck icon SVG -->
+                <svg viewBox="0 0 24 24" fill="none">
+                  <rect x="1" y="7" width="15" height="10" rx="2" stroke="#fff" stroke-width="2"/>
+                  <rect x="16" y="11" width="6" height="6" rx="2" stroke="#fff" stroke-width="2"/>
+                  <circle cx="5" cy="19" r="2" stroke="#fff" stroke-width="2"/>
+                  <circle cx="19" cy="19" r="2" stroke="#fff" stroke-width="2"/>
+                </svg>
+              </div>
+              <div class="flow-label">Deliver<br>Revalued Products</div>
+            </div>
+          </div>
+          <button class="join-btn">Join</button>
+        </div>
+        <!-- Revalue Policy Card -->
+        <div class="policy-card">
+          <h2 class="policy-title">Revalue Policy</h2>
+          <div class="policy-desc">
+            Through our Revalue Policy, customers can exchange their waste products for money. By giving new worth to what is often overlooked, we encourage people to see waste not as an end, but as an opportunity. It's a simple way for customers to benefit while contributing to a cleaner, more sustainable future.
+          </div>
+          <div class="flow-diagram">
+            <div class="flow-step">
+              <div class="flow-icon">
+                <!-- Recycling arrows icon SVG -->
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M6 17L3 12L6 7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M3 12H12" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M18 7L21 12L18 17" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M21 12H12" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="flow-label">Customer Brings<br>Waste</div>
+            </div>
+            <div class="flow-arrow">&#8594;</div>
+            <div class="flow-step">
+              <div class="flow-icon">
+                <!-- Assess value icon SVG (chart/arrow up) -->
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M4 17V13M8 17V9M12 17V5M16 17V11M20 17V7" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="flow-label">We Assess<br>Value</div>
+            </div>
+            <div class="flow-arrow">&#8594;</div>
+            <div class="flow-step">
+              <div class="flow-icon">
+                <!-- Dollar icon SVG -->
+                <svg viewBox="0 0 24 24" fill="none">
+                  <rect x="4" y="4" width="16" height="16" rx="4" stroke="#fff" stroke-width="2"/>
+                  <path d="M12 8V16" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M9 12H15" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="flow-label">Customer Get<br>Money</div>
+            </div>
+          </div>
+          <button class="join-btn">Join</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal markup -->
+<div id="retakeModal" class="modal-backdrop" style="display:none;">
+  <div class="modal-container">
+    <button class="modal-close" id="closeModalBtn" aria-label="Close">&times;</button>
+    <div class="modal-title-row">
+      <span class="modal-title-icon">
+        <!-- Leaf icon -->
+        <svg width="24" height="24" viewBox="0 0 24 24"><path d="M4 20C4 20 4 4 20 4C20 20 4 20 4 20Z" stroke="#1e8e3e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 16C8 16 12 12 16 8" stroke="#1e8e3e" stroke-width="2" stroke-linecap="round"/></svg>
+      </span>
+      <span class="modal-title">Join Retake Policy</span>
+    </div>
+    <div class="modal-subtitle">Fill out the form below to join our eco-friendly retake program. We’ll help you turn waste into worth!</div>
+    <form id="retakeForm" autocomplete="off">
+      <div class="modal-form-row">
+        <div class="modal-form-group">
+          <label>
+            <span class="modal-label-icon">
+              <!-- User icon -->
+              <svg width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4" fill="#3c9a5f"/><path d="M16 21v-2a4 4 0 0 0-8 0v2" stroke="#3c9a5f" stroke-width="2" fill="none"/></svg>
+            </span>
+            Full Name
+          </label>
+          <input type="text" name="fullname" required>
+        </div>
+        <div class="modal-form-group">
+          <label>
+            <span class="modal-label-icon">
+              <!-- Email icon -->
+              <svg width="18" height="18" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="2" fill="#3c9a5f"/><path d="M3 7l9 6 9-6" stroke="#fff" stroke-width="2"/></svg>
+            </span>
+            Email Address
+          </label>
+          <input type="email" name="email" required>
+        </div>
+      </div>
+      <div class="modal-form-row">
+        <div class="modal-form-group">
+          <label>
+            <span class="modal-label-icon">
+              <!-- Phone icon -->
+              <svg width="18" height="18" viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1C7.61 22 2 16.39 2 9.5a1 1 0 0 1 1-1H6.5a1 1 0 0 1 1 1c0 1.35.27 2.67.76 3.88a1 1 0 0 1-.21 1.11l-2.2 2.2z" fill="#3c9a5f"/></svg>
+            </span>
+            Contact Number
+          </label>
+          <input type="tel" name="contact" required>
+        </div>
+        <div class="modal-form-group">
+          <label>
+            <span class="modal-label-icon">
+              <!-- Trash icon -->
+              <svg width="18" height="18" viewBox="0 0 24 24"><rect x="6" y="7" width="12" height="13" rx="2" fill="#3c9a5f"/><rect x="9" y="3" width="6" height="4" rx="2" fill="#3c9a5f"/><path d="M3 7h18" stroke="#3c9a5f" stroke-width="2"/></svg>
+            </span>
+            Type of Waste
+          </label>
+          <select name="waste" required>
+            <option value="">Select type</option>
+            <option value="Plastic">Plastic</option>
+            <option value="Metal">Metal</option>
+            <option value="Glass">Glass</option>
+            <option value="Organic">Organic</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-form-group modal-form-full">
+        <label>
+          <span class="modal-label-icon">
+            <!-- Location icon -->
+            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" fill="#3c9a5f"/></svg>
+          </span>
+          Location/Address
+        </label>
+        <textarea name="address" rows="2" required></textarea>
+      </div>
+      <div class="modal-form-group modal-form-full">
+        <label>
+          <span class="modal-label-icon">
+            <!-- Lock icon (for description) -->
+            <svg width="18" height="18" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="8" rx="2" fill="#3c9a5f"/><path d="M12 7a4 4 0 0 1 4 4v2H8v-2a4 4 0 0 1 4-4z" fill="#3c9a5f"/></svg>
+          </span>
+          Quantity/Description
+        </label>
+        <textarea name="quantity" rows="2" required></textarea>
+      </div>
+      <button type="submit" class="modal-submit-btn">Join</button>
+    </form>
+    <div id="modalToast" class="modal-toast" style="display:none;">Thank you for joining! We’ll contact you soon.</div>
+  </div>
+</div>
+
+<!-- Revalue Policy Modal -->
+<div id="revalueModal" class="modal-backdrop" style="display:none;">
+  <div class="modal-container">
+    <button class="modal-close" id="closeRevalueModalBtn" aria-label="Close">&times;</button>
+    <div class="modal-title-row">
+      <span class="modal-title-icon">
+        <!-- Green recycle icon -->
+        <svg width="24" height="24" viewBox="0 0 24 24"><path d="M6 17L3 12L6 7" stroke="#1e8e3e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 12H12" stroke="#1e8e3e" stroke-width="2" stroke-linecap="round"/><path d="M18 7L21 12L18 17" stroke="#1e8e3e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12H12" stroke="#1e8e3e" stroke-width="2" stroke-linecap="round"/></svg>
+      </span>
+      <span class="modal-title">Join Revalue Policy</span>
+    </div>
+    <div class="modal-subtitle">
+      Fill out the form below to participate in our Revalue Policy. We'll assess your waste and provide fair compensation based on its value and environmental impact.
+    </div>
+    <form id="revalueForm" autocomplete="off">
+      <div class="modal-form-row">
+        <div class="modal-form-group">
+          <label>
+            <span class="modal-label-icon">
+              <!-- User icon -->
+              <svg width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4" fill="#3c9a5f"/><path d="M16 21v-2a4 4 0 0 0-8 0v2" stroke="#3c9a5f" stroke-width="2" fill="none"/></svg>
+            </span>
+            Full Name
+          </label>
+          <input type="text" name="fullname" required>
+        </div>
+        <div class="modal-form-group">
+          <label>
+            <span class="modal-label-icon">
+              <!-- Email icon -->
+              <svg width="18" height="18" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="2" fill="#3c9a5f"/><path d="M3 7l9 6 9-6" stroke="#fff" stroke-width="2"/></svg>
+            </span>
+            Email Address
+          </label>
+          <input type="email" name="email" required>
+        </div>
+      </div>
+      <div class="modal-form-row">
+        <div class="modal-form-group">
+          <label>
+            <span class="modal-label-icon">
+              <!-- Phone icon -->
+              <svg width="18" height="18" viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.11-.21c1.21.49 2.53.76 3.88.76a1 1 0 0 1 1 1v3.5a1 1 0 0 1-1 1C7.61 22 2 16.39 2 9.5a1 1 0 0 1 1-1H6.5a1 1 0 0 1 1 1c0 1.35.27 2.67.76 3.88a1 1 0 0 1-.21 1.11l-2.2 2.2z" fill="#3c9a5f"/></svg>
+            </span>
+            Contact Number
+          </label>
+          <input type="tel" name="contact" required>
+        </div>
+        <div class="modal-form-group">
+          <label>
+            <span class="modal-label-icon">
+              <!-- Waste icon -->
+              <svg width="18" height="18" viewBox="0 0 24 24"><rect x="6" y="7" width="12" height="13" rx="2" fill="#3c9a5f"/><rect x="9" y="3" width="6" height="4" rx="2" fill="#3c9a5f"/><path d="M3 7h18" stroke="#3c9a5f" stroke-width="2"/></svg>
+            </span>
+            Type of Waste
+          </label>
+          <select name="waste" required>
+            <option value="">Select type</option>
+            <option value="Plastic">Plastic</option>
+            <option value="Metal">Metal</option>
+            <option value="Glass">Glass</option>
+            <option value="Organic">Organic</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-form-group modal-form-full">
+        <label>
+          <span class="modal-label-icon">
+            <!-- Location icon -->
+            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" fill="#3c9a5f"/></svg>
+          </span>
+          Location/Address
+        </label>
+        <textarea name="address" rows="2" required placeholder="Enter your complete address for assessment and pickup"></textarea>
+      </div>
+      <div class="modal-form-group modal-form-full">
+        <label>
+          <span class="modal-label-icon">
+            <!-- Lock icon (for description) -->
+            <svg width="18" height="18" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="8" rx="2" fill="#3c9a5f"/><path d="M12 7a4 4 0 0 1 4 4v2H8v-2a4 4 0 0 1 4-4z" fill="#3c9a5f"/></svg>
+          </span>
+          Quantity/Description
+        </label>
+        <textarea name="quantity" rows="2" required placeholder="Describe the quantity and condition of waste items for valuation (e.g., 20kg mixed plastic, clean condition)"></textarea>
+      </div>
+      <button type="submit" class="modal-submit-btn">Join</button>
+    </form>
+    <div id="revalueModalToast" class="modal-toast" style="display:none;">Thank you for joining! We’ll contact you soon.</div>
+  </div>
+</div>
+
+<!-- Modal CSS -->
+<style>
+  .modal-backdrop {
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    background: rgba(44, 62, 80, 0.18);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-container {
+    background: #fff;
+    border-radius: 22px;
+    box-shadow: 0 8px 32px 0 rgba(44,62,80,0.13);
+    padding: 38px 32px 32px 32px;
+    max-width: 540px;
+    width: 98vw;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    font-family: 'Inter', Arial, sans-serif;
+  }
+  .modal-title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .modal-title-icon {
+    background: linear-gradient(135deg, #3c9a5f 60%, #1e8e3e 100%);
+    border-radius: 8px;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #1e8e3e;
+    letter-spacing: 0.2px;
+  }
+  .modal-subtitle {
+    font-size: 1.02rem;
+    color: #888;
+    margin-bottom: 18px;
+    margin-top: 2px;
+    font-weight: 500;
+    text-align: left;
+  }
+  .modal-form-row {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 0;
+  }
+  .modal-form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+  }
+  .modal-form-full {
+    width: 100%;
+    margin-bottom: 18px;
+  }
+  .modal-form-group label {
+    font-size: 0.98rem;
+    color: #176c2a;
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .modal-label-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    margin-right: 2px;
+  }
+  .modal-form-group input,
+  .modal-form-group select,
+  .modal-form-group textarea {
+    border-radius: 10px;
+    border: 1.5px solid #b6e2c7;
+    background: #F5FFF8;
+    padding: 10px 12px;
+    font-size: 1rem;
+    color: #222;
+    outline: none;
+    margin-top: 2px;
+    transition: border 0.18s, box-shadow 0.18s;
+    font-family: inherit;
+    resize: none;
+    box-shadow: 0 0 0 0 rgba(44, 62, 80, 0);
+  }
+  .modal-form-group input:focus,
+  .modal-form-group select:focus,
+  .modal-form-group textarea:focus {
+    border-color: #3c9a5f;
+    box-shadow: 0 0 0 2px #eafaf1;
+  }
+  .modal-form-group select {
+    cursor: pointer;
+  }
+  .modal-submit-btn {
+    background: linear-gradient(90deg, #3c9a5f 60%, #1e8e3e 100%);
+    color: #fff;
+    border: none;
+    border-radius: 22px;
+    padding: 12px 0;
+    width: 100%;
+    font-size: 1.13rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 8px 0 rgba(44,62,80,0.08);
+    margin-top: 10px;
+    transition: background 0.2s;
+  }
+  .modal-submit-btn:hover {
+    background: linear-gradient(90deg, #1e8e3e 60%, #3c9a5f 100%);
+  }
+  .modal-close {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    background: none;
+    border: none;
+    font-size: 1.7rem;
+    color: #3c9a5f;
+    cursor: pointer;
+    font-weight: 700;
+    transition: color 0.18s;
+  }
+  .modal-close:hover {
+    color: #176c2a;
+  }
+  .modal-toast {
+    position: absolute;
+    bottom: -38px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #3c9a5f;
+    color: #fff;
+    padding: 10px 28px;
+    border-radius: 18px;
+    font-size: 1.08rem;
+    font-weight: 600;
+    box-shadow: 0 2px 8px 0 rgba(44,62,80,0.08);
+    margin-top: 18px;
+    z-index: 10;
+    animation: fadeIn 0.5s;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px) translateX(-50%);}
+    to { opacity: 1; transform: translateY(0) translateX(-50%);}
+  }
+  @media (max-width: 700px) {
+    .modal-container {
+      padding: 18px 8px 18px 8px;
+      max-width: 98vw;
+    }
+    .modal-form-row {
+      flex-direction: column;
+      gap: 0;
+    }
+    .modal-form-group {
+      margin-bottom: 14px;
+    }
+    .modal-title {
+      font-size: 1.12rem;
+    }
+    .modal-toast {
+      font-size: 0.98rem;
+      padding: 8px 18px;
+    }
+  }
+</style>
+
+<!-- Modal JS -->
+<script>
+  // Open modal when Retake Policy Join button is clicked
+  document.querySelectorAll('.policy-card .join-btn')[0].addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('retakeModal').style.display = 'flex';
+  });
+
+  // Close modal
+  document.getElementById('closeModalBtn').onclick = function() {
+    document.getElementById('retakeModal').style.display = 'none';
+  };
+
+  // Form submit handler
+  document.getElementById('retakeForm').onsubmit = function(e) {
+    e.preventDefault();
+    // Show toast
+    var toast = document.getElementById('modalToast');
+    toast.style.display = 'block';
+    // Reset form after short delay
+    setTimeout(function() {
+      toast.style.display = 'none';
+      document.getElementById('retakeModal').style.display = 'none';
+      document.getElementById('retakeForm').reset();
+    }, 1800);
+  };
+
+  // Open modal when Revalue Policy Join button is clicked
+  document.querySelectorAll('.policy-card .join-btn')[1].addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('revalueModal').style.display = 'flex';
+  });
+
+  // Close modal
+  document.getElementById('closeRevalueModalBtn').onclick = function() {
+    document.getElementById('revalueModal').style.display = 'none';
+  };
+
+  // Form submit handler
+  document.getElementById('revalueForm').onsubmit = function(e) {
+    e.preventDefault();
+    // Show toast
+    var toast = document.getElementById('revalueModalToast');
+    toast.style.display = 'block';
+    // Reset form after short delay
+    setTimeout(function() {
+      toast.style.display = 'none';
+      document.getElementById('revalueModal').style.display = 'none';
+      document.getElementById('revalueForm').reset();
+    }, 1800);
+  };
+</script>
+</body>
+</html>
