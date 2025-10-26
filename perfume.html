@@ -8,7 +8,7 @@
   <style>
     :root {
       --eco-green: #2e7d32;
-      --eco-green-light: #eafaf1;
+      --eco-green-light: #f0f9f4;
       --sidebar-bg: #e6f4ec;
       --card-radius: 20px;
       --card-shadow: 0 8px 32px 0 rgba(44, 62, 80, 0.09);
@@ -167,8 +167,8 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 32px;
-      width: 100%;
-      max-width: 1200px;
+      width: 95%;
+      max-width: 1400px;
       margin: 0 auto;
       align-items: stretch; /* Ensure all cards are same height */
     }
@@ -198,16 +198,17 @@
       flex-direction: column;
       position: relative;
       overflow: hidden;
-      min-height: 440px; /* Increased from 370px */
+      min-height: 500px;
       height: 100%;
       transition: box-shadow 0.2s;
+      align-items: center;
     }
     .product-card:hover {
       box-shadow: 0 12px 36px 0 rgba(44, 62, 80, 0.13);
     }
     .product-image {
       width: 100%;
-      height: 140px;
+      height: 160px;
       background: #e0e0e0;
       border-top-left-radius: var(--card-radius);
       border-top-right-radius: var(--card-radius);
@@ -270,10 +271,11 @@
       width: 100%;
       display: flex;
       flex-direction: column;
-      align-items: stretch;
-      padding: 18px 18px 0 18px;
+      align-items: center;
+      text-align: center;
+      padding: 18px 20px 0 20px;
       flex: 1 1 auto;
-      min-height: 180px;
+      min-height: 200px;
     }
     .product-title {
       font-size: 1.13rem;
@@ -329,18 +331,19 @@
       background: var(--eco-green);
       color: #fff;
       border: none;
-      border-radius: 22px;
-      padding: 12px 0;
-      width: 100%;
-      font-size: 1.08rem;
+      border-radius: 18px;
+      padding: 10px 16px;
+      width: 85%;
+      font-size: 0.95rem;
       font-weight: 600;
       cursor: pointer;
       box-shadow: 0 2px 8px 0 rgba(44, 62, 80, 0.08);
       transition: background 0.2s;
       margin-top: auto;
-      margin-bottom: 0;
-      align-self: stretch;
+      margin-bottom: 16px;
+      align-self: center;
       display: block;
+      min-height: 38px;
     }
     .add-to-cart:hover {
       background: #176c2a;
