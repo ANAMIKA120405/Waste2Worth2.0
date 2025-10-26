@@ -32,13 +32,14 @@
         margin-top: 0;
         margin-bottom: 0;
         width: 100%;
-        max-width: 700px;
+        max-width: 1100px;
         margin-left: auto;
         margin-right: auto;
+        padding: 48px 60px;
       }
       .impact-bottom {
-        margin-top: 48px;
-        margin-bottom: 32px;
+        margin-top: 64px;
+        margin-bottom: 48px;
       }
       @media (max-width: 1200px) {
         .container {
@@ -148,35 +149,33 @@
                 <ul>
                     <li>
                         <a href="homepage.html">
-                            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
-                                <path d="M3 12l9-9 9 9v8a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-4h-4v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8z"/>
-                            </svg>
+                            <span class="nav-icon">
+                                <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9v8a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-4h-4v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8z" fill="#2E8B57"/></svg>
+                            </span>
                             Home
                         </a>
                     </li>
                     <li>
                         <a href="joincomm.html">
-                            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
-                                <circle cx="12" cy="7" r="4"/>
-                                <path d="M16 21v-2a4 4 0 0 0-8 0v2"/>
-                            </svg>
+                            <span class="nav-icon">
+                                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="#2E8B57"/></svg>
+                            </span>
                             Join Our Community
                         </a>
                     </li>
                     <li>
                         <a href="value.html">
-                            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
-                                <path d="M12 21c-4.97 0-9-3.13-9-7 0-2.21 1.79-4 4-4 .34 0 .67.03 1 .08V7a5 5 0 0 1 10 0v3.08c.33-.05.66-.08 1-.08 2.21 0 4 1.79 4 4 0 3.87-4.03 7-9 7zm-4-7c0 2.21 3.13 4 7 4s7-1.79 7-4-3.13-4-7-4-7 1.79-7 4z"/>
-                            </svg>
+                            <span class="nav-icon">
+                                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#2E8B57"/></svg>
+                            </span>
                             Value for Money
                         </a>
                     </li>
                     <li>
                         <a href="aboutus.html">
-                            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
-                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
-                                <path d="M12 16v-4M12 8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            </svg>
+                            <span class="nav-icon">
+                                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#2E8B57"/><path d="M12 16v-4M12 8h.01" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+                            </span>
                             About Us
                         </a>
                     </li>
@@ -185,11 +184,19 @@
         </aside>
         <!-- Main Content -->
         <main class="main">
-            <section class="banner">
-                <div class="banner-title">ReUse &amp; ReNew</div>
-                <div class="banner-tagline">
-                    Transform waste into wonderful home essentials. Every purchase saves the planet, one item at a time.
+            <section class="banner" style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <div class="banner-title">ReUse &amp; ReNew</div>
+                    <div class="banner-tagline">
+                        Transform waste into wonderful home essentials. Every purchase saves the planet, one item at a time.
+                    </div>
                 </div>
+                <a href="cart.html" style="text-decoration: none; color: #2e7d32; display: flex; align-items: center; gap: 8px; background: #fff; padding: 12px 20px; border-radius: 12px; box-shadow: 0 4px 16px 0 rgba(44, 62, 80, 0.08); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+                    </svg>
+                    <span style="font-weight: 600; font-size: 1.05rem;">Cart</span>
+                </a>
             </section>
             <section class="products-section">
                 <div class="products-grid">
@@ -210,7 +217,7 @@
                                 <span class="star">&#9734;</span>
                                 <span class="reviews">(203)</span>
                             </div>
-                            <a href="perfume.html" class="product-btn" style="text-align:center;display:block;">Add to Cart</a>
+                            <button class="product-btn redirect-btn" data-redirect="perfume.html" style="text-align:center;display:block;border:none;cursor:pointer;width:85%;align-self:center;">Select Fragrance</button>
                         </div>
                     </div>
                     <!-- Product 2 -->
@@ -233,7 +240,7 @@
                                 <span class="star">&#9734;</span>
                                 <span class="reviews">(158)</span>
                             </div>
-                            <a href="cocoplate.html" class="product-btn" style="text-align:center;display:block;">Add to Cart</a>
+                            <button class="product-btn redirect-btn" data-redirect="cocoplate.html" style="text-align:center;display:block;border:none;cursor:pointer;width:85%;align-self:center;">Select Sizes</button>
                         </div>
                     </div>
                     <!-- Product 3 -->
@@ -259,7 +266,7 @@
                             <div class="product-price">
                                 <span class="current">₹50/kg</span>
                             </div>
-                            <button class="product-btn">Add to Cart</button>
+                            <button class="product-btn add-to-cart-btn" data-product="2" style="border:none;cursor:pointer;">Add to Cart</button>
                         </div>
                     </div>
                     <!-- Product 4 -->
@@ -285,7 +292,7 @@
                             <div class="product-price">
                                 <span class="current">₹1350/kg</span>
                             </div>
-                            <button class="product-btn">Add to Cart</button>
+                            <button class="product-btn add-to-cart-btn" data-product="3" style="border:none;cursor:pointer;">Add to Cart</button>
                         </div>
                     </div>
                     <!-- Product 5 -->
@@ -305,7 +312,7 @@
                                 <span class="star">&#9734;</span>
                                 <span class="reviews">(94)</span>
                             </div>
-                            <button class="product-btn">Add to Cart</button>
+                            <button class="product-btn" disabled style="border:none;cursor:not-allowed;opacity:0.6;background:#ccc;color:#666;">Coming Soon</button>
                         </div>
                     </div>
                 </div>
@@ -337,5 +344,39 @@
             </section>
         </main>
     </div>
+    
+    <script src="cart.js"></script>
+    <script>
+        // Product data for homepage (only for products with direct Add to Cart)
+        const homepageProducts = [
+            { id: 'home-cocopeat', name: 'Coco-Peat', description: 'Better water retention for healthy plants', price: 50, image: '🌱' },
+            { id: 'home-bricket', name: 'Bricket', description: 'Eco-friendly briquettes from leftover materials', price: 1350, image: '🧱' },
+            { id: 'home-codunk', name: 'Co-Dunk', description: 'Coming soon - Exciting new product', price: 0, image: '🎯' }
+        ];
+        
+        // Add click handlers for "Add to Cart" buttons
+        document.querySelectorAll('.add-to-cart-btn').forEach((button) => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const productIndex = parseInt(this.getAttribute('data-product'));
+                if (homepageProducts[productIndex]) {
+                    addToCart(homepageProducts[productIndex]);
+                }
+            });
+        });
+        
+        // Add click handlers for redirect buttons (Select Fragrance, Select Sizes)
+        document.querySelectorAll('.redirect-btn').forEach((button) => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const redirectUrl = this.getAttribute('data-redirect');
+                if (redirectUrl) {
+                    window.location.href = redirectUrl;
+                }
+            });
+        });
+    </script>
 </body>
 </html>

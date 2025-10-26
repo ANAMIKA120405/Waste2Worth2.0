@@ -48,18 +48,33 @@ body {
     gap: 14px;
     padding: 12px 32px;
     font-size: 1.08rem;
-    color: #2e7d32;
+    color: #3c9a5f;
     text-decoration: none;
     border-radius: 8px 0 0 8px;
-    transition: background 0.18s, color 0.18s;
+    transition: background 0.2s, color 0.2s;
     font-weight: 600;
+}
+.sidebar nav a .nav-icon {
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #3c9a5f;
+    transition: color 0.2s;
 }
 .sidebar nav a.active {
     background: #2e7d32;
     color: #fff;
 }
+.sidebar nav a.active .nav-icon {
+    color: #fff;
+}
 .sidebar nav a:hover:not(.active) {
     background: #c3e6d2;
+    color: #2e7d32;
+}
+.sidebar nav a:hover:not(.active) .nav-icon {
     color: #2e7d32;
 }
 .sidebar nav svg {

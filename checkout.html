@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout | Waste2Worth</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green-light: #f0f9f4;
+            --green-main: #3c9a5f;
+            --green-dark: #2e7d32;
+            --sidebar-bg: #e6f4ec;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--green-light);
+            color: #222;
+            min-height: 100vh;
+            display: flex;
+        }
+        .sidebar {
+            width: 260px;
+            background: var(--sidebar-bg);
+            min-height: 100vh;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 10;
+            box-shadow: 2px 0 16px 0 rgba(44, 62, 80, 0.04);
+        }
+        .logo {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: var(--green-dark);
+            letter-spacing: 0.5px;
+            margin: 36px 0 36px 32px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .sidebar nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar nav ul li {
+            margin-bottom: 8px;
+        }
+        .sidebar nav a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 32px;
+            font-size: 1.08rem;
+            font-weight: 600;
+            color: #3c9a5f;
+            text-decoration: none;
+            transition: all 0.2s;
+            border-radius: 8px 0 0 8px;
+        }
+        .sidebar nav a:hover:not(.active) {
+            background: #c3e6d2;
+            color: var(--green-dark);
+        }
+        .sidebar nav a.active {
+            background: var(--green-dark);
+            color: #fff;
+        }
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .sidebar nav a.active .nav-icon svg path,
+        .sidebar nav a.active .nav-icon svg circle {
+            fill: #fff;
+            stroke: #fff;
+        }
+        .main-content {
+            margin-left: 260px;
+            flex: 1;
+            padding: 48px 60px;
+            min-height: 100vh;
+        }
+        .checkout-header {
+            margin-bottom: 36px;
+        }
+        .checkout-header h1 {
+            font-size: 2.2rem;
+            color: var(--green-dark);
+            margin-bottom: 8px;
+        }
+        .checkout-header p {
+            color: #666;
+            font-size: 1.05rem;
+        }
+        .checkout-container {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 32px;
+            max-width: 1400px;
+        }
+        .checkout-section {
+            background: #fff;
+            padding: 32px;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(44, 62, 80, 0.09);
+        }
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--green-dark);
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--green-light);
+        }
+        .form-group {
+            margin-bottom: 24px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: 'Inter', Arial, sans-serif;
+            transition: all 0.3s;
+            background: #fafafa;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--green-main);
+            background: #fff;
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .delivery-options {
+            display: flex;
+            gap: 16px;
+            margin-top: 12px;
+        }
+        .delivery-option {
+            flex: 1;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #fafafa;
+            text-align: center;
+        }
+        .delivery-option:hover {
+            border-color: var(--green-main);
+            background: #fff;
+        }
+        .delivery-option.selected {
+            border-color: var(--green-main);
+            background: #e8f5e9;
+        }
+        .delivery-option input[type="radio"] {
+            margin-bottom: 8px;
+        }
+        .delivery-option .option-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        .delivery-option .option-desc {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        .order-summary {
+            position: sticky;
+            top: 48px;
+        }
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+        .item-details {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+        .item-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: var(--green-light);
+        }
+        .item-info h4 {
+            font-size: 0.95rem;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        .item-info p {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        .item-price {
+            font-weight: 700;
+            color: var(--green-dark);
+            font-size: 1.05rem;
+        }
+        .summary-divider {
+            height: 2px;
+            background: var(--green-light);
+            margin: 20px 0;
+        }
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--green-dark);
+        }
+        .checkout-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--green-main), var(--green-dark));
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+            box-shadow: 0 4px 16px rgba(46, 125, 50, 0.3);
+        }
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(46, 125, 50, 0.4);
+        }
+        .checkout-btn:active {
+            transform: translateY(0);
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green-main);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 24px;
+            transition: all 0.3s;
+        }
+        .back-link:hover {
+            color: var(--green-dark);
+            gap: 12px;
+        }
+        .required {
+            color: #d32f2f;
+        }
+        .promo-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid var(--green-light);
+        }
+        .promo-input-group {
+            display: flex;
+            gap: 12px;
+        }
+        .promo-input-group input {
+            flex: 1;
+        }
+        .promo-btn {
+            padding: 14px 24px;
+            background: var(--green-main);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .promo-btn:hover {
+            background: var(--green-dark);
+        }
+        .discount-applied {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            color: #2e7d32;
+            font-weight: 600;
+        }
+        .discount-applied .remove-btn {
+            color: #d32f2f;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 1024px) {
+            .checkout-container {
+                grid-template-columns: 1fr;
+            }
+            .order-summary {
+                position: static;
+            }
+        }
+        @media (max-width: 768px) {
+            .main-content {
+                margin-left: 0;
+                padding: 24px 20px;
+            }
+            .sidebar {
+                display: none;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .delivery-options {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">Waste2Worth</div>
+        <nav>
+            <ul>
+                <li>
+                    <a href="homepage.html">
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9v8a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-4h-4v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8z" fill="#2E8B57"/></svg>
+                        </span>
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="joincomm.html">
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="#2E8B57"/></svg>
+                        </span>
+                        Join Our Community
+                    </a>
+                </li>
+                <li>
+                    <a href="value.html">
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#2E8B57"/></svg>
+                        </span>
+                        Value for Money
+                    </a>
+                </li>
+                <li>
+                    <a href="aboutus.html">
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#2E8B57"/><path d="M12 16v-4M12 8h.01" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+                        </span>
+                        About Us
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <a href="cart.html" class="back-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Back to Cart
+        </a>
+
+        <div class="checkout-header">
+            <h1>Checkout</h1>
+            <p>Complete your order by filling in the details below</p>
+        </div>
+
+        <div class="checkout-container">
+            <!-- Customer Information -->
+            <div class="checkout-section">
+                <h2 class="section-title">Customer Information</h2>
+                <form id="checkoutForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name <span class="required">*</span></label>
+                            <input type="text" id="firstName" name="firstName" required placeholder="Enter first name">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name <span class="required">*</span></label>
+                            <input type="text" id="lastName" name="lastName" required placeholder="Enter last name">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address <span class="required">*</span></label>
+                            <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number <span class="required">*</span></label>
+                            <input type="tel" id="phone" name="phone" required placeholder="+91 98765 43210">
+                        </div>
+                    </div>
+
+                    <h2 class="section-title" style="margin-top: 36px;">Delivery Method</h2>
+                    <div class="delivery-options">
+                        <label class="delivery-option selected">
+                            <input type="radio" name="deliveryMethod" value="delivery" checked>
+                            <div class="option-title">🚚 Home Delivery</div>
+                            <div class="option-desc">Delivered to your doorstep</div>
+                        </label>
+                        <label class="delivery-option">
+                            <input type="radio" name="deliveryMethod" value="pickup">
+                            <div class="option-title">📦 Self Pickup</div>
+                            <div class="option-desc">Collect from our location</div>
+                        </label>
+                    </div>
+
+                    <div id="addressSection" style="margin-top: 24px;">
+                        <div class="form-group">
+                            <label for="address">Delivery Address <span class="required">*</span></label>
+                            <input type="text" id="address" name="address" required placeholder="Street address, apartment, suite, etc.">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city">City <span class="required">*</span></label>
+                                <input type="text" id="city" name="city" required placeholder="City">
+                            </div>
+                            <div class="form-group">
+                                <label for="state">State <span class="required">*</span></label>
+                                <input type="text" id="state" name="state" required placeholder="State">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="pincode">Pincode <span class="required">*</span></label>
+                                <input type="text" id="pincode" name="pincode" required placeholder="PIN Code">
+                            </div>
+                            <div class="form-group">
+                                <label for="landmark">Landmark (Optional)</label>
+                                <input type="text" id="landmark" name="landmark" placeholder="Nearby landmark">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="pickupSection" style="display: none; margin-top: 24px;">
+                        <div class="form-group">
+                            <label for="pickupDate">Preferred Pickup Date <span class="required">*</span></label>
+                            <input type="date" id="pickupDate" name="pickupDate">
+                        </div>
+                        <div class="form-group">
+                            <label for="pickupTime">Preferred Pickup Time <span class="required">*</span></label>
+                            <select id="pickupTime" name="pickupTime">
+                                <option value="">Select time slot</option>
+                                <option value="9am-12pm">9:00 AM - 12:00 PM</option>
+                                <option value="12pm-3pm">12:00 PM - 3:00 PM</option>
+                                <option value="3pm-6pm">3:00 PM - 6:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 24px;">
+                        <label for="notes">Order Notes (Optional)</label>
+                        <textarea id="notes" name="notes" placeholder="Any special instructions for your order..."></textarea>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="checkout-section order-summary">
+                <h2 class="section-title">Order Summary</h2>
+                <div id="orderItems">
+                    <!-- Items will be loaded from cart -->
+                </div>
+
+                <div class="summary-divider"></div>
+
+                <div class="promo-section">
+                    <div class="form-group">
+                        <label for="promoCode">Promo Code</label>
+                        <div class="promo-input-group">
+                            <input type="text" id="promoCode" placeholder="Enter promo code">
+                            <button type="button" class="promo-btn" onclick="applyPromo()">Apply</button>
+                        </div>
+                    </div>
+                    <div id="discountDisplay" style="display: none;"></div>
+                </div>
+
+                <div class="summary-divider"></div>
+
+                <div style="padding: 12px 0;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 12px; color: #666;">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">₹0</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 12px; color: #666;">
+                        <span>Delivery Fee:</span>
+                        <span id="deliveryFee">₹50</span>
+                    </div>
+                    <div id="discountRow" style="display: none; justify-content: space-between; margin-bottom: 12px; color: #2e7d32;">
+                        <span>Discount:</span>
+                        <span id="discountAmount">-₹0</span>
+                    </div>
+                </div>
+
+                <div class="summary-total">
+                    <span>Total:</span>
+                    <span id="total">₹0</span>
+                </div>
+
+                <button type="button" class="checkout-btn" onclick="placeOrder()">
+                    Place Order
+                </button>
+
+                <p style="text-align: center; font-size: 0.85rem; color: #999; margin-top: 16px;">
+                    By placing your order, you agree to our Terms & Conditions
+                </p>
+            </div>
+        </div>
+    </main>
+
+    </main>
+
+    <script>
+        // Load cart items
+        function loadCartItems() {
+            const cart = JSON.parse(localStorage.getItem('waste2worth_cart') || '[]');
+            const orderItemsDiv = document.getElementById('orderItems');
+            
+            if (cart.length === 0) {
+                orderItemsDiv.innerHTML = '<p style="text-align: center; color: #999; padding: 20px;">Your cart is empty</p>';
+                return;
+            }
+
+            let subtotal = 0;
+            orderItemsDiv.innerHTML = cart.map(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                return `
+                    <div class="summary-item">
+                        <div class="item-details">
+                            <div style="width: 60px; height: 60px; border-radius: 8px; background: var(--green-light); display: flex; align-items: center; justify-content: center; font-size: 2rem;">${item.image}</div>
+                            <div class="item-info">
+                                <h4>${item.name}</h4>
+                                <p>Quantity: ${item.quantity}</p>
+                            </div>
+                        </div>
+                        <div class="item-price">₹${itemTotal}</div>
+                    </div>
+                `;
+            }).join('');
+
+            updateTotals(subtotal);
+        }
+
+        function updateTotals(subtotal) {
+            const deliveryMethod = document.querySelector('input[name="deliveryMethod"]:checked').value;
+            const deliveryFee = deliveryMethod === 'delivery' ? 50 : 0;
+            const discount = parseFloat(document.getElementById('discountAmount')?.textContent.replace('-₹', '') || 0);
+            
+            document.getElementById('subtotal').textContent = `₹${subtotal}`;
+            document.getElementById('deliveryFee').textContent = deliveryFee > 0 ? `₹${deliveryFee}` : 'Free';
+            
+            const total = subtotal + deliveryFee - discount;
+            document.getElementById('total').textContent = `₹${total}`;
+        }
+
+        // Delivery method toggle
+        document.querySelectorAll('.delivery-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.delivery-option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                this.querySelector('input').checked = true;
+
+                const method = this.querySelector('input').value;
+                const addressSection = document.getElementById('addressSection');
+                const pickupSection = document.getElementById('pickupSection');
+
+                if (method === 'delivery') {
+                    addressSection.style.display = 'block';
+                    pickupSection.style.display = 'none';
+                } else {
+                    addressSection.style.display = 'none';
+                    pickupSection.style.display = 'block';
+                }
+
+                // Recalculate totals
+                const cart = JSON.parse(localStorage.getItem('waste2worth_cart') || '[]');
+                const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                updateTotals(subtotal);
+            });
+        });
+
+        // Promo code functionality
+        const promoCodes = {
+            'FIRST10': { discount: 10, type: 'percentage' },
+            'SAVE50': { discount: 50, type: 'fixed' },
+            'GREEN20': { discount: 20, type: 'percentage' }
+        };
+
+        function applyPromo() {
+            const promoInput = document.getElementById('promoCode');
+            const code = promoInput.value.toUpperCase();
+            
+            if (promoCodes[code]) {
+                const cart = JSON.parse(localStorage.getItem('waste2worth_cart') || '[]');
+                const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                
+                let discount = 0;
+                if (promoCodes[code].type === 'percentage') {
+                    discount = (subtotal * promoCodes[code].discount) / 100;
+                } else {
+                    discount = promoCodes[code].discount;
+                }
+
+                document.getElementById('discountRow').style.display = 'flex';
+                document.getElementById('discountAmount').textContent = `-₹${discount}`;
+                
+                promoInput.disabled = true;
+                document.querySelector('.promo-btn').textContent = 'Applied ✓';
+                document.querySelector('.promo-btn').disabled = true;
+
+                const deliveryMethod = document.querySelector('input[name="deliveryMethod"]:checked').value;
+                const deliveryFee = deliveryMethod === 'delivery' ? 50 : 0;
+                updateTotals(subtotal);
+
+                alert(`Promo code applied! You saved ₹${discount}`);
+            } else {
+                alert('Invalid promo code');
+            }
+        }
+
+        // Place order
+        function placeOrder() {
+            console.log('Place Order button clicked');
+            
+            // Get cart items first
+            const cart = JSON.parse(localStorage.getItem('waste2worth_cart') || '[]');
+            console.log('Cart items:', cart);
+            
+            if (cart.length === 0) {
+                alert('Your cart is empty! Please add items before checkout.');
+                window.location.href = 'homepage.html';
+                return;
+            }
+            
+            const form = document.getElementById('checkoutForm');
+            console.log('Form element:', form);
+            
+            if (!form) {
+                console.error('Form not found!');
+                alert('Form error. Please refresh the page.');
+                return;
+            }
+            
+            // Check if required fields are filled
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            
+            if (!firstName || !lastName || !email || !phone) {
+                alert('Please fill in all required customer information fields');
+                return;
+            }
+            
+            console.log('Customer info validated');
+
+            const deliveryMethod = document.querySelector('input[name="deliveryMethod"]:checked').value;
+            console.log('Delivery method:', deliveryMethod);
+            
+            // Validate delivery-specific fields
+            if (deliveryMethod === 'delivery') {
+                const address = document.getElementById('address').value.trim();
+                const city = document.getElementById('city').value.trim();
+                const state = document.getElementById('state').value.trim();
+                const pincode = document.getElementById('pincode').value.trim();
+                
+                if (!address || !city || !state || !pincode) {
+                    alert('Please fill in all required address fields');
+                    return;
+                }
+            } else {
+                const pickupDate = document.getElementById('pickupDate').value;
+                const pickupTime = document.getElementById('pickupTime').value;
+                
+                if (!pickupDate || !pickupTime) {
+                    alert('Please select pickup date and time');
+                    return;
+                }
+            }
+            
+            console.log('Delivery details validated');
+            
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const deliveryFee = deliveryMethod === 'delivery' ? 50 : 0;
+            const discountText = document.getElementById('discountAmount')?.textContent || '-₹0';
+            const discount = parseFloat(discountText.replace('-₹', '')) || 0;
+            const total = subtotal + deliveryFee - discount;
+
+            // Generate order ID
+            const orderId = 'W2W' + Date.now().toString().slice(-8);
+            console.log('Generated Order ID:', orderId);
+            
+            // Prepare order data
+            const orderData = {
+                orderId: orderId,
+                customerName: firstName + ' ' + lastName,
+                email: email,
+                phone: phone,
+                deliveryMethod: deliveryMethod,
+                address: deliveryMethod === 'delivery' ? document.getElementById('address').value : '',
+                city: deliveryMethod === 'delivery' ? document.getElementById('city').value : '',
+                state: deliveryMethod === 'delivery' ? document.getElementById('state').value : '',
+                pincode: deliveryMethod === 'delivery' ? document.getElementById('pincode').value : '',
+                pickupDate: deliveryMethod === 'pickup' ? document.getElementById('pickupDate').value : '',
+                pickupTime: deliveryMethod === 'pickup' ? document.getElementById('pickupTime').value : '',
+                items: cart,
+                subtotal: subtotal,
+                deliveryFee: deliveryFee,
+                discount: discount,
+                total: total,
+                orderDate: new Date().toISOString()
+            };
+
+            console.log('Order data prepared:', orderData);
+
+            try {
+                // Save order data to sessionStorage as pending order
+                sessionStorage.setItem('pendingOrder', JSON.stringify(orderData));
+                console.log('Order data saved to sessionStorage as pending order');
+                
+                // Verify it was saved
+                const savedData = sessionStorage.getItem('pendingOrder');
+                console.log('Verified saved data:', savedData);
+
+                // Don't clear cart yet - will clear after payment
+                console.log('Cart will be cleared after payment');
+
+                // Redirect to payment page
+                console.log('About to redirect to payment.html');
+                window.location.href = 'payment.html';
+                
+            } catch (error) {
+                console.error('Error during checkout:', error);
+                alert('Error processing checkout: ' + error.message);
+            }
+        }
+
+        // Set minimum date for pickup
+        const today = new Date().toISOString().split('T')[0];
+        const pickupDateInput = document.getElementById('pickupDate');
+        if (pickupDateInput) {
+            pickupDateInput.setAttribute('min', today);
+        }
+
+        // Initialize
+        loadCartItems();
+    </script>
+</body>
+</html>

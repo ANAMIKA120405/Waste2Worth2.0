@@ -73,19 +73,11 @@
       gap: 14px;
       padding: 12px 32px;
       font-size: 1.08rem;
-      color: var(--eco-green);
+      color: #3c9a5f;
       text-decoration: none;
       border-radius: 8px 0 0 8px;
-      transition: background 0.18s, color 0.18s;
+      transition: background 0.2s, color 0.2s;
       font-weight: 600;
-    }
-    .sidebar nav a.active {
-      background: var(--eco-green);
-      color: #fff;
-    }
-    .sidebar nav a:hover:not(.active) {
-      background: #c3e6d2;
-      color: var(--eco-green);
     }
     .sidebar nav a .nav-icon {
       width: 22px;
@@ -93,34 +85,42 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--eco-green);
+      color: #3c9a5f;
       transition: color 0.2s;
+    }
+    .sidebar nav a.active {
+      background: #2e7d32;
+      color: #fff;
     }
     .sidebar nav a.active .nav-icon {
       color: #fff;
     }
+    .sidebar nav a:hover:not(.active) {
+      background: #c3e6d2;
+      color: #2e7d32;
+    }
     .sidebar nav a:hover:not(.active) .nav-icon {
-      color: var(--eco-green);
+      color: #2e7d32;
     }
     .back-products-btn {
-      background: #3c9a5f;
-      color: #fff;
+      background: transparent;
+      color: #3c9a5f;
       border: none;
-      border-radius: 22px;
-      padding: 10px 0;
-      width: 80%;
-      font-size: 1.08rem;
+      border-radius: 0;
+      padding: 0;
+      width: auto;
+      font-size: 1.1rem;
       font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 2px 8px 0 rgba(44, 62, 80, 0.08);
-      transition: background 0.2s;
-      margin: 18px auto 0 auto;
-      display: block;
-      text-align: center;
+      box-shadow: none;
+      transition: color 0.2s;
+      display: inline-block;
+      text-align: left;
       text-decoration: none;
     }
     .back-products-btn:hover {
-      background: #287346;
+      color: #287346;
+      text-decoration: underline;
     }
     .more-options {
       margin: 32px 32px 32px 32px;
@@ -308,27 +308,34 @@
         <ul>
           <li>
             <a href="homepage.html">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
-                <path d="M3 12l9-9 9 9v8a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-4h-4v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8z"/>
-              </svg>
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9v8a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-4h-4v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8z" fill="#2E8B57"/></svg>
+              </span>
               Home
             </a>
           </li>
           <li>
             <a href="joincomm.html">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
-                <circle cx="12" cy="7" r="4"/>
-                <path d="M16 21v-2a4 4 0 0 0-8 0v2"/>
-              </svg>
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="#2E8B57"/></svg>
+              </span>
               Join Our Community
             </a>
           </li>
           <li>
             <a href="value.html">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
-                <path d="M12 21c-4.97 0-9-3.13-9-7 0-2.21 1.79-4 4-4 .34 0 .67.03 1 .08V7a5 5 0 0 1 10 0v3.08c.33-.05.66-.08 1-.08 2.21 0 4 1.79 4 4 0 3.87-4.03 7-9 7zm-4-7c0 2.21 3.13 4 7 4s7-1.79 7-4-3.13-4-7-4-7 1.79-7 4z"/>
-              </svg>
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#2E8B57"/></svg>
+              </span>
               Value for Money
+            </a>
+          </li>
+          <li>
+            <a href="aboutus.html">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#2E8B57"/><path d="M12 16v-4M12 8h.01" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+              </span>
+              About Us
             </a>
           </li>
         </ul>
@@ -338,7 +345,15 @@
     </aside>
     <main class="main">
       <!-- Back to Products link at the very top -->
-      <a href="homepage.html" class="back-products-btn" style="margin-bottom: 24px; display: inline-block;">&larr; Back to Products</a>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; width: 100%;">
+        <a href="homepage.html" class="back-products-btn" style="margin-bottom: 0; margin-left: 0;">&larr; Back to Products</a>
+        <a href="cart.html" style="text-decoration: none; color: #2e7d32; display: flex; align-items: center; gap: 8px; background: #fff; padding: 12px 20px; border-radius: 12px; box-shadow: 0 4px 16px 0 rgba(44, 62, 80, 0.08); transition: transform 0.2s; margin-right: 0;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+          </svg>
+          <span style="font-weight: 600; font-size: 1.05rem;">Cart</span>
+        </a>
+      </div>
       <div class="page-title">Coco Husk Dinnerware Collection</div>
       <div class="page-desc">
         Discover our exclusive collection of sustainable dinnerware, handcrafted from upcycled coconut husk waste. Each piece combines natural beauty with eco-conscious design for your dining experience.
@@ -419,5 +434,27 @@
       </div>
     </main>
   </div>
+  
+  <script src="cart.js"></script>
+  <script>
+    // Product data for cocoplate items
+    const cocoplateProducts = [
+      { id: 'cocoplate-tree', name: 'Tree Plate', description: 'Handcrafted from coconut husk, perfect for daily use', price: 120, image: '🌿' },
+      { id: 'cocoplate-vine', name: 'Vine Dinner Plate', description: 'Elegant design for dinner parties', price: 150, image: '🍃' },
+      { id: 'cocoplate-classic', name: 'Classic Coco Bowl', description: 'Perfect for soups and salads', price: 100, image: '🥗' },
+      { id: 'cocoplate-eco', name: 'Eco Cup', description: 'Sustainable drinking cup', price: 80, image: '☕' },
+      { id: 'cocoplate-snack', name: 'Snack Plate', description: 'Small size for snacks and dips', price: 70, image: '🍪' },
+      { id: 'cocoplate-designer', name: 'Designer Coco Plate', description: 'Stylish and sustainable for special occasions', price: 180, image: '✨' }
+    ];
+    
+    // Add click handlers to all "Add to Cart" buttons
+    document.querySelectorAll('.add-to-cart').forEach((button, index) => {
+      button.addEventListener('click', function() {
+        if (cocoplateProducts[index]) {
+          addToCart(cocoplateProducts[index]);
+        }
+      });
+    });
+  </script>
 </body>
 </html>

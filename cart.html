@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shopping Cart - Waste2Worth</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sidebar-width: 260px;
+      --primary-green: #3c9a5f;
+      --sidebar-bg: #e6f4ec;
+      --card-radius: 18px;
+      --shadow: 0 8px 32px 0 rgba(44, 62, 80, 0.09);
+      --transition: 0.2s;
+      --font-main: 'Inter', Arial, sans-serif;
+      --bg-main: #f0f9f4;
+      --sidebar-active: #2f6f4f;
+      --sidebar-hover: #c3e6d2;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-main);
+      background: var(--bg-main);
+      color: #222;
+      min-height: 100vh;
+    }
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
+    /* Sidebar */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: var(--sidebar-bg);
+      min-height: 100vh;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 10;
+      box-shadow: 2px 0 16px 0 rgba(44, 62, 80, 0.04);
+    }
+    .logo {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--primary-green);
+      letter-spacing: 0.5px;
+      margin: 36px 0 36px 32px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sidebar nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sidebar nav ul li {
+      margin-bottom: 8px;
+    }
+    .sidebar nav a {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 32px;
+      font-size: 1.08rem;
+      color: #3c9a5f;
+      text-decoration: none;
+      border-radius: 8px 0 0 8px;
+      transition: background 0.2s, color 0.2s;
+      font-weight: 600;
+    }
+    .sidebar nav a .nav-icon {
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #3c9a5f;
+      transition: color 0.2s;
+    }
+    .sidebar nav a.active {
+      background: #2e7d32;
+      color: #fff;
+    }
+    .sidebar nav a.active .nav-icon {
+      color: #fff;
+    }
+    .sidebar nav a:hover:not(.active) {
+      background: #c3e6d2;
+      color: #2e7d32;
+    }
+    .sidebar nav a:hover:not(.active) .nav-icon {
+      color: #2e7d32;
+    }
+    .sidebar nav svg {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+    .main {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      padding: 40px 48px;
+      background: var(--bg-main);
+      min-height: 100vh;
+    }
+    .page-header {
+      margin-bottom: 32px;
+    }
+    .page-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--primary-green);
+      margin-bottom: 8px;
+    }
+    .page-subtitle {
+      font-size: 1.13rem;
+      color: #555;
+    }
+    .cart-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .cart-content {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 32px;
+      align-items: start;
+    }
+    .cart-items {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .cart-item {
+      background: #fff;
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      border: 1.5px solid #e0f2e9;
+    }
+    .item-image {
+      width: 100px;
+      height: 100px;
+      background: #e0e0e0;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #bdbdbd;
+      font-size: 1.5rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .item-details {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .item-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary-green);
+    }
+    .item-description {
+      font-size: 0.95rem;
+      color: #666;
+    }
+    .item-price {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #222;
+    }
+    .item-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-end;
+    }
+    .quantity-control {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #f0f9f4;
+      border-radius: 8px;
+      padding: 6px 12px;
+    }
+    .quantity-btn {
+      background: var(--primary-green);
+      color: #fff;
+      border: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--transition);
+    }
+    .quantity-btn:hover {
+      background: #287346;
+    }
+    .quantity-value {
+      font-size: 1rem;
+      font-weight: 600;
+      min-width: 30px;
+      text-align: center;
+    }
+    .remove-btn {
+      background: transparent;
+      color: #e74c3c;
+      border: 1px solid #e74c3c;
+      padding: 6px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all var(--transition);
+    }
+    .remove-btn:hover {
+      background: #e74c3c;
+      color: #fff;
+    }
+    .cart-summary {
+      background: #fff;
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow);
+      padding: 28px;
+      border: 1.5px solid #e0f2e9;
+      position: sticky;
+      top: 40px;
+    }
+    .summary-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--primary-green);
+      margin-bottom: 20px;
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #e0f2e9;
+    }
+    .summary-row:last-child {
+      border-bottom: none;
+      padding-top: 16px;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+    .summary-label {
+      color: #666;
+      font-size: 1rem;
+    }
+    .summary-value {
+      font-weight: 600;
+      color: #222;
+    }
+    .checkout-btn {
+      background: var(--primary-green);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 16px 0;
+      width: 100%;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 16px 0 rgba(60, 154, 95, 0.3);
+      transition: all var(--transition);
+      margin-top: 20px;
+    }
+    .checkout-btn:hover {
+      background: #287346;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px 0 rgba(60, 154, 95, 0.4);
+    }
+    .empty-cart {
+      text-align: center;
+      padding: 80px 20px;
+    }
+    .empty-cart-icon {
+      font-size: 4rem;
+      color: #ccc;
+      margin-bottom: 20px;
+    }
+    .empty-cart-text {
+      font-size: 1.3rem;
+      color: #666;
+      margin-bottom: 24px;
+    }
+    .continue-shopping-btn {
+      background: var(--primary-green);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 32px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all var(--transition);
+    }
+    .continue-shopping-btn:hover {
+      background: #287346;
+      transform: translateY(-2px);
+    }
+    @media (max-width: 900px) {
+      .main {
+        margin-left: 0;
+        padding: 20px;
+      }
+      .sidebar {
+        display: none;
+      }
+      .cart-content {
+        grid-template-columns: 1fr;
+      }
+      .cart-summary {
+        position: static;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">Waste2Worth</div>
+      <nav>
+        <ul>
+          <li>
+            <a href="homepage.html">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9v8a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-4h-4v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8z" fill="#2E8B57"/></svg>
+              </span>
+              Home
+            </a>
+          </li>
+          <li>
+            <a href="joincomm.html">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="#2E8B57"/></svg>
+              </span>
+              Join Our Community
+            </a>
+          </li>
+          <li>
+            <a href="value.html">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#2E8B57"/></svg>
+              </span>
+              Value for Money
+            </a>
+          </li>
+          <li>
+            <a href="aboutus.html">
+              <span class="nav-icon">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#2E8B57"/><path d="M12 16v-4M12 8h.01" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+              </span>
+              About Us
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <div class="page-header">
+        <div class="page-title">Shopping Cart</div>
+        <div class="page-subtitle">Review your items and proceed to checkout</div>
+      </div>
+
+      <div class="cart-container">
+        <div class="cart-content" id="cartContent">
+          <!-- Cart Items will be dynamically loaded here -->
+          <div class="cart-items" id="cartItems">
+            <!-- Items will be added by JavaScript -->
+          </div>
+
+          <!-- Cart Summary -->
+          <div class="cart-summary">
+            <div class="summary-title">Order Summary</div>
+            <div class="summary-row">
+              <span class="summary-label">Subtotal</span>
+              <span class="summary-value" id="subtotal">₹0</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">Shipping</span>
+              <span class="summary-value" id="shipping">₹0</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">Tax (GST 18%)</span>
+              <span class="summary-value" id="tax">₹0</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">Total</span>
+              <span class="summary-value" id="total">₹0</span>
+            </div>
+            <button class="checkout-btn" id="checkoutBtn">Proceed to Checkout</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty Cart State -->
+      <div class="empty-cart" id="emptyCart" style="display: none;">
+        <div class="empty-cart-icon">🛒</div>
+        <div class="empty-cart-text">Your cart is empty</div>
+        <a href="homepage.html" class="continue-shopping-btn">Continue Shopping</a>
+      </div>
+    </main>
+  </div>
+
+  <script src="cart.js"></script>
+  <script>
+    // Load and display cart items
+    function displayCart() {
+      const cart = getCart();
+      const cartItemsContainer = document.getElementById('cartItems');
+      const emptyCart = document.getElementById('emptyCart');
+      const cartContent = document.getElementById('cartContent');
+      
+      if (cart.length === 0) {
+        cartContent.style.display = 'none';
+        emptyCart.style.display = 'block';
+        return;
+      }
+      
+      cartContent.style.display = 'grid';
+      emptyCart.style.display = 'none';
+      
+      // Clear existing items
+      cartItemsContainer.innerHTML = '';
+      
+      // Add each cart item
+      cart.forEach(item => {
+        const cartItem = document.createElement('div');
+        cartItem.className = 'cart-item';
+        cartItem.innerHTML = `
+          <div class="item-image">${item.image}</div>
+          <div class="item-details">
+            <div class="item-name">${item.name}</div>
+            <div class="item-description">${item.description}</div>
+            <div class="item-price">${formatPrice(item.price)}/unit</div>
+          </div>
+          <div class="item-controls">
+            <div class="quantity-control">
+              <button class="quantity-btn" onclick="changeQuantity('${item.id}', -1)">−</button>
+              <span class="quantity-value">${item.quantity}</span>
+              <button class="quantity-btn" onclick="changeQuantity('${item.id}', 1)">+</button>
+            </div>
+            <button class="remove-btn" onclick="removeItem('${item.id}')">Remove</button>
+          </div>
+        `;
+        cartItemsContainer.appendChild(cartItem);
+      });
+      
+      // Update totals
+      updateTotals();
+    }
+    
+    // Change quantity
+    function changeQuantity(productId, change) {
+      let cart = getCart();
+      const item = cart.find(i => i.id === productId);
+      
+      if (item) {
+        const newQuantity = item.quantity + change;
+        if (newQuantity > 0) {
+          updateQuantity(productId, newQuantity);
+          displayCart();
+        } else {
+          removeItem(productId);
+        }
+      }
+    }
+    
+    // Remove item
+    function removeItem(productId) {
+      removeFromCart(productId);
+      displayCart();
+      showNotification('Item removed from cart');
+    }
+    
+    // Update totals
+    function updateTotals() {
+      const totals = calculateTotals();
+      document.getElementById('subtotal').textContent = formatPrice(totals.subtotal);
+      document.getElementById('shipping').textContent = formatPrice(totals.shipping);
+      document.getElementById('tax').textContent = formatPrice(totals.tax);
+      document.getElementById('total').textContent = formatPrice(totals.total);
+    }
+    
+    // Checkout button
+    document.getElementById('checkoutBtn').addEventListener('click', function() {
+      const cart = getCart();
+      if (cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+      }
+      // Redirect to checkout page
+      window.location.href = 'checkout.html';
+    });
+    
+    // Initialize cart display
+    displayCart();
+  </script>
+</body>
+</html>

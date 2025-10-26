@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Track Order | Waste2Worth</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green-light: #f0f9f4;
+            --green-main: #3c9a5f;
+            --green-dark: #2e7d32;
+            --sidebar-bg: #e6f4ec;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--green-light);
+            color: #222;
+            min-height: 100vh;
+            display: flex;
+        }
+        .sidebar {
+            width: 260px;
+            background: var(--sidebar-bg);
+            min-height: 100vh;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 10;
+            box-shadow: 2px 0 16px 0 rgba(44, 62, 80, 0.04);
+        }
+        .logo {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: var(--green-dark);
+            letter-spacing: 0.5px;
+            margin: 36px 0 36px 32px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .sidebar nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar nav ul li {
+            margin-bottom: 8px;
+        }
+        .sidebar nav a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 32px;
+            font-size: 1.08rem;
+            font-weight: 600;
+            color: #3c9a5f;
+            text-decoration: none;
+            transition: all 0.2s;
+            border-radius: 8px 0 0 8px;
+        }
+        .sidebar nav a:hover:not(.active) {
+            background: #c3e6d2;
+            color: var(--green-dark);
+        }
+        .sidebar nav a.active {
+            background: var(--green-dark);
+            color: #fff;
+        }
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .main-content {
+            margin-left: 260px;
+            flex: 1;
+            padding: 48px 60px;
+            min-height: 100vh;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green-main);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 24px;
+            transition: all 0.3s;
+        }
+        .back-link:hover {
+            color: var(--green-dark);
+            gap: 12px;
+        }
+        .track-header {
+            margin-bottom: 40px;
+        }
+        .track-header h1 {
+            font-size: 2.5rem;
+            color: var(--green-dark);
+            margin-bottom: 12px;
+        }
+        .track-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        .track-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .search-section {
+            background: #fff;
+            padding: 40px;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(44, 62, 80, 0.09);
+            margin-bottom: 40px;
+        }
+        .search-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--green-dark);
+            margin-bottom: 24px;
+        }
+        .search-form {
+            display: flex;
+            gap: 16px;
+        }
+        .search-input {
+            flex: 1;
+            padding: 18px 24px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-family: 'Inter', Arial, sans-serif;
+            transition: all 0.3s;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: var(--green-main);
+            box-shadow: 0 0 0 4px rgba(60, 154, 95, 0.1);
+        }
+        .track-btn {
+            padding: 18px 40px;
+            background: linear-gradient(135deg, var(--green-main), var(--green-dark));
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+            box-shadow: 0 4px 16px rgba(46, 125, 50, 0.3);
+        }
+        .track-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(46, 125, 50, 0.4);
+        }
+        .track-btn:active {
+            transform: translateY(0);
+        }
+        .order-details {
+            display: none;
+            background: #fff;
+            padding: 40px;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(44, 62, 80, 0.09);
+            animation: fadeInUp 0.4s ease-out;
+        }
+        .order-details.show {
+            display: block;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 2px solid var(--green-light);
+        }
+        .order-info h2 {
+            font-size: 1.8rem;
+            color: var(--green-dark);
+            margin-bottom: 8px;
+        }
+        .order-id {
+            font-size: 1.1rem;
+            color: #666;
+            font-weight: 600;
+        }
+        .order-date {
+            font-size: 0.95rem;
+            color: #999;
+            margin-top: 4px;
+        }
+        .status-badge {
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .status-confirmed {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        .status-shipped {
+            background: #cfe2ff;
+            color: #084298;
+        }
+        .status-delivered {
+            background: #d1e7dd;
+            color: #0f5132;
+        }
+        .status-cancelled {
+            background: #f8d7da;
+            color: #842029;
+        }
+        .tracking-timeline {
+            margin: 40px 0;
+            position: relative;
+        }
+        .timeline-item {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 32px;
+            position: relative;
+        }
+        .timeline-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 23px;
+            top: 48px;
+            width: 2px;
+            height: calc(100% + 8px);
+            background: #e0e0e0;
+        }
+        .timeline-item.completed::after {
+            background: var(--green-main);
+        }
+        .timeline-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            background: #f5f5f5;
+            border: 3px solid #e0e0e0;
+            position: relative;
+            z-index: 1;
+        }
+        .timeline-item.completed .timeline-icon {
+            background: var(--green-light);
+            border-color: var(--green-main);
+        }
+        .timeline-item.active .timeline-icon {
+            background: var(--green-main);
+            border-color: var(--green-dark);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(46, 125, 50, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 12px rgba(46, 125, 50, 0);
+            }
+        }
+        .timeline-content {
+            flex: 1;
+            padding-top: 4px;
+        }
+        .timeline-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        .timeline-item.completed .timeline-title {
+            color: var(--green-dark);
+        }
+        .timeline-desc {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+        .timeline-time {
+            color: #999;
+            font-size: 0.85rem;
+        }
+        .order-items {
+            margin: 40px 0;
+        }
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--green-dark);
+            margin-bottom: 20px;
+        }
+        .item-card {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            background: #fafafa;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+        .item-icon {
+            font-size: 3rem;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            border-radius: 10px;
+        }
+        .item-info {
+            flex: 1;
+        }
+        .item-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        .item-details {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .delivery-info {
+            background: var(--green-light);
+            padding: 24px;
+            border-radius: 12px;
+            margin-top: 32px;
+        }
+        .delivery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 16px;
+        }
+        .delivery-item {
+            display: flex;
+            align-items: start;
+            gap: 12px;
+        }
+        .delivery-icon {
+            font-size: 1.5rem;
+            margin-top: 2px;
+        }
+        .delivery-label {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+        .delivery-value {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        .error-message {
+            display: none;
+            background: #f8d7da;
+            color: #842029;
+            padding: 20px 24px;
+            border-radius: 12px;
+            margin-top: 20px;
+            border: 1px solid #f5c2c7;
+        }
+        .error-message.show {
+            display: block;
+            animation: fadeInUp 0.3s ease-out;
+        }
+        @media (max-width: 768px) {
+            .main-content {
+                margin-left: 0;
+                padding: 24px 20px;
+            }
+            .sidebar {
+                display: none;
+            }
+            .search-form {
+                flex-direction: column;
+            }
+            .order-header {
+                flex-direction: column;
+                gap: 16px;
+            }
+            .delivery-grid {
+                grid-template-columns: 1fr;
+            }
+            .track-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">Waste2Worth</div>
+        <nav>
+            <ul>
+                <li>
+                    <a href="homepage.html">
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9v8a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-4h-4v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8z" fill="#2E8B57"/></svg>
+                        </span>
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="joincomm.html">
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="#2E8B57"/></svg>
+                        </span>
+                        Join Our Community
+                    </a>
+                </li>
+                <li>
+                    <a href="value.html">
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#2E8B57"/></svg>
+                        </span>
+                        Value for Money
+                    </a>
+                </li>
+                <li>
+                    <a href="aboutus.html">
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#2E8B57"/><path d="M12 16v-4M12 8h.01" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+                        </span>
+                        About Us
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <a href="homepage.html" class="back-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Back to Home
+        </a>
+
+        <div class="track-header">
+            <h1>Track Your Order</h1>
+            <p>Enter your Order ID to track your order status and delivery details</p>
+        </div>
+
+        <div class="track-container">
+            <!-- Search Section -->
+            <div class="search-section">
+                <h2 class="search-title">Enter Order ID</h2>
+                <div class="search-form">
+                    <input 
+                        type="text" 
+                        id="orderIdInput" 
+                        class="search-input" 
+                        placeholder="Enter your Order ID (e.g., W2W12345678)"
+                        pattern="W2W[0-9]{8}"
+                    >
+                    <button type="button" class="track-btn" onclick="trackOrder()">
+                        Track Order
+                    </button>
+                </div>
+                <div id="errorMessage" class="error-message"></div>
+            </div>
+
+            <!-- Order Details Section (Hidden by default) -->
+            <div id="orderDetails" class="order-details">
+                <!-- Order Header -->
+                <div class="order-header">
+                    <div class="order-info">
+                        <h2>Order Details</h2>
+                        <div class="order-id">Order ID: <span id="displayOrderId"></span></div>
+                        <div class="order-date">Placed on: <span id="orderDate"></span></div>
+                    </div>
+                    <div id="statusBadge" class="status-badge"></div>
+                </div>
+
+                <!-- Tracking Timeline -->
+                <div class="tracking-timeline">
+                    <div class="timeline-item completed" id="timeline-ordered">
+                        <div class="timeline-icon">📦</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Order Placed</div>
+                            <div class="timeline-desc">Your order has been received and confirmed</div>
+                            <div class="timeline-time" id="time-ordered"></div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item" id="timeline-confirmed">
+                        <div class="timeline-icon">✓</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Order Confirmed</div>
+                            <div class="timeline-desc">Seller has confirmed your order</div>
+                            <div class="timeline-time" id="time-confirmed"></div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item" id="timeline-shipped">
+                        <div class="timeline-icon">🚚</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Order Shipped</div>
+                            <div class="timeline-desc">Your order is on the way</div>
+                            <div class="timeline-time" id="time-shipped"></div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item" id="timeline-outfordelivery">
+                        <div class="timeline-icon">🏃</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Out for Delivery</div>
+                            <div class="timeline-desc">Your order will be delivered today</div>
+                            <div class="timeline-time" id="time-outfordelivery"></div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item" id="timeline-delivered">
+                        <div class="timeline-icon">✅</div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">Delivered</div>
+                            <div class="timeline-desc">Order has been delivered successfully</div>
+                            <div class="timeline-time" id="time-delivered"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Items -->
+                <div class="order-items">
+                    <h3 class="section-title">Order Items</h3>
+                    <div id="itemsList"></div>
+                </div>
+
+                <!-- Delivery Information -->
+                <div class="delivery-info">
+                    <h3 class="section-title">Delivery Information</h3>
+                    <div class="delivery-grid">
+                        <div class="delivery-item">
+                            <div class="delivery-icon">👤</div>
+                            <div>
+                                <div class="delivery-label">Customer Name</div>
+                                <div class="delivery-value" id="customerName"></div>
+                            </div>
+                        </div>
+                        <div class="delivery-item">
+                            <div class="delivery-icon">📧</div>
+                            <div>
+                                <div class="delivery-label">Email</div>
+                                <div class="delivery-value" id="customerEmail"></div>
+                            </div>
+                        </div>
+                        <div class="delivery-item">
+                            <div class="delivery-icon">📱</div>
+                            <div>
+                                <div class="delivery-label">Phone</div>
+                                <div class="delivery-value" id="customerPhone"></div>
+                            </div>
+                        </div>
+                        <div class="delivery-item">
+                            <div class="delivery-icon">📍</div>
+                            <div>
+                                <div class="delivery-label">Delivery Address</div>
+                                <div class="delivery-value" id="deliveryAddress"></div>
+                            </div>
+                        </div>
+                        <div class="delivery-item">
+                            <div class="delivery-icon">💰</div>
+                            <div>
+                                <div class="delivery-label">Payment Method</div>
+                                <div class="delivery-value" id="paymentMethod"></div>
+                            </div>
+                        </div>
+                        <div class="delivery-item">
+                            <div class="delivery-icon">💵</div>
+                            <div>
+                                <div class="delivery-label">Total Amount</div>
+                                <div class="delivery-value" id="totalAmount"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Simulated order database (in real app, this would be from backend)
+        const orderDatabase = {};
+
+        // Check if there's a recent order in sessionStorage
+        const recentOrder = sessionStorage.getItem('orderConfirmation');
+        if (recentOrder) {
+            const order = JSON.parse(recentOrder);
+            orderDatabase[order.orderId] = order;
+        }
+
+        function trackOrder() {
+            const orderIdInput = document.getElementById('orderIdInput');
+            const orderId = orderIdInput.value.trim().toUpperCase();
+            const errorMessage = document.getElementById('errorMessage');
+            const orderDetails = document.getElementById('orderDetails');
+
+            // Validate Order ID format
+            if (!orderId || !orderId.match(/^W2W[0-9]{8}$/)) {
+                errorMessage.textContent = 'Please enter a valid Order ID (format: W2W12345678)';
+                errorMessage.classList.add('show');
+                orderDetails.classList.remove('show');
+                return;
+            }
+
+            // Check if order exists
+            const order = orderDatabase[orderId];
+            if (!order) {
+                errorMessage.textContent = 'Order not found. Please check your Order ID and try again.';
+                errorMessage.classList.add('show');
+                orderDetails.classList.remove('show');
+                return;
+            }
+
+            // Hide error and show order details
+            errorMessage.classList.remove('show');
+            displayOrderDetails(order);
+        }
+
+        function displayOrderDetails(order) {
+            const orderDetails = document.getElementById('orderDetails');
+            
+            // Display basic order info
+            document.getElementById('displayOrderId').textContent = order.orderId;
+            
+            const orderDate = new Date(order.orderDate);
+            document.getElementById('orderDate').textContent = orderDate.toLocaleDateString('en-IN', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            // Simulate order status based on time since order
+            const hoursSinceOrder = (Date.now() - new Date(order.orderDate).getTime()) / (1000 * 60 * 60);
+            let status = 'pending';
+            
+            if (hoursSinceOrder > 72) {
+                status = 'delivered';
+            } else if (hoursSinceOrder > 48) {
+                status = 'outfordelivery';
+            } else if (hoursSinceOrder > 24) {
+                status = 'shipped';
+            } else if (hoursSinceOrder > 2) {
+                status = 'confirmed';
+            }
+
+            // Update status badge
+            const statusBadge = document.getElementById('statusBadge');
+            const statusMap = {
+                'pending': { text: 'Pending', class: 'status-pending' },
+                'confirmed': { text: 'Confirmed', class: 'status-confirmed' },
+                'shipped': { text: 'Shipped', class: 'status-shipped' },
+                'outfordelivery': { text: 'Out for Delivery', class: 'status-shipped' },
+                'delivered': { text: 'Delivered', class: 'status-delivered' }
+            };
+            
+            statusBadge.textContent = statusMap[status].text;
+            statusBadge.className = 'status-badge ' + statusMap[status].class;
+
+            // Update timeline
+            updateTimeline(status, order.orderDate);
+
+            // Display items
+            const itemsList = document.getElementById('itemsList');
+            itemsList.innerHTML = '';
+            order.items.forEach(item => {
+                const itemCard = document.createElement('div');
+                itemCard.className = 'item-card';
+                itemCard.innerHTML = `
+                    <div class="item-icon">${item.icon || item.image || '📦'}</div>
+                    <div class="item-info">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-details">Quantity: ${item.quantity} × ₹${item.price}</div>
+                    </div>
+                    <div style="font-weight: 700; color: var(--green-dark); font-size: 1.1rem;">
+                        ₹${item.price * item.quantity}
+                    </div>
+                `;
+                itemsList.appendChild(itemCard);
+            });
+
+            // Display delivery info
+            document.getElementById('customerName').textContent = order.customerName;
+            document.getElementById('customerEmail').textContent = order.email;
+            document.getElementById('customerPhone').textContent = order.phone;
+            
+            if (order.deliveryMethod === 'delivery') {
+                document.getElementById('deliveryAddress').textContent = 
+                    `${order.address}, ${order.city}, ${order.state} - ${order.pincode}`;
+            } else {
+                document.getElementById('deliveryAddress').textContent = 'Self Pickup from Store';
+            }
+            
+            const paymentMethodMap = {
+                'upi': 'UPI Payment',
+                'card': 'Credit/Debit Card',
+                'netbanking': 'Net Banking',
+                'cod': 'Cash on Delivery'
+            };
+            document.getElementById('paymentMethod').textContent = 
+                paymentMethodMap[order.paymentMethod] || 'Not specified';
+            
+            document.getElementById('totalAmount').textContent = `₹${order.total}`;
+
+            // Show order details
+            orderDetails.classList.add('show');
+            orderDetails.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function updateTimeline(status, orderDate) {
+            const statuses = ['ordered', 'confirmed', 'shipped', 'outfordelivery', 'delivered'];
+            const currentIndex = statuses.indexOf(status);
+            
+            const baseTime = new Date(orderDate);
+            
+            statuses.forEach((s, index) => {
+                const timelineItem = document.getElementById(`timeline-${s}`);
+                const timeElement = document.getElementById(`time-${s}`);
+                
+                if (index <= currentIndex) {
+                    timelineItem.classList.add('completed');
+                    
+                    // Calculate time for each stage
+                    const hoursToAdd = index * 24;
+                    const stageTime = new Date(baseTime.getTime() + (hoursToAdd * 60 * 60 * 1000));
+                    timeElement.textContent = stageTime.toLocaleDateString('en-IN', {
+                        day: 'numeric',
+                        month: 'short',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                } else {
+                    timelineItem.classList.remove('completed');
+                    timeElement.textContent = 'Pending';
+                }
+                
+                // Add active class to current status
+                if (index === currentIndex) {
+                    timelineItem.classList.add('active');
+                } else {
+                    timelineItem.classList.remove('active');
+                }
+            });
+        }
+
+        // Allow Enter key to trigger search
+        document.getElementById('orderIdInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                trackOrder();
+            }
+        });
+
+        // Auto-fill if order ID is in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderIdFromUrl = urlParams.get('orderId');
+        if (orderIdFromUrl) {
+            document.getElementById('orderIdInput').value = orderIdFromUrl;
+            trackOrder();
+        }
+    </script>
+</body>
+</html>

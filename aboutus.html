@@ -8,20 +8,20 @@
   <style>
     :root {
       --green-light: #f0f9f4;
-      --green-main: #4CAF50;
-      --green-dark: #2E8B57;
-      --green-gradient: linear-gradient(to right, #4CAF50, #2E8B57);
-      --sidebar-bg: #fff;
+      --green-main: #3c9a5f;
+      --green-dark: #2e7d32;
+      --green-gradient: linear-gradient(to right, #3c9a5f, #2e7d32);
+      --sidebar-bg: #e6f4ec;
       --sidebar-shadow: 2px 0 16px 0 rgba(44, 62, 80, 0.04);
-      --sidebar-purple: #2E8B57; /* changed from #8E24AA */
-      --sidebar-purple-dark: #256d49; /* changed from #6d1b7b */
-      --sidebar-active-bg: #2E8B57;
+      --sidebar-purple: #3c9a5f;
+      --sidebar-purple-dark: #287346;
+      --sidebar-active-bg: #3c9a5f;
       --sidebar-active-color: #fff;
       --card-bg: #fff;
       --card-radius: 18px;
-      --card-shadow: 0 4px 24px 0 rgba(44, 62, 80, 0.08);
-      --main-radius: 24px;
-      --main-shadow: 0 8px 32px 0 rgba(44,62,80,0.10);
+      --card-shadow: 0 8px 32px 0 rgba(44, 62, 80, 0.09);
+      --main-radius: 20px;
+      --main-shadow: 0 8px 32px 0 rgba(44,62,80,0.09);
       --font-main: 'Inter', Arial, sans-serif;
     }
     html, body {
@@ -37,7 +37,7 @@
       min-height: 100vh;
     }
     .sidebar {
-      width: 270px;
+      width: 260px;
       background: var(--sidebar-bg);
       box-shadow: var(--sidebar-shadow);
       display: flex;
@@ -50,31 +50,15 @@
       min-height: 100vh;
       padding-bottom: 32px;
     }
-    .sidebar-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 32px 28px 18px 28px;
-    }
-    .sidebar-logo {
-      font-size: 2rem;
+    .sidebar .logo {
+      font-size: 1.7rem;
       font-weight: 700;
-      color: var(--green-dark);
+      color: #2e7d32;
       letter-spacing: 0.5px;
+      margin: 36px 0 36px 32px;
       display: flex;
       align-items: center;
       gap: 10px;
-    }
-    .sidebar-menu {
-      font-size: 2rem;
-      color: var(--green-dark);
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      margin-left: 12px;
-      display: flex;
-      align-items: center;
     }
     .sidebar-nav {
       margin-top: 18px;
@@ -101,7 +85,7 @@
       text-decoration: none;
       border-radius: 10px;
       font-weight: 600;
-      transition: background 0.18s, color 0.18s;
+      transition: background 0.2s, color 0.2s;
       margin-right: 16px;
       position: relative;
       background: none;
@@ -116,18 +100,18 @@
       transition: color 0.2s;
     }
     .sidebar-nav a.active {
-      background: var(--sidebar-active-bg);
-      color: var(--sidebar-active-color);
+      background: #2e7d32;
+      color: #fff;
     }
     .sidebar-nav a.active .nav-icon {
       color: #fff;
     }
     .sidebar-nav a:hover:not(.active) {
-      background: #F3EAF7;
-      color: var(--sidebar-purple-dark);
+      background: #c3e6d2;
+      color: #2e7d32;
     }
     .sidebar-nav a:hover:not(.active) .nav-icon {
-      color: var(--sidebar-purple-dark);
+      color: #2e7d32;
     }
     .sidebar .more-options {
       margin: 32px 28px 0 28px;
@@ -159,7 +143,7 @@
     /* Main Content */
     .main-content {
       flex: 1;
-      margin-left: 270px;
+      margin-left: 260px;
       padding: 0;
       background: none;
       min-width: 0;
@@ -167,23 +151,22 @@
       flex-direction: column;
     }
     .main-inner {
-      max-width: 1200px;
-      margin: 38px auto 38px auto;
-      background: #fff;
-      border-radius: var(--main-radius);
-      box-shadow: var(--main-shadow);
-      padding: 0 0 38px 0;
-      overflow: hidden;
+      max-width: 1240px;
+      margin: 48px auto 48px auto;
+      background: none;
+      padding: 0 32px 60px 32px;
+      overflow: visible;
     }
     /* Header Section */
     .about-header {
       background: var(--green-gradient);
       color: #fff;
-      border-radius: 0 0 38px 38px;
-      padding: 48px 32px 38px 32px;
+      border-radius: 24px;
+      padding: 60px 48px 48px 48px;
       text-align: center;
       position: relative;
-      margin-bottom: 0;
+      margin-bottom: 48px;
+      box-shadow: 0 12px 48px rgba(44, 62, 80, 0.15);
     }
     .about-header-icons {
       display: flex;
@@ -192,24 +175,25 @@
       margin-bottom: 18px;
     }
     .about-header-icon {
-      background: rgba(255,255,255,0.18);
-      border-radius: 14px;
-      padding: 10px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 16px;
+      padding: 14px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     }
     .about-header-icon svg {
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
       fill: #fff;
       display: block;
     }
     .about-header h1 {
-      font-size: 2.7rem;
+      font-size: 3rem;
       font-weight: 700;
       margin: 0;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.8px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -217,34 +201,46 @@
       margin-bottom: 18px;
     }
     .about-header-desc {
-      font-size: 1.18rem;
+      font-size: 1.2rem;
       font-weight: 500;
-      color: #eafaf1;
-      background: rgba(44, 62, 80, 0.13);
-      border-radius: 18px;
-      padding: 18px 24px;
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 24px 32px;
       margin: 0 auto;
-      max-width: 900px;
+      max-width: 950px;
       margin-bottom: 0;
+      line-height: 1.7;
+      backdrop-filter: blur(10px);
+    }
+    /* General Section Styling */
+    section {
+      padding: 0 32px;
+      margin-bottom: 20px;
+    }
+    section.about-header {
+      padding: 60px 48px 48px 48px;
     }
     /* Section Headers */
     .section-header {
       display: flex;
       align-items: center;
       gap: 14px;
-      font-size: 2rem;
+      font-size: 2.2rem;
       font-weight: 700;
       color: var(--green-dark);
-      margin: 48px 0 18px 0;
+      margin: 48px 0 32px 0;
       justify-content: center;
+      letter-spacing: 0.5px;
     }
     .section-header-icon {
-      background: #f0f9f4;
-      border-radius: 10px;
-      padding: 8px;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 4px 16px rgba(44, 62, 80, 0.08);
     }
     .section-header-icon svg {
       width: 28px;
@@ -255,73 +251,84 @@
     /* Cards Row */
     .cards-row {
       display: flex;
-      gap: 32px;
+      gap: 28px;
       justify-content: center;
-      margin-bottom: 32px;
+      margin-bottom: 48px;
       flex-wrap: wrap;
+      padding: 0 24px;
     }
     .card {
-      background: var(--card-bg);
-      border-radius: var(--card-radius);
-      box-shadow: var(--card-shadow);
-      padding: 28px 24px 24px 24px;
-      flex: 1 1 260px;
-      max-width: 340px;
-      min-width: 220px;
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(44, 62, 80, 0.08);
+      padding: 36px 28px 32px 28px;
+      flex: 1 1 280px;
+      max-width: 360px;
+      min-width: 240px;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      margin-bottom: 18px;
+      margin-bottom: 0;
+      border: 1.5px solid #e0f2e9;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(44, 62, 80, 0.12);
+      border-color: #3c9a5f;
     }
     .card-icon {
-      background: #f0f9f4;
-      border-radius: 10px;
-      padding: 8px;
-      margin-bottom: 12px;
+      background: linear-gradient(135deg, #f0f9f4 0%, #e0f2e9 100%);
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 18px;
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 4px 12px rgba(60, 154, 95, 0.12);
     }
     .card-icon svg {
-      width: 28px;
-      height: 28px;
+      width: 32px;
+      height: 32px;
       fill: var(--green-dark);
       display: block;
     }
     .card-title {
-      font-size: 1.18rem;
+      font-size: 1.3rem;
       font-weight: 700;
       color: var(--green-dark);
-      margin-bottom: 6px;
+      margin-bottom: 10px;
+      line-height: 1.3;
     }
     .card-desc {
-      font-size: 1.02rem;
-      color: #222;
+      font-size: 1.05rem;
+      color: #444;
       font-weight: 500;
       margin-bottom: 0;
+      line-height: 1.65;
     }
     /* Section Text */
     .section-text {
-      font-size: 1.13rem;
-      color: #222;
+      font-size: 1.18rem;
+      color: #333;
       text-align: center;
-      max-width: 900px;
-      margin: 0 auto 32px auto;
+      max-width: 950px;
+      margin: 0 auto 40px auto;
       font-weight: 500;
+      line-height: 1.75;
+      padding: 0 24px;
     }
     /* Mission Block */
     .mission-block {
       background: var(--green-gradient);
       color: #fff;
-      border-radius: 18px;
-      box-shadow: var(--card-shadow);
-      padding: 32px 28px;
-      margin: 48px 32px 0 32px;
+      border-radius: 24px;
+      box-shadow: 0 12px 48px rgba(44, 62, 80, 0.15);
+      padding: 48px 40px;
+      margin: 60px auto 0 auto;
       text-align: center;
       position: relative;
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
+      max-width: 950px;
     }
     .mission-icons {
       display: flex;
@@ -330,30 +337,32 @@
       margin-bottom: 18px;
     }
     .mission-icon {
-      background: rgba(255,255,255,0.18);
-      border-radius: 14px;
-      padding: 10px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 16px;
+      padding: 14px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     }
     .mission-icon svg {
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
       fill: #fff;
       display: block;
     }
     .mission-title {
-      font-size: 2rem;
+      font-size: 2.2rem;
       font-weight: 700;
-      margin-bottom: 18px;
-      letter-spacing: 0.5px;
+      margin-bottom: 20px;
+      letter-spacing: 0.8px;
     }
     .mission-text {
-      font-size: 1.13rem;
+      font-size: 1.18rem;
       font-weight: 500;
-      color: #eafaf1;
+      color: #ffffff;
       margin-bottom: 0;
+      line-height: 1.75;
     }
     /* For Generations Block */
     .generations-block {
@@ -560,19 +569,7 @@
 <body>
   <!-- Sidebar -->
   <aside class="sidebar">
-    <div class="sidebar-header">
-      <span class="sidebar-logo">
-        <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="4" fill="#2E8B57"/></svg>
-        Waste2Worth
-      </span>
-      <button class="sidebar-menu" aria-label="Menu">
-        <svg width="28" height="28" fill="none" viewBox="0 0 24 24">
-          <rect y="4" width="24" height="2" rx="1" fill="#2E8B57"/>
-          <rect y="11" width="24" height="2" rx="1" fill="#2E8B57"/>
-          <rect y="18" width="24" height="2" rx="1" fill="#2E8B57"/>
-        </svg>
-      </button>
-    </div>
+    <div class="logo">Waste2Worth</div>
     <nav class="sidebar-nav">
       <ul>
         <li>
@@ -587,8 +584,8 @@
         <li>
           <a href="joincomm.html">
             <span class="nav-icon">
-              <!-- Group icon -->
-              <svg viewBox="0 0 24 24"><circle cx="8" cy="10" r="2" fill="#2E8B57"/><circle cx="16" cy="10" r="2" fill="#2E8B57"/><ellipse cx="12" cy="16" rx="7" ry="3" fill="#2E8B57"/></svg>
+              <!-- Heart icon -->
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="#2E8B57"/></svg>
             </span>
             Join Our Community
           </a>
@@ -596,8 +593,8 @@
         <li>
           <a href="value.html">
             <span class="nav-icon">
-              <!-- Dollar icon -->
-              <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4" fill="#2E8B57"/><path d="M12 8v8M9 12h6" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+              <!-- Star icon -->
+              <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#2E8B57"/></svg>
             </span>
             Value for Money
           </a>
@@ -606,7 +603,7 @@
           <a href="aboutus.html" class="active">
             <span class="nav-icon">
               <!-- Info icon -->
-              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#fff"/><path d="M12 16v-4M12 8h.01" stroke="#2E8B57" stroke-width="2" stroke-linecap="round"/></svg>
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#2E8B57"/><path d="M12 16v-4M12 8h.01" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
             </span>
             About Us
           </a>

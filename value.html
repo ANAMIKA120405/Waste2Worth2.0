@@ -18,7 +18,7 @@
     }
     /* Sidebar */
     .sidebar {
-      width: 250px;
+      width: 260px;
       background: #e6f4ec; /* eco-green as homepage */
       min-height: 100vh;
       padding: 0;
@@ -34,7 +34,7 @@
     .logo {
       font-size: 1.7rem;
       font-weight: 700;
-      color: #2f6f4f;
+      color: #3c9a5f;
       letter-spacing: 0.5px;
       margin: 36px 0 36px 32px;
       display: flex;
@@ -61,23 +61,15 @@
     .sidebar nav a {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
       padding: 12px 32px;
       font-size: 1.08rem;
-      color: #2f6f4f;
+      color: #3c9a5f;
       text-decoration: none;
       border-radius: 8px 0 0 8px;
-      transition: background 0.18s, color 0.18s;
+      transition: background 0.2s, color 0.2s;
       font-weight: 600;
       margin-right: 16px;
-    }
-    .sidebar nav a.active {
-      background: #2f6f4f;
-      color: #fff;
-    }
-    .sidebar nav a:hover:not(.active) {
-      background: #c3e6d2;
-      color: #2f6f4f;
     }
     .sidebar nav a .nav-icon {
       width: 22px;
@@ -88,11 +80,19 @@
       color: #3c9a5f;
       transition: color 0.2s;
     }
+    .sidebar nav a.active {
+      background: #2e7d32;
+      color: #fff;
+    }
     .sidebar nav a.active .nav-icon {
       color: #fff;
     }
+    .sidebar nav a:hover:not(.active) {
+      background: #c3e6d2;
+      color: #2e7d32;
+    }
     .sidebar nav a:hover:not(.active) .nav-icon {
-      color: #2f6f4f;
+      color: #2e7d32;
     }
     .more-options {
       margin: 32px 32px 32px 32px;
@@ -102,7 +102,7 @@
     }
     .more-options label {
       font-size: 0.98rem;
-      color: #2f6f4f;
+      color: #3c9a5f;
       margin-bottom: 2px;
       font-weight: 500;
     }
@@ -111,13 +111,13 @@
       border-radius: 6px;
       border: 1px solid #b6e2c7;
       font-size: 1rem;
-      color: #2f6f4f;
+      color: #3c9a5f;
       background: #fff;
     }
     /* Main Content */
     .main-content {
       flex: 1;
-      margin-left: 250px;
+      margin-left: 260px;
       padding: 0;
       display: flex;
       flex-direction: column;
@@ -133,16 +133,16 @@
       display: flex;
       align-items: center;
       gap: 18px;
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       font-weight: 700;
-      color: #1e8e3e;
+      color: #3c9a5f;
       margin-bottom: 18px;
     }
     .heading-icon,
     .heart-icon {
       width: 38px;
       height: 38px;
-      background: #1e8e3e;
+      background: #3c9a5f;
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -156,21 +156,22 @@
       display: block;
     }
     .intro-heading span {
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       font-weight: 700;
-      color: #1e8e3e;
+      color: #3c9a5f;
     }
     .intro-subheading {
       background: #fff;
       border-radius: 18px;
-      box-shadow: 0 4px 24px 0 rgba(44, 62, 80, 0.06);
-      padding: 24px 32px;
-      font-size: 1.15rem;
+      box-shadow: 0 8px 32px 0 rgba(44, 62, 80, 0.09);
+      padding: 32px 40px;
+      font-size: 1.13rem;
       color: #222;
       text-align: center;
-      max-width: 900px;
-      margin-bottom: 40px;
+      max-width: 1000px;
+      margin-bottom: 48px;
       border: 1.5px solid #e0f2e9;
+      line-height: 1.6;
     }
     /* Cards Section */
     .cards-section {
@@ -181,21 +182,26 @@
     }
     .policy-card {
       background: #fff;
-      border-radius: 22px;
+      border-radius: 20px;
       box-shadow: 0 8px 32px 0 rgba(44, 62, 80, 0.09);
-      padding: 32px 28px 28px 28px;
-      flex: 1 1 380px;
-      max-width: 480px;
+      padding: 40px 32px 36px 32px;
+      flex: 1 1 400px;
+      max-width: 500px;
       display: flex;
       flex-direction: column;
       align-items: center;
       border: 1.5px solid #e0f2e9;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .policy-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px 0 rgba(44, 62, 80, 0.12);
     }
     .policy-title {
-      font-size: 2rem;
+      font-size: 1.8rem;
       font-weight: 700;
-      color: #1e8e3e;
-      margin-bottom: 10px;
+      color: #3c9a5f;
+      margin-bottom: 16px;
       text-align: center;
       position: relative;
     }
@@ -318,17 +324,15 @@
           <li>
             <a href="homepage.html">
               <span class="nav-icon">
-                <!-- House icon -->
-                <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9v8a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-4h-4v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8z" fill="currentColor"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9v8a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-4h-4v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8z" fill="#2E8B57"/></svg>
               </span>
               Home
             </a>
           </li>
           <li>
-            <a href="joincomm.html" class="nav-link">
+            <a href="joincomm.html">
               <span class="nav-icon">
-                <!-- Users icon -->
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4" fill="currentColor"/><path d="M16 21v-2a4 4 0 0 0-8 0v2" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="#2E8B57"/></svg>
               </span>
               Join Our Community
             </a>
@@ -336,8 +340,7 @@
           <li>
             <a href="value.html" class="active">
               <span class="nav-icon">
-                <!-- Dollar icon -->
-                <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4" fill="currentColor"/><path d="M12 8v8M9 12h6" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#fff"/></svg>
               </span>
               Value for Money
             </a>
@@ -345,8 +348,7 @@
           <li>
             <a href="aboutus.html">
               <span class="nav-icon">
-                <!-- Info/About icon -->
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 16v-4M12 8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#2E8B57"/><path d="M12 16v-4M12 8h.01" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
               </span>
               About Us
             </a>
