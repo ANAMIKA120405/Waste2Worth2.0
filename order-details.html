@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details | Waste2Worth</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green-light: #f0f9f4;
+            --green-main: #3c9a5f;
+            --green-dark: #2e7d32;
+            --sidebar-bg: #e6f4ec;
+            --sidebar-width: 260px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--green-light);
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 10;
+            box-shadow: 2px 0 16px 0 rgba(44, 62, 80, 0.04);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: var(--green-dark);
+            letter-spacing: 0.5px;
+            margin: 36px 0 36px 32px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar nav {
+            flex: 1;
+        }
+
+        .sidebar nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .sidebar nav a {
+            display: block;
+            padding: 12px 32px;
+            font-size: 1.08rem;
+            color: var(--green-main);
+            text-decoration: none;
+            border-radius: 8px 0 0 8px;
+            transition: background 0.2s, color 0.2s;
+            font-weight: 600;
+            margin-right: 16px;
+        }
+
+        .sidebar nav a:hover {
+            background: #c3e6d2;
+            color: var(--green-dark);
+        }
+
+        .sidebar nav a.active {
+            background: var(--green-dark);
+            color: #fff;
+        }
+
+        /* Main content */
+        .main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 40px 48px;
+            min-height: 100vh;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green-main);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 24px;
+            transition: gap 0.2s;
+        }
+
+        .back-link:hover {
+            gap: 12px;
+        }
+
+        .page-header {
+            margin-bottom: 32px;
+        }
+
+        .page-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--green-dark);
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            font-size: 1.13rem;
+            color: #666;
+        }
+
+        .order-container {
+            max-width: 1200px;
+        }
+
+        .order-header-card {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(44, 62, 80, 0.09);
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+
+        .order-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .info-label {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .info-value {
+            font-size: 1.1rem;
+            color: #222;
+            font-weight: 600;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .status-pending {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .status-processing {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .status-shipped {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .status-delivered {
+            background: #c8e6c9;
+            color: #2e7d32;
+        }
+
+        .status-cancelled {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .order-items-card {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(44, 62, 80, 0.09);
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--green-dark);
+            margin-bottom: 24px;
+        }
+
+        .order-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            border: 1.5px solid #e0f2e9;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .item-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            background: var(--green-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #222;
+            margin-bottom: 8px;
+        }
+
+        .item-quantity {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .item-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--green-dark);
+        }
+
+        .order-summary-card {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(44, 62, 80, 0.09);
+            padding: 32px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--green-dark);
+            padding-top: 20px;
+            margin-top: 12px;
+            border-top: 2px solid var(--green-dark);
+        }
+
+        .address-card {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(44, 62, 80, 0.09);
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+
+        .address-text {
+            color: #444;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 40px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">♻️ Waste2Worth</div>
+        <nav>
+            <ul>
+                <li><a href="profile.html" class="active">👤 Profile</a></li>
+                <li><a href="homepage.html">🏠 Home</a></li>
+                <li><a href="joincomm.html">🤝 Join Community</a></li>
+                <li><a href="value.html">💎 Our Values</a></li>
+                <li><a href="aboutus.html">ℹ️ About Us</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+        <a href="profile.html" class="back-link">← Back to Profile</a>
+
+        <div class="page-header">
+            <h1 class="page-title">Order Details</h1>
+            <p class="page-subtitle">View your complete order information</p>
+        </div>
+
+        <div id="loadingMessage" class="loading">
+            Loading order details...
+        </div>
+
+        <div id="errorMessage" class="error-message" style="display: none;"></div>
+
+        <div id="orderContent" class="order-container" style="display: none;">
+            <!-- Order Header -->
+            <div class="order-header-card">
+                <h2 class="section-title">Order Information</h2>
+                <div class="order-info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Order ID</span>
+                        <span class="info-value" id="orderId">#-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Order Date</span>
+                        <span class="info-value" id="orderDate">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Status</span>
+                        <span class="info-value" id="orderStatus"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Payment Method</span>
+                        <span class="info-value" id="paymentMethod">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Shipping Address -->
+            <div class="address-card">
+                <h2 class="section-title">Shipping Address</h2>
+                <p class="address-text" id="shippingAddress">-</p>
+            </div>
+
+            <!-- Order Items -->
+            <div class="order-items-card">
+                <h2 class="section-title">Order Items</h2>
+                <div id="orderItemsList">
+                    <!-- Items will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="order-summary-card">
+                <h2 class="section-title">Order Summary</h2>
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="subtotal">₹0</span>
+                </div>
+                <div class="summary-row">
+                    <span>Delivery Fee</span>
+                    <span id="deliveryFee">₹0</span>
+                </div>
+                <div class="summary-row">
+                    <span>Total Amount</span>
+                    <span id="totalAmount">₹0</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="supabaseClient.js"></script>
+    <script type="module" src="auth.js"></script>
+    <script type="module">
+        import { supabase } from './supabaseClient.js';
+
+        // Get order ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('id');
+
+        async function loadOrderDetails() {
+            try {
+                // Check if user is logged in
+                const { data: { user }, error: userError } = await supabase.auth.getUser();
+                if (userError || !user) {
+                    window.location.href = 'signup.html';
+                    return;
+                }
+
+                if (!orderId) {
+                    showError('No order ID provided');
+                    return;
+                }
+
+                // Fetch order details
+                const { data: order, error: orderError } = await supabase
+                    .from('orders')
+                    .select('*')
+                    .eq('id', orderId)
+                    .eq('user_id', user.id)
+                    .single();
+
+                if (orderError) throw orderError;
+
+                if (!order) {
+                    showError('Order not found');
+                    return;
+                }
+
+                // Fetch order items - don't rely on products table join since it may not have all columns
+                const { data: orderItems, error: itemsError } = await supabase
+                    .from('order_items')
+                    .select('*')
+                    .eq('order_id', orderId);
+
+                if (itemsError) throw itemsError;
+
+                // Try to fetch product details separately for each item
+                if (orderItems && orderItems.length > 0) {
+                    for (let item of orderItems) {
+                        try {
+                            const { data: product } = await supabase
+                                .from('products')
+                                .select('name, description')
+                                .eq('id', item.product_id)
+                                .single();
+                            
+                            if (product) {
+                                item.product_name = product.name;
+                                item.product_description = product.description;
+                            }
+                        } catch (err) {
+                            console.log('Could not fetch product details:', err);
+                            // Continue even if product fetch fails
+                        }
+                    }
+                }
+
+                // Display order details
+                displayOrderDetails(order, orderItems);
+
+            } catch (error) {
+                console.error('Error loading order details:', error);
+                showError('Failed to load order details: ' + error.message);
+            }
+        }
+
+        function displayOrderDetails(order, items) {
+            document.getElementById('loadingMessage').style.display = 'none';
+            document.getElementById('orderContent').style.display = 'block';
+
+            // Order Info
+            document.getElementById('orderId').textContent = `#${order.id}`;
+            
+            const orderDate = new Date(order.created_at).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            document.getElementById('orderDate').textContent = orderDate;
+
+            const statusBadge = `<span class="status-badge status-${order.status}">${order.status.toUpperCase()}</span>`;
+            document.getElementById('orderStatus').innerHTML = statusBadge;
+
+            document.getElementById('paymentMethod').textContent = order.payment_method || 'Not specified';
+            document.getElementById('shippingAddress').textContent = order.shipping_address || 'Not available';
+
+            // Order Items
+            const itemsList = document.getElementById('orderItemsList');
+            if (items && items.length > 0) {
+                itemsList.innerHTML = items.map(item => {
+                    const productName = item.product_name || `Product ID: ${item.product_id}`;
+                    const itemTotal = item.price * item.quantity;
+
+                    return `
+                        <div class="order-item">
+                            <div class="item-image">📦</div>
+                            <div class="item-details">
+                                <div class="item-name">${productName}</div>
+                                <div class="item-quantity">Quantity: ${item.quantity} × ₹${item.price.toFixed(2)}</div>
+                            </div>
+                            <div class="item-price">₹${itemTotal.toFixed(2)}</div>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                itemsList.innerHTML = '<p style="color: #666; text-align: center;">No items found</p>';
+            }
+
+            // Calculate totals
+            const subtotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const deliveryFee = order.payment_method === 'delivery' ? 50 : 0;
+            
+            document.getElementById('subtotal').textContent = `₹${subtotal.toFixed(2)}`;
+            document.getElementById('deliveryFee').textContent = deliveryFee > 0 ? `₹${deliveryFee}` : 'Free';
+            document.getElementById('totalAmount').textContent = `₹${parseFloat(order.total_amount).toFixed(2)}`;
+        }
+
+        function showError(message) {
+            document.getElementById('loadingMessage').style.display = 'none';
+            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('errorMessage').style.display = 'block';
+        }
+
+        // Initialize
+        loadOrderDetails();
+    </script>
+</body>
+</html>

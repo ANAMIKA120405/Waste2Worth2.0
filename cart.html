@@ -149,6 +149,110 @@
       gap: 20px;
       align-items: center;
       border: 1.5px solid #e0f2e9;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .cart-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px 0 rgba(44, 62, 80, 0.12);
+    }
+    .cart-item-image {
+      width: 120px;
+      height: 120px;
+      border-radius: 12px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #f5f5f5;
+    }
+    .cart-item-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .cart-item-details {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+    .cart-item-name {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary-green);
+      margin-bottom: 4px;
+    }
+    .cart-item-desc {
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.4;
+    }
+    .cart-item-price {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #222;
+      white-space: nowrap;
+    }
+    .cart-item-quantity {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .qty-btn {
+      background: var(--primary-green);
+      color: #fff;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--transition);
+    }
+    .qty-btn:hover:not(:disabled) {
+      background: #287346;
+    }
+    .qty-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+    .qty-input {
+      width: 50px;
+      text-align: center;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: var(--font-main);
+    }
+    .cart-item-total {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary-green);
+      white-space: nowrap;
+      min-width: 100px;
+      text-align: right;
+    }
+    .cart-item-remove {
+      background: transparent;
+      color: #e74c3c;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 6px;
+      transition: all var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cart-item-remove:hover {
+      background: #fee;
+      color: #c0392b;
     }
     .item-image {
       width: 100px;
@@ -342,41 +446,14 @@
   <div class="container">
     <!-- Sidebar -->
     <aside class="sidebar">
-      <div class="logo">Waste2Worth</div>
+      <div class="logo">♻️ Waste2Worth</div>
       <nav>
         <ul>
-          <li>
-            <a href="homepage.html">
-              <span class="nav-icon">
-                <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9v8a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-4h-4v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8z" fill="#2E8B57"/></svg>
-              </span>
-              Home
-            </a>
-          </li>
-          <li>
-            <a href="joincomm.html">
-              <span class="nav-icon">
-                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="#2E8B57"/></svg>
-              </span>
-              Join Our Community
-            </a>
-          </li>
-          <li>
-            <a href="value.html">
-              <span class="nav-icon">
-                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#2E8B57"/></svg>
-              </span>
-              Value for Money
-            </a>
-          </li>
-          <li>
-            <a href="aboutus.html">
-              <span class="nav-icon">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#2E8B57"/><path d="M12 16v-4M12 8h.01" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
-              </span>
-              About Us
-            </a>
-          </li>
+          <li><a href="profile.html">👤 Profile</a></li>
+          <li><a href="homepage.html">🏠 Home</a></li>
+          <li><a href="joincomm.html">🤝 Join Community</a></li>
+          <li><a href="value.html">💎 Our Values</a></li>
+          <li><a href="aboutus.html">ℹ️ About Us</a></li>
         </ul>
       </nav>
     </aside>
@@ -386,6 +463,12 @@
       <div class="page-header">
         <div class="page-title">Shopping Cart</div>
         <div class="page-subtitle">Review your items and proceed to checkout</div>
+        <button id="logout-btn" style="position: absolute; right: 20px; top: 20px; color: #fff; background: #d32f2f; display: flex; align-items: center; gap: 8px; padding: 10px 18px; border: none; border-radius: 10px; box-shadow: 0 4px 16px 0 rgba(211, 47, 47, 0.3); transition: transform 0.2s, background 0.2s; cursor: pointer; font-family: inherit; font-size: 0.95rem;" onmouseover="this.style.transform='translateY(-2px)'; this.style.background='#c62828'" onmouseout="this.style.transform='translateY(0)'; this.style.background='#d32f2f'">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+          </svg>
+          <span style="font-weight: 600;">Logout</span>
+        </button>
       </div>
 
       <div class="cart-container">
@@ -428,99 +511,9 @@
     </main>
   </div>
 
-  <script src="cart.js"></script>
-  <script>
-    // Load and display cart items
-    function displayCart() {
-      const cart = getCart();
-      const cartItemsContainer = document.getElementById('cartItems');
-      const emptyCart = document.getElementById('emptyCart');
-      const cartContent = document.getElementById('cartContent');
-      
-      if (cart.length === 0) {
-        cartContent.style.display = 'none';
-        emptyCart.style.display = 'block';
-        return;
-      }
-      
-      cartContent.style.display = 'grid';
-      emptyCart.style.display = 'none';
-      
-      // Clear existing items
-      cartItemsContainer.innerHTML = '';
-      
-      // Add each cart item
-      cart.forEach(item => {
-        const cartItem = document.createElement('div');
-        cartItem.className = 'cart-item';
-        cartItem.innerHTML = `
-          <div class="item-image">${item.image}</div>
-          <div class="item-details">
-            <div class="item-name">${item.name}</div>
-            <div class="item-description">${item.description}</div>
-            <div class="item-price">${formatPrice(item.price)}/unit</div>
-          </div>
-          <div class="item-controls">
-            <div class="quantity-control">
-              <button class="quantity-btn" onclick="changeQuantity('${item.id}', -1)">−</button>
-              <span class="quantity-value">${item.quantity}</span>
-              <button class="quantity-btn" onclick="changeQuantity('${item.id}', 1)">+</button>
-            </div>
-            <button class="remove-btn" onclick="removeItem('${item.id}')">Remove</button>
-          </div>
-        `;
-        cartItemsContainer.appendChild(cartItem);
-      });
-      
-      // Update totals
-      updateTotals();
-    }
-    
-    // Change quantity
-    function changeQuantity(productId, change) {
-      let cart = getCart();
-      const item = cart.find(i => i.id === productId);
-      
-      if (item) {
-        const newQuantity = item.quantity + change;
-        if (newQuantity > 0) {
-          updateQuantity(productId, newQuantity);
-          displayCart();
-        } else {
-          removeItem(productId);
-        }
-      }
-    }
-    
-    // Remove item
-    function removeItem(productId) {
-      removeFromCart(productId);
-      displayCart();
-      showNotification('Item removed from cart');
-    }
-    
-    // Update totals
-    function updateTotals() {
-      const totals = calculateTotals();
-      document.getElementById('subtotal').textContent = formatPrice(totals.subtotal);
-      document.getElementById('shipping').textContent = formatPrice(totals.shipping);
-      document.getElementById('tax').textContent = formatPrice(totals.tax);
-      document.getElementById('total').textContent = formatPrice(totals.total);
-    }
-    
-    // Checkout button
-    document.getElementById('checkoutBtn').addEventListener('click', function() {
-      const cart = getCart();
-      if (cart.length === 0) {
-        alert('Your cart is empty!');
-        return;
-      }
-      // Redirect to checkout page
-      window.location.href = 'checkout.html';
-    });
-    
-    // Initialize cart display
-    displayCart();
-  </script>
+  <script type="module" src="cart.js"></script>
+  <script type="module" src="supabaseClient.js"></script>
+  <script type="module" src="auth.js"></script>
+  <script type="module" src="cart-display.js"></script>
 </body>
 </html>

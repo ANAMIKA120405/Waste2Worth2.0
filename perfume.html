@@ -399,45 +399,15 @@
   <div class="container">
     <!-- Sidebar: Make it match homepage.html exactly -->
     <aside class="sidebar">
-      <div class="logo">Waste2Worth</div>
+      <div class="logo">♻️ Waste2Worth</div>
       <nav>
         <ul>
-          <li>
-            <a href="homepage.html">
-              <span class="nav-icon">
-                <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9v8a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-4h-4v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8z" fill="#2E8B57"/></svg>
-              </span>
-              Home
-            </a>
-          </li>
-          <li>
-            <a href="joincomm.html">
-              <span class="nav-icon">
-                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="#2E8B57"/></svg>
-              </span>
-              Join Our Community
-            </a>
-          </li>
-          <li>
-            <a href="value.html">
-              <span class="nav-icon">
-                <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#2E8B57"/></svg>
-              </span>
-              Value for Money
-            </a>
-          </li>
-          <li>
-            <a href="aboutus.html">
-              <span class="nav-icon">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#2E8B57"/><path d="M12 16v-4M12 8h.01" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
-              </span>
-              About Us
-            </a>
-          </li>
+          <li><a href="profile.html">👤 Profile</a></li>
+          <li><a href="homepage.html">🏠 Home</a></li>
+          <li><a href="joincomm.html">🤝 Join Community</a></li>
+          <li><a href="value.html">💎 Our Values</a></li>
+          <li><a href="aboutus.html">ℹ️ About Us</a></li>
         </ul>
-        <div class="more-options">
-         
-         
       </nav>
     </aside>
     <main class="main">
@@ -457,6 +427,12 @@
             </svg>
             <span style="font-weight: 600; font-size: 1.05rem;">Cart</span>
           </a>
+          <button id="logout-btn" style="color: #fff; background: #d32f2f; display: flex; align-items: center; gap: 8px; padding: 12px 20px; border: none; border-radius: 12px; box-shadow: 0 4px 16px 0 rgba(211, 47, 47, 0.3); transition: transform 0.2s, background 0.2s; cursor: pointer; font-family: inherit; font-size: 1.05rem; font-weight: 600;" onmouseover="this.style.transform='translateY(-2px)'; this.style.background='#c62828'" onmouseout="this.style.transform='translateY(0)'; this.style.background='#d32f2f'">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+            </svg>
+            <span>Logout</span>
+          </button>
         </div>
       </div>
       <div class="page-title">Eco-Luxury Perfume Collection</div>
@@ -874,20 +850,31 @@
     </main>
   </div>
   
-  <script src="cart.js"></script>
+  <script type="module" src="cart.js"></script>
   <script src="perfume-wishlist.js"></script>
-  <script>
-    // Product data for perfumes
+  <script type="module">
+    // Import cart and wishlist functions
+    import { addToCart, getWishlist, addToWishlist, removeFromWishlist, isInWishlist } from './cart.js';
+    
+    // Make wishlist functions available globally for non-module scripts
+    window.wishlistFunctions = {
+      getWishlist,
+      addToWishlist,
+      removeFromWishlist,
+      isInWishlist
+    };
+    
+    // Product data for perfumes (matching database IDs)
     const perfumeProducts = [
-      { id: 'perfume-vrindavanprem', name: 'VrindavanPrem', description: 'A pure fragrance that reflects love and devotion', price: 180, image: '🌸' },
-      { id: 'perfume-kalachandhrika', name: 'Kalachandhrika', description: 'Luxury floral perfume', price: 200, image: '🌺' },
-      { id: 'perfume-geraniumbliss', name: 'Geranium Bliss', description: 'Fresh and uplifting scent', price: 190, image: '🌷' },
-      { id: 'perfume-cedarwoodmusk', name: 'Cedarwood Musk', description: 'Woody and earthy fragrance', price: 210, image: '🌲' },
-      { id: 'perfume-lavenderfields', name: 'Lavender Fields', description: 'Calming lavender essence', price: 185, image: '💜' },
-      { id: 'perfume-citrusbreeze', name: 'Citrus Breeze', description: 'Refreshing citrus blend', price: 175, image: '🍋' },
-      { id: 'perfume-rosegarden', name: 'Rose Garden', description: 'Classic rose perfume', price: 195, image: '🌹' },
-      { id: 'perfume-sandalwood', name: 'Sandalwood Essence', description: 'Rich sandalwood aroma', price: 220, image: '🪵' },
-      { id: 'perfume-jasmine', name: 'Jasmine Night', description: 'Exotic jasmine fragrance', price: 200, image: '🌼' }
+      { id: 'perfume-1', name: 'Lavender Dreams', description: 'Calming lavender scent perfect for relaxation', price: 29.99, image: 'images/lavender-perfume.jpg' },
+      { id: 'perfume-2', name: 'Ocean Breeze', description: 'Fresh aquatic fragrance reminiscent of the sea', price: 34.99, image: 'images/ocean-perfume.jpg' },
+      { id: 'perfume-3', name: 'Rose Garden', description: 'Classic rose scent with floral notes', price: 39.99, image: 'images/rose-perfume.jpg' },
+      { id: 'perfume-4', name: 'Citrus Burst', description: 'Energizing citrus blend for daily wear', price: 27.99, image: 'images/citrus-perfume.jpg' },
+      { id: 'perfume-5', name: 'Vanilla Essence', description: 'Warm vanilla fragrance with sweet undertones', price: 32.99, image: 'images/vanilla-perfume.jpg' },
+      { id: 'perfume-6', name: 'Sandalwood Serenity', description: 'Earthy sandalwood with woody notes', price: 44.99, image: 'images/sandalwood-perfume.jpg' },
+      { id: 'perfume-7', name: 'Jasmine Night', description: 'Exotic jasmine scent for evening wear', price: 37.99, image: 'images/jasmine-perfume.jpg' },
+      { id: 'perfume-8', name: 'Mint Fresh', description: 'Cool minty fragrance for freshness', price: 24.99, image: 'images/mint-perfume.jpg' },
+      { id: 'perfume-9', name: 'Amber Glow', description: 'Rich amber scent with warm spices', price: 42.99, image: 'images/amber-perfume.jpg' }
     ];
     
     // Add click handlers to all "Add to Cart" buttons
@@ -899,5 +886,7 @@
       });
     });
   </script>
+  <script type="module" src="supabaseClient.js"></script>
+  <script type="module" src="auth.js"></script>
 </body>
 </html>

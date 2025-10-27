@@ -358,7 +358,7 @@
                 </div>
                 <div class="form-slide login">
                     <h1>Login</h1>
-                    <form action="homepage.html" method="get">
+                    <form id="loginForm">
                         <div class="form-group">
                             <label for="login-email">Email</label>
                             <div class="input-container">
@@ -393,23 +393,29 @@
             </div>
         </div>
     </div>
-    <script>
+    <script type="module">
+        // Import Supabase client
+        import { supabase } from './supabaseClient.js';
+
         const showSignup = document.getElementById('showSignup');
         const showLogin = document.getElementById('showLogin');
         const sliderContainer = document.getElementById('sliderContainer');
         const loginLink = document.getElementById('loginLink');
         const signupLink = document.getElementById('signupLink');
 
+        // Toggle between signup and login forms
         showSignup.addEventListener('click', () => {
             sliderContainer.classList.remove('show-login');
             showSignup.classList.add('active');
             showLogin.classList.remove('active');
         });
+
         showLogin.addEventListener('click', () => {
             sliderContainer.classList.add('show-login');
             showLogin.classList.add('active');
             showSignup.classList.remove('active');
         });
+
         if (loginLink) {
             loginLink.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -418,6 +424,7 @@
                 showSignup.classList.remove('active');
             });
         }
+
         if (signupLink) {
             signupLink.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -426,12 +433,152 @@
                 showLogin.classList.remove('active');
             });
         }
-        document.getElementById('signupForm').addEventListener('submit', function(e) {
+
+        // ==========================================
+        // SIGNUP FUNCTIONALITY WITH SUPABASE
+        // ==========================================
+        document.getElementById('signupForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            // ...your signup logic...
-            // After successful signup:
-            window.location.href = 'homepage.html';
+            
+            const fullName = document.getElementById('fullname').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const agreeTerms = document.getElementById('agree-terms').checked;
+
+            // Validation
+            if (!fullName || !email || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters long');
+                return;
+            }
+
+            if (!agreeTerms) {
+                alert('Please agree to the Terms of Service and Privacy Policy');
+                return;
+            }
+
+            try {
+                // Sign up with Supabase
+                const { data, error } = await supabase.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: {
+                        data: {
+                            full_name: fullName
+                        },
+                        emailRedirectTo: window.location.origin + '/homepage.html'
+                    }
+                });
+
+                if (error) {
+                    console.error('Signup error details:', error);
+                    throw error;
+                }
+
+                console.log('Signup response:', data);
+
+                // Check if email confirmation is required
+                if (data.user && !data.session) {
+                    alert('Signup successful! Please check your email to confirm your account before logging in.');
+                    // Switch to login form
+                    sliderContainer.classList.add('show-login');
+                    showLogin.classList.add('active');
+                    showSignup.classList.remove('active');
+                } else if (data.user && data.session) {
+                    // User is immediately signed in (email confirmation disabled)
+                    alert('Signup successful! Welcome to Waste2Worth!');
+                    
+                    // Store user info in localStorage (optional)
+                    localStorage.setItem('waste2worth_user', JSON.stringify({
+                        email: email,
+                        full_name: fullName,
+                        user_id: data.user.id
+                    }));
+
+                    // Redirect to homepage
+                    window.location.href = 'homepage.html';
+                } else {
+                    alert('Signup completed, but please try logging in.');
+                }
+
+            } catch (error) {
+                console.error('Signup error:', error);
+                alert('Signup failed: ' + (error.message || 'Unknown error. Check console for details.'));
+            }
         });
+
+        // ==========================================
+        // LOGIN FUNCTIONALITY WITH SUPABASE
+        // ==========================================
+        const loginForm = document.getElementById('loginForm');
+        loginForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value;
+
+            // Validation
+            if (!email || !password) {
+                alert('Please enter both email and password');
+                return;
+            }
+
+            try {
+                // Sign in with Supabase
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+
+                if (error) {
+                    throw error;
+                }
+
+                // Success!
+                alert('Login successful! Welcome back!');
+                console.log('User logged in:', data);
+
+                // Store user info in localStorage (optional)
+                localStorage.setItem('waste2worth_user', JSON.stringify({
+                    email: data.user?.email,
+                    full_name: data.user?.user_metadata?.full_name || 'User',
+                    user_id: data.user?.id
+                }));
+
+                // Redirect to homepage
+                window.location.href = 'homepage.html';
+
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('Login failed: ' + error.message);
+            }
+        });
+
+        // ==========================================
+        // CHECK IF USER IS ALREADY LOGGED IN
+        // ==========================================
+        async function checkUserSession() {
+            const { data: { session } } = await supabase.auth.getSession();
+            
+            if (session) {
+                // User is already logged in, redirect to homepage
+                console.log('User already logged in:', session.user);
+                window.location.href = 'homepage.html';
+            }
+        }
+
+        // Check session on page load
+        checkUserSession();
     </script>
 </body>
 </html>

@@ -1,6 +1,15 @@
 // Wishlist Toggle Function for Homepage
-function toggleWishlist(button, productId) {
+// Wait for cart.js functions to be available
+async function toggleWishlist(button, productId) {
     event.stopPropagation();
+    
+    // Wait for window.wishlistFunctions to be available
+    if (!window.wishlistFunctions) {
+        console.error('Wishlist functions not loaded yet');
+        return;
+    }
+    
+    const { addToWishlist, removeFromWishlist, getWishlist } = window.wishlistFunctions;
     
     const productData = {
         '2': { 
@@ -54,18 +63,25 @@ function toggleWishlist(button, productId) {
 
 // Initialize wishlist buttons on page load
 window.addEventListener('DOMContentLoaded', function() {
-    const wishlist = getWishlist();
-    document.querySelectorAll('.wishlist-btn').forEach(button => {
-        const onclickAttr = button.getAttribute('onclick');
-        if (onclickAttr) {
-            const match = onclickAttr.match(/'([^']+)'/);
-            if (match) {
-                const productId = match[1];
-                if (wishlist.some(item => item.id === productId)) {
-                    button.textContent = '❤';
-                    button.classList.add('active');
+    // Wait for wishlist functions to be available
+    const checkWishlistLoaded = setInterval(() => {
+        if (window.wishlistFunctions) {
+            clearInterval(checkWishlistLoaded);
+            const { getWishlist } = window.wishlistFunctions;
+            const wishlist = getWishlist();
+            document.querySelectorAll('.wishlist-btn').forEach(button => {
+                const onclickAttr = button.getAttribute('onclick');
+                if (onclickAttr) {
+                    const match = onclickAttr.match(/'([^']+)'/);
+                    if (match) {
+                        const productId = match[1];
+                        if (wishlist.some(item => item.id === productId)) {
+                            button.textContent = '❤';
+                            button.classList.add('active');
+                        }
+                    }
                 }
-            }
+            });
         }
-    });
+    }, 50);
 });
