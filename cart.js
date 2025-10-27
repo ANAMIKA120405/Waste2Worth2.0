@@ -148,3 +148,78 @@ function showNotification(message) {
 document.addEventListener('DOMContentLoaded', function() {
   updateCartCount();
 });
+
+// ============================================
+// WISHLIST MANAGEMENT FUNCTIONS
+// ============================================
+
+// Get wishlist from localStorage
+function getWishlist() {
+  const wishlist = localStorage.getItem('waste2worth_wishlist');
+  return wishlist ? JSON.parse(wishlist) : [];
+}
+
+// Save wishlist to localStorage
+function saveWishlist(wishlist) {
+  localStorage.setItem('waste2worth_wishlist', JSON.stringify(wishlist));
+}
+
+// Add item to wishlist
+function addToWishlist(product) {
+  let wishlist = getWishlist();
+  
+  // Check if item already exists
+  const existingItem = wishlist.find(item => item.id === product.id);
+  
+  if (existingItem) {
+    showNotification('Item already in wishlist!');
+    return false;
+  }
+  
+  // Add to wishlist with timestamp
+  wishlist.push({
+    id: product.id,
+    name: product.name,
+    description: product.description,
+    price: product.price,
+    image: product.image,
+    icon: product.icon,
+    addedDate: new Date().toISOString()
+  });
+  
+  saveWishlist(wishlist);
+  updateWishlistCount();
+  showNotification('Added to wishlist! 💚');
+  return true;
+}
+
+// Remove item from wishlist
+function removeFromWishlist(productId) {
+  let wishlist = getWishlist();
+  wishlist = wishlist.filter(item => item.id !== productId);
+  saveWishlist(wishlist);
+  updateWishlistCount();
+  showNotification('Removed from wishlist');
+}
+
+// Check if item is in wishlist
+function isInWishlist(productId) {
+  const wishlist = getWishlist();
+  return wishlist.some(item => item.id === productId);
+}
+
+// Update wishlist count in navigation
+function updateWishlistCount() {
+  const wishlist = getWishlist();
+  const wishlistCountElements = document.querySelectorAll('.wishlist-count');
+  
+  wishlistCountElements.forEach(element => {
+    element.textContent = wishlist.length;
+    
+    // Add animation
+    element.style.animation = 'none';
+    setTimeout(() => {
+      element.style.animation = 'pulse 0.3s ease-out';
+    }, 10);
+  });
+}

@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Wishlist | Waste2Worth</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --green-light: #f0f9f4;
+            --green-main: #3c9a5f;
+            --green-dark: #2e7d32;
+            --sidebar-bg: #e6f4ec;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            background: var(--green-light);
+            color: #222;
+            min-height: 100vh;
+            display: flex;
+        }
+        .sidebar {
+            width: 260px;
+            background: var(--sidebar-bg);
+            min-height: 100vh;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 10;
+            box-shadow: 2px 0 16px 0 rgba(44, 62, 80, 0.04);
+        }
+        .logo {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: var(--green-dark);
+            letter-spacing: 0.5px;
+            margin: 36px 0 36px 32px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .sidebar nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar nav ul li {
+            margin-bottom: 8px;
+        }
+        .sidebar nav a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 32px;
+            font-size: 1.08rem;
+            font-weight: 600;
+            color: #3c9a5f;
+            text-decoration: none;
+            transition: all 0.2s;
+            border-radius: 8px 0 0 8px;
+        }
+        .sidebar nav a:hover:not(.active) {
+            background: #c3e6d2;
+            color: var(--green-dark);
+        }
+        .sidebar nav a.active {
+            background: var(--green-dark);
+            color: #fff;
+        }
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .main-content {
+            margin-left: 260px;
+            flex: 1;
+            padding: 48px 60px;
+            min-height: 100vh;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--green-main);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 24px;
+            transition: all 0.3s;
+        }
+        .back-link:hover {
+            color: var(--green-dark);
+            gap: 12px;
+        }
+        .wishlist-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .wishlist-title {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .wishlist-title h1 {
+            font-size: 2.5rem;
+            color: var(--green-dark);
+        }
+        .wishlist-count {
+            background: var(--green-main);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+        .wishlist-actions {
+            display: flex;
+            gap: 12px;
+        }
+        .action-btn {
+            padding: 12px 24px;
+            border: 2px solid var(--green-main);
+            background: #fff;
+            color: var(--green-main);
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .action-btn:hover {
+            background: var(--green-main);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+        }
+        .empty-wishlist {
+            text-align: center;
+            padding: 80px 20px;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(44, 62, 80, 0.09);
+        }
+        .empty-icon {
+            font-size: 6rem;
+            margin-bottom: 24px;
+            opacity: 0.5;
+        }
+        .empty-wishlist h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 12px;
+        }
+        .empty-wishlist p {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+        }
+        .browse-btn {
+            display: inline-block;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, var(--green-main), var(--green-dark));
+            color: #fff;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            transition: all 0.3s;
+            box-shadow: 0 4px 16px rgba(46, 125, 50, 0.3);
+        }
+        .browse-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(46, 125, 50, 0.4);
+        }
+        .wishlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        .wishlist-card {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            position: relative;
+        }
+        .wishlist-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+        .remove-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.95);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #e74c3c;
+            transition: all 0.3s;
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+        .remove-btn:hover {
+            background: #e74c3c;
+            color: #fff;
+            transform: scale(1.1);
+        }
+        .product-image {
+            width: 100%;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--green-light);
+            font-size: 5rem;
+        }
+        .product-info {
+            padding: 20px;
+        }
+        .product-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .product-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 2px solid var(--green-light);
+        }
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--green-dark);
+        }
+        .add-to-cart-btn {
+            padding: 10px 24px;
+            background: linear-gradient(135deg, var(--green-main), var(--green-dark));
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .add-to-cart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.4);
+        }
+        .added-badge {
+            display: none;
+            align-items: center;
+            gap: 6px;
+            color: var(--green-dark);
+            font-weight: 600;
+        }
+        .added-badge.show {
+            display: flex;
+        }
+        @media (max-width: 768px) {
+            .main-content {
+                margin-left: 0;
+                padding: 24px 20px;
+            }
+            .sidebar {
+                display: none;
+            }
+            .wishlist-header {
+                flex-direction: column;
+                align-items: start;
+                gap: 20px;
+            }
+            .wishlist-title h1 {
+                font-size: 2rem;
+            }
+            .wishlist-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">Waste2Worth</div>
+        <nav>
+            <ul>
+                <li>
+                    <a href="homepage.html">
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9v8a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-4h-4v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8z" fill="#2E8B57"/></svg>
+                        </span>
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="joincomm.html">
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="#2E8B57"/></svg>
+                        </span>
+                        Join Our Community
+                    </a>
+                </li>
+                <li>
+                    <a href="value.html">
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#2E8B57"/></svg>
+                        </span>
+                        Value for Money
+                    </a>
+                </li>
+                <li>
+                    <a href="aboutus.html">
+                        <span class="nav-icon">
+                            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#2E8B57"/><path d="M12 16v-4M12 8h.01" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+                        </span>
+                        About Us
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <a href="homepage.html" class="back-link">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Back to Home
+        </a>
+
+        <div class="wishlist-header">
+            <div class="wishlist-title">
+                <h1>My Wishlist</h1>
+                <span class="wishlist-count" id="wishlistCount">0</span>
+            </div>
+            <div class="wishlist-actions">
+                <button class="action-btn" onclick="clearWishlist()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                        <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Clear All
+                </button>
+                <button class="action-btn" onclick="addAllToCart()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 2L11 8H20L17 14H8L6 8H2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="9" cy="20" r="1" fill="currentColor"/>
+                        <circle cx="16" cy="20" r="1" fill="currentColor"/>
+                        <path d="M7.5 14L5.5 21H18.5L16.5 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Add All to Cart
+                </button>
+            </div>
+        </div>
+
+        <!-- Empty Wishlist State -->
+        <div id="emptyWishlist" class="empty-wishlist" style="display: none;">
+            <div class="empty-icon">💚</div>
+            <h2>Your Wishlist is Empty</h2>
+            <p>Save your favorite eco-friendly products here for later!</p>
+            <a href="homepage.html" class="browse-btn">Browse Products</a>
+        </div>
+
+        <!-- Wishlist Grid -->
+        <div id="wishlistGrid" class="wishlist-grid"></div>
+    </main>
+
+    <script src="cart.js"></script>
+    <script>
+        // Wishlist functions
+        function getWishlist() {
+            return JSON.parse(localStorage.getItem('waste2worth_wishlist') || '[]');
+        }
+
+        function saveWishlist(wishlist) {
+            localStorage.setItem('waste2worth_wishlist', JSON.stringify(wishlist));
+        }
+
+        function addToWishlist(product) {
+            const wishlist = getWishlist();
+            
+            // Check if product already exists
+            const exists = wishlist.find(item => item.id === product.id);
+            if (exists) {
+                alert('This product is already in your wishlist!');
+                return false;
+            }
+
+            // Add timestamp
+            product.addedDate = new Date().toISOString();
+            wishlist.push(product);
+            saveWishlist(wishlist);
+            
+            return true;
+        }
+
+        function removeFromWishlist(productId) {
+            let wishlist = getWishlist();
+            wishlist = wishlist.filter(item => item.id !== productId);
+            saveWishlist(wishlist);
+            loadWishlist();
+        }
+
+        function clearWishlist() {
+            if (confirm('Are you sure you want to clear your entire wishlist?')) {
+                localStorage.removeItem('waste2worth_wishlist');
+                loadWishlist();
+            }
+        }
+
+        function moveToCart(product, cardElement) {
+            // Add to cart
+            if (addToCart(product)) {
+                // Show success feedback
+                const addBtn = cardElement.querySelector('.add-to-cart-btn');
+                const addedBadge = cardElement.querySelector('.added-badge');
+                
+                addBtn.style.display = 'none';
+                addedBadge.classList.add('show');
+                
+                // Optionally remove from wishlist after adding to cart
+                setTimeout(() => {
+                    removeFromWishlist(product.id);
+                }, 1500);
+            }
+        }
+
+        function addAllToCart() {
+            const wishlist = getWishlist();
+            
+            if (wishlist.length === 0) {
+                alert('Your wishlist is empty!');
+                return;
+            }
+
+            let addedCount = 0;
+            wishlist.forEach(product => {
+                if (addToCart(product)) {
+                    addedCount++;
+                }
+            });
+
+            if (addedCount > 0) {
+                alert(`${addedCount} item(s) added to cart!`);
+                // Optionally clear wishlist after adding all to cart
+                // localStorage.removeItem('waste2worth_wishlist');
+                // loadWishlist();
+            }
+        }
+
+        function loadWishlist() {
+            const wishlist = getWishlist();
+            const wishlistGrid = document.getElementById('wishlistGrid');
+            const emptyWishlist = document.getElementById('emptyWishlist');
+            const wishlistCount = document.getElementById('wishlistCount');
+
+            // Update count
+            wishlistCount.textContent = wishlist.length;
+
+            // Show empty state or grid
+            if (wishlist.length === 0) {
+                emptyWishlist.style.display = 'block';
+                wishlistGrid.style.display = 'none';
+                return;
+            }
+
+            emptyWishlist.style.display = 'none';
+            wishlistGrid.style.display = 'grid';
+
+            // Render wishlist items
+            wishlistGrid.innerHTML = wishlist.map(product => `
+                <div class="wishlist-card" data-product-id="${product.id}">
+                    <button class="remove-btn" onclick="removeFromWishlist('${product.id}')" title="Remove from wishlist">
+                        ❌
+                    </button>
+                    <div class="product-image">
+                        ${product.icon || product.image || '🌱'}
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        <p class="product-description">${product.description || 'Eco-friendly sustainable product'}</p>
+                        <div class="product-footer">
+                            <div class="product-price">₹${product.price}</div>
+                            <button class="add-to-cart-btn" onclick="moveToCart({
+                                id: '${product.id}',
+                                name: '${product.name}',
+                                price: ${product.price},
+                                image: '${product.icon || product.image || '🌱'}',
+                                description: '${product.description || ''}',
+                                quantity: 1
+                            }, this.closest('.wishlist-card'))">
+                                🛒 Add to Cart
+                            </button>
+                            <div class="added-badge">
+                                ✓ Added
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Initialize wishlist on page load
+        loadWishlist();
+
+        // Listen for storage changes (if wishlist is updated from another tab)
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'waste2worth_wishlist') {
+                loadWishlist();
+            }
+        });
+    </script>
+</body>
+</html>
