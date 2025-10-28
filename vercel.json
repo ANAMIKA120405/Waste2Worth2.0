@@ -1,6 +1,7 @@
 {
   "rewrites": [
     { "source": "/", "destination": "/homepage.html" },
+    { "source": "/index.html", "destination": "/homepage.html" },
     { "source": "/(.*)", "destination": "/$1" }
   ],
   "headers": [
