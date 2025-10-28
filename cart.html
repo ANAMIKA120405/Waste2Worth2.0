@@ -515,5 +515,43 @@
   <script type="module" src="supabaseClient.js"></script>
   <script type="module" src="auth.js"></script>
   <script type="module" src="cart-display.js"></script>
+  
+  <!-- W2W Chatbot Widget -->
+  <div id="w2w-chatbot-container">
+      <!-- Floating Chat Button -->
+      <button id="w2w-chat-button" aria-label="Open W2W Eco-Assistant Chat">
+          🌱
+      </button>
+      
+      <!-- Chat Window (Hidden by default) -->
+      <div id="w2w-chat-window">
+          <!-- Chat Header -->
+          <div id="w2w-chat-header">
+              <h3>🌱 W2W Eco-Assistant</h3>
+              <button id="w2w-close-chat" aria-label="Close Chat">×</button>
+          </div>
+          
+          <!-- Chat Messages Area -->
+          <div id="w2w-chat-messages">
+              <!-- Messages will be dynamically added here -->
+          </div>
+          
+          <!-- Chat Input Area -->
+          <div id="w2w-chat-input-container">
+              <textarea 
+                  id="w2w-user-input" 
+                  placeholder="Ask about our eco-products..."
+                  rows="1"
+                  maxlength="500"
+              ></textarea>
+              <button id="w2w-send-button" aria-label="Send Message">
+                  ➤
+              </button>
+          </div>
+      </div>
+  </div>
+
+  <!-- Chatbot JavaScript -->
+  <script src="w2w-chatbot.js"></script>
 </body>
 </html>

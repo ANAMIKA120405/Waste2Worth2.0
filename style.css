@@ -317,3 +317,329 @@ body {
 .back-home-btn:hover, .signup-btn:hover {
   background: #287346;
 }
+
+/* ============================================
+   W2W ECO-ASSISTANT CHATBOT STYLES
+   ============================================ */
+
+/* Chatbot Container - Fixed positioning */
+#w2w-chatbot-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  font-family: 'Inter', Arial, sans-serif;
+}
+
+/* Chat Button - Floating action button */
+#w2w-chat-button {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  box-shadow: 0 6px 24px rgba(46, 125, 50, 0.4);
+  transition: all 0.3s ease;
+  animation: pulse 2s infinite;
+}
+
+#w2w-chat-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 32px rgba(46, 125, 50, 0.6);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 6px 24px rgba(46, 125, 50, 0.4);
+  }
+  50% {
+    box-shadow: 0 8px 32px rgba(46, 125, 50, 0.6);
+  }
+}
+
+/* Chat Window - Main container */
+#w2w-chat-window {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 400px;
+  height: 600px;
+  max-height: 85vh;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+/* Chat Header */
+#w2w-chat-header {
+  background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
+  color: white;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 20px 20px 0 0;
+}
+
+#w2w-chat-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#w2w-close-chat {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+#w2w-close-chat:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Chat Messages Container */
+#w2w-chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  background: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Custom Scrollbar */
+#w2w-chat-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+#w2w-chat-messages::-webkit-scrollbar-track {
+  background: #e0e0e0;
+}
+
+#w2w-chat-messages::-webkit-scrollbar-thumb {
+  background: #2e7d32;
+  border-radius: 3px;
+}
+
+/* Message Styles */
+.w2w-message {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.w2w-message-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.w2w-bot-message .w2w-message-avatar {
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+}
+
+.w2w-user-message .w2w-message-avatar {
+  background: linear-gradient(135deg, #bbdefb 0%, #90caf9 100%);
+}
+
+.w2w-message-content {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 16px;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+.w2w-bot-message .w2w-message-content {
+  background: white;
+  color: #333;
+  border: 1px solid #e0e0e0;
+}
+
+.w2w-user-message {
+  flex-direction: row-reverse;
+}
+
+.w2w-user-message .w2w-message-content {
+  background: #2e7d32;
+  color: white;
+}
+
+/* Typing Indicator */
+.w2w-typing-indicator .w2w-typing-dots {
+  display: flex;
+  gap: 6px;
+  padding: 8px 0;
+}
+
+.w2w-typing-indicator .w2w-typing-dots span {
+  width: 8px;
+  height: 8px;
+  background: #2e7d32;
+  border-radius: 50%;
+  animation: typing 1.4s infinite;
+}
+
+.w2w-typing-indicator .w2w-typing-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.w2w-typing-indicator .w2w-typing-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typing {
+  0%, 60%, 100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-8px);
+  }
+}
+
+/* Chat Input Container */
+#w2w-chat-input-container {
+  padding: 16px;
+  background: white;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+#w2w-user-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 24px;
+  font-size: 0.95rem;
+  font-family: 'Inter', Arial, sans-serif;
+  outline: none;
+  transition: border-color 0.2s;
+  resize: none;
+  max-height: 100px;
+}
+
+#w2w-user-input:focus {
+  border-color: #2e7d32;
+}
+
+#w2w-send-button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #2e7d32;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+#w2w-send-button:hover:not(:disabled) {
+  background: #1b5e20;
+  transform: scale(1.05);
+}
+
+#w2w-send-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  #w2w-chatbot-container {
+    bottom: 16px;
+    right: 16px;
+  }
+  
+  #w2w-chat-window {
+    width: calc(100vw - 32px);
+    height: calc(100vh - 32px);
+    bottom: 16px;
+    right: 16px;
+    max-height: none;
+  }
+  
+  #w2w-chat-button {
+    width: 56px;
+    height: 56px;
+    font-size: 28px;
+  }
+}
+
+/* Message Content Formatting */
+.w2w-message-content ul {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.w2w-message-content li {
+  margin: 4px 0;
+}
+
+.w2w-message-content strong {
+  font-weight: 600;
+  color: #1b5e20;
+}
+
+.w2w-user-message .w2w-message-content strong {
+  color: #e8f5e9;
+}
+
+.w2w-message-content p {
+  margin: 8px 0;
+}
+
+.w2w-message-content p:first-child {
+  margin-top: 0;
+}
+
+.w2w-message-content p:last-child {
+  margin-bottom: 0;
+}

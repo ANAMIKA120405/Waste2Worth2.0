@@ -1,0 +1,50 @@
+<!-- ============================================
+     W2W ECO-ASSISTANT CHATBOT WIDGET
+     ============================================
+     
+     INSTRUCTIONS:
+     Copy this entire block and paste it immediately 
+     before the closing </body> tag on all pages where 
+     you want the chatbot to appear.
+     
+     Pages to add: homepage.html, joincomm.html, 
+     cart.html, profile.html, etc.
+     ============================================ -->
+
+<!-- W2W Chatbot Container -->
+<div id="w2w-chatbot-container">
+    <!-- Floating Chat Button -->
+    <button id="w2w-chat-button" aria-label="Open W2W Eco-Assistant Chat">
+        🌱
+    </button>
+    
+    <!-- Chat Window (Hidden by default) -->
+    <div id="w2w-chat-window">
+        <!-- Chat Header -->
+        <div id="w2w-chat-header">
+            <h3>🌱 W2W Eco-Assistant</h3>
+            <button id="w2w-close-chat" aria-label="Close Chat">×</button>
+        </div>
+        
+        <!-- Chat Messages Area -->
+        <div id="w2w-chat-messages">
+            <!-- Messages will be dynamically added here -->
+        </div>
+        
+        <!-- Chat Input Area -->
+        <div id="w2w-chat-input-container">
+            <textarea 
+                id="w2w-user-input" 
+                placeholder="Ask about our eco-products..."
+                rows="1"
+                maxlength="500"
+            ></textarea>
+            <button id="w2w-send-button" aria-label="Send Message">
+                ➤
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Chatbot JavaScript -->
+<script src="w2w-chatbot.js"></script>
