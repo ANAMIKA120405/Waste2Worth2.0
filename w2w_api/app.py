@@ -5,17 +5,31 @@ Flask server with Gemini API integration
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import google.generativeai as genai
+import os
+
+# Try importing google.generativeai; if it fails (e.g. incompatible protobuf/Python),
+# fall back to a lightweight local responder so the API can run for development.
+try:
+    import google.generativeai as genai
+except Exception as e:
+    genai = None
+    print(f"⚠️ google.generativeai import failed: {e}")
 
 # Initialize Flask app
 app = Flask(__name__)
 CORS(app)  # Enable CORS for frontend requests
 
 # Hardcoded API Key for local testing
-GEMINI_API_KEY = "AIzaSyDXEDLSXFkFk_cBgCBMr0WtX2lsNIS7_RI"
+# Prefer environment variable for the API key; fall back to the hardcoded value if present.
+# NOTE: For security, remove the hardcoded key in production and set GEMINI_API_KEY in the env.
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY') or "AIzaSyDXEDLSXFkFk_cBgCBMr0WtX2lsNIS7_RI"
 
-# Configure Gemini client
-genai.configure(api_key=GEMINI_API_KEY)
+# Configure Gemini client only if the library loaded successfully
+if genai:
+    try:
+        genai.configure(api_key=GEMINI_API_KEY)
+    except Exception as e:
+        print(f"⚠️ Failed to configure google.generativeai: {e}")
 
 # Select the best model with higher free tier limits
 # Priority: Flash models have better rate limits than Pro models
@@ -119,13 +133,36 @@ a sustainable e-commerce platform. Your role is to help customers learn about ou
 - Be sales-oriented but not pushy
 """
 
-# Initialize Gemini model
-try:
-    model = genai.GenerativeModel(selected_model)
-    print(f"✅ Gemini model initialized successfully!")
-except Exception as e:
-    print(f"❌ Error initializing Gemini model: {e}")
+def _make_local_responder():
+    """Create a simple fallback responder used when the Gemini client isn't available.
+
+    This keeps the Flask API runnable for development and testing without the external
+    dependency (useful on systems where the protobuf wheel is incompatible).
+    """
+    def responder(prompt_text: str) -> str:
+        # Very small heuristic responder: acknowledge and echo back a short helpful answer.
+        # Keep this concise — the frontend expects a short answer string.
+        return (
+            "Thanks for your question!\n\n"
+            "I don't have access to the external AI in this environment, but here's a helpful summary: "
+            f"(You asked: {prompt_text[:80]}...)\n\n"
+            "Products we offer: Vrindavan Prem (perfume), Coco-Peat, Coconut husk plates, and Bricket. "
+            "Ask me about product details or logistics and I'll help."
+        )
+
+# Initialize Gemini model (or use a local responder fallback)
+if genai:
+    try:
+        model = genai.GenerativeModel(selected_model)
+        print(f"✅ Gemini model initialized successfully!")
+    except Exception as e:
+        print(f"❌ Error initializing Gemini model: {e}")
+        model = None
+else:
     model = None
+
+# Fallback local responder used when model is None
+local_responder = _make_local_responder()
 
 @app.route('/chat', methods=['POST'])
 def chat():
@@ -150,11 +187,14 @@ def chat():
                 'error': 'Empty message'
             }), 400
         
-        # Check if model is initialized
+        # If the external model is not available, produce a helpful local response
         if not model:
+            bot_response = local_responder(user_message)
             return jsonify({
-                'error': 'AI model not initialized'
-            }), 500
+                'response': bot_response,
+                'status': 'success',
+                'note': 'local_responder'
+            })
         
         # Create full prompt with system instruction
         full_prompt = f"""{W2W_SYSTEM_PROMPT}
