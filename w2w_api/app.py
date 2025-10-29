@@ -236,13 +236,26 @@ def chat():
             }), 400
         
         # If the external model is not available, produce a helpful local response
-        if not model:
-            bot_response = local_responder(user_message)
-            return jsonify({
-                'response': bot_response,
-                'status': 'success',
-                'note': 'local_responder'
-            })
+            if not model:
+                # Try REST fallback (requests) if available
+                if 'requests' in globals() and requests is not None and GEMINI_API_KEY:
+                    try:
+                        bot_response = _rest_generate(full_prompt, selected_model)
+                        return jsonify({
+                            'response': bot_response,
+                            'status': 'success',
+                            'note': 'rest_fallback'
+                        })
+                    except Exception as e:
+                        print(f"⚠️ REST fallback failed: {e}")
+                        # fall through to local responder
+
+                bot_response = local_responder(user_message)
+                return jsonify({
+                    'response': bot_response,
+                    'status': 'success',
+                    'note': 'local_responder'
+                })
         
         # Create full prompt with system instruction
         full_prompt = f"""{W2W_SYSTEM_PROMPT}
