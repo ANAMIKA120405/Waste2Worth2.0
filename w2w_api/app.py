@@ -14,6 +14,12 @@ try:
 except Exception as e:
     genai = None
     print(f"⚠️ google.generativeai import failed: {e}")
+    # If the google client cannot be imported (common on some Python versions),
+    # we'll try to call the Generative Language REST endpoint directly using requests.
+    try:
+        import requests
+    except Exception:
+        requests = None
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -30,6 +36,48 @@ if genai:
         genai.configure(api_key=GEMINI_API_KEY)
     except Exception as e:
         print(f"⚠️ Failed to configure google.generativeai: {e}")
+
+# If google client is unavailable but requests is present, use REST calls as a fallback
+def _rest_generate(prompt_text: str, model_name: str) -> str:
+    if not requests or not GEMINI_API_KEY:
+        raise RuntimeError('REST client or API key not available')
+
+    # Build REST endpoint for the chosen model
+    url = f"https://generativelanguage.googleapis.com/v1/{model_name}:generate?key={GEMINI_API_KEY}"
+    payload = {
+        "prompt": {"text": prompt_text},
+        "temperature": 0.2,
+        "max_output_tokens": 512
+    }
+
+    resp = requests.post(url, json=payload, timeout=20)
+    resp.raise_for_status()
+    data = resp.json()
+
+    # Try common response shapes
+    if isinstance(data, dict):
+        # Newer responses sometimes include 'candidates' with 'content'
+        if 'candidates' in data and isinstance(data['candidates'], list) and data['candidates']:
+            cand = data['candidates'][0]
+            return cand.get('content') or cand.get('text') or str(cand)
+        # Some responses use 'output' or 'outputs'
+        if 'output' in data:
+            out = data['output']
+            if isinstance(out, list) and out:
+                first = out[0]
+                if isinstance(first, dict):
+                    return first.get('content') or str(first)
+                return str(first)
+        if 'outputs' in data and isinstance(data['outputs'], list) and data['outputs']:
+            first = data['outputs'][0]
+            if isinstance(first, dict):
+                return first.get('content') or first.get('text') or str(first)
+        # Older simple shape
+        if 'text' in data:
+            return data['text']
+
+    # Fallback: return full JSON as string (shouldn't happen in normal cases)
+    return str(data)
 
 # Select the best model with higher free tier limits
 # Priority: Flash models have better rate limits than Pro models
