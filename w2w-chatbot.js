@@ -89,6 +89,17 @@
         scrollToBottom();
     }
     
+    // Local fallback responder (used when backend is unreachable)
+    function localResponder(prompt) {
+        return (
+            "Thanks for your question!\n\n" +
+            "I don't have access to the AI backend right now, but here's a helpful summary: " +
+            `(You asked: ${prompt.slice(0,80)}...)\n\n` +
+            "Products we offer: Vrindavan Prem (perfume), Coco-Peat, Coconut husk plates, and Bricket. " +
+            "You can ask about product details, delivery, payment options, or partnerships."
+        );
+    }
+
     // Send user message
     async function sendMessage() {
         const message = userInput.value.trim();
@@ -138,12 +149,11 @@
             }
             
         } catch (error) {
-            console.error('Error sending message:', error);
+            console.warn('Error sending message to API, falling back to local responder:', error);
             removeTypingIndicator();
-            addMessage(
-                '⚠️ Sorry, I\'m having trouble connecting right now. Please make sure the Flask server is running on http://127.0.0.1:5000',
-                'bot'
-            );
+            // Use local fallback responder to provide a helpful answer instead of an error
+            const fallback = localResponder(message);
+            addMessage(fallback, 'bot');
         } finally {
             // Re-enable input
             setInputState(true);
