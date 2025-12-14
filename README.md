@@ -1,35 +1,66 @@
 # Waste2Worth
 
-An e-commerce platform for selling products made from recycled materials.
+A web-based e-commerce platform focused on selling products made from recycled and upcycled materials. The application allows users to browse products, manage carts and wishlists, and place orders through a structured checkout flow.
 
-## What It Does
+## Features
 
-Waste2Worth is a web-based marketplace where users can browse and purchase upcycled products like coconut-based plates and perfumes made from waste materials. It includes user authentication, a shopping cart, wishlist functionality, order tracking, and an AI chatbot assistant.
+### For Users
 
-## Main Features
+- **Product Browsing**: View products made from recycled materials with basic filtering.
+- **User Authentication**: Register and log in using email-based authentication.
+- **Shopping Cart**: Add, update, and remove products from the cart.
+- **Wishlist**: Save products for future reference.
+- **Order Tracking**: View placed orders and their status.
+- **User Profiles**: Manage basic user account information.
 
-- User registration and authentication
-- Product catalog with filtering
-- Shopping cart and checkout flow
-- Wishlist management
-- Order tracking
-- User profiles
-- Payment processing integration
-- AI chatbot for product assistance (powered by Google Gemini API)
+### General
 
-## Technologies Used
+- **Structured UI Flow**: Clear navigation from product browsing to checkout.
+- **Sustainable Focus**: Platform centered around eco-friendly and recycled products.
+- **Modular Design**: Frontend and backend structured for future expansion.
 
-**Frontend:**
-- HTML, CSS, JavaScript
-- Supabase client for authentication and database
+## Tech Stack
 
-**Backend:**
-- Flask (Python web framework)
-- Flask-CORS for cross-origin requests
-- Google Generative AI (Gemini) for chatbot
+- **Frontend**: HTML, CSS, JavaScript
+- **Backend**: Python (Flask)
+- **Database & Auth**: Supabase (PostgreSQL, Authentication)
+- **AI Integration**: Google Gemini API (basic chatbot support)
+- **Deployment**: Vercel (configuration included)
 
-**Database:**
-- Supabase (PostgreSQL)
+## Folder Structure
 
-**Deployment:**
-- Vercel configuration included
+```
+WASTE2WORTH/
+├── frontend/
+├── backend/
+├── templates/
+├── static/
+├── app.py
+└── vercel.json
+```
+
+## Known Limitations
+
+- Payment gateway is not fully integrated (UI and flow only).
+- AI chatbot functionality is basic.
+- UI and feature set require further refinement.
+- Limited product management features.
+
+## Project Collaboration
+
+This project was developed as a team effort.
+
+**My contributions included:**
+- UI design and frontend implementation
+- Core application logic and workflows
+- Backend setup and Supabase integration
+- Database structure and deployment configuration
+
+## License
+
+MIT License
+
+## Credits
+
+Built by Anamika with collaborators.  
+Focused on sustainable product ideas and practical full-stack learning.
